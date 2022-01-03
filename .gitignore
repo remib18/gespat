@@ -238,3 +238,4 @@ fabric.properties
 .idea/modules.xml
 .idea/project-template.xml
 .vscode/settings.json
+.idea/vcs.xml
