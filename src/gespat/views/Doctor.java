@@ -10,6 +10,7 @@ import components.template.Template;
 import components.template.Template.In;
 import controllers.ConsultationController;
 import exceptions.ConflictingDataException;
+import exceptions.FormatException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Consultation;
@@ -78,8 +79,17 @@ public class Doctor extends JFrame {
 
         String[] devices = consultCtrl.getDevices();
 
-        for (String device : devices) {
-            panel.add(new Checkbox(device, device.equals(selectedConsultation.getRequiredEquiment())));
+        for (int i = 0; i < devices.length; i++) {
+            Checkbox device = new Checkbox(devices[i], devices[i].equals(selectedConsultation.getRequiredEquiment()));
+            int finalI = i;
+            device.addActionListener(e -> {
+                Checkbox cp = (Checkbox) e.getSource();
+                if (cp.isSelected()) {
+                    selectedConsultation.setRequiredEquiment(devices[finalI]);
+                    updateGraphics();
+                }
+            });
+            panel.add(device);
         }
 
         return panel;
@@ -96,8 +106,11 @@ public class Doctor extends JFrame {
         final List<String> patientPathologies = selectedConsultation.getDiagnosedPathologies();
         final List<String> pathologies = consultCtrl.getAllPathologies();
 
-        for (String pathology : pathologies) {
-            panel.add(new Checkbox(pathology, patientPathologies.contains(pathology)));
+        for (int i = 0; i < pathologies.size(); i++) {
+            String pathologyString = pathologies.get(i);
+            Checkbox pathology = new Checkbox(pathologies.get(i), patientPathologies.contains(pathologyString));
+            pathology.addActionListener(e -> setPathology(pathologyString, ((Checkbox) e.getSource()).isSelected()));
+            panel.add(pathology);
         }
 
         return panel;
@@ -145,11 +158,15 @@ public class Doctor extends JFrame {
         }
         final Patient patient = selectedConsultation.getPatient();
 
-        template.add(new SidebarRow("Patient : ", patient.getFullname()), In.SIDEBAR_BODY);
+        template.add(new SidebarRow("Patient : ", patient.getFullname(), false), In.SIDEBAR_BODY);
 
-        template.add(new SidebarRow("Sécurité sociale : ", "" + patient.getSocialId()), In.SIDEBAR_BODY);
+        template.add(new SidebarRow("Sécurité sociale : ", "" + patient.getSocialId(), false), In.SIDEBAR_BODY);
 
-        template.add(new SidebarRow("Date de la consultation", selectedConsultation.getConsultedAt()), In.SIDEBAR_BODY);
+        SidebarRow consultedAt = new SidebarRow("Date de la consultation", selectedConsultation.getConsultedAt());
+        template.add(consultedAt, In.SIDEBAR_BODY);
+
+        SidebarRow doctorName = new SidebarRow("Docteur : ", patient.getFullname());
+        template.add(doctorName, In.SIDEBAR_BODY);
 
         JPanel pathApp = new JPanel();
         pathApp.setLayout(new BorderLayout());
@@ -164,7 +181,7 @@ public class Doctor extends JFrame {
         template.add(details, In.SIDEBAR_BODY);
 
         Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);
-        saveBtn.addActionListener(e -> save());
+        saveBtn.addActionListener(e -> save(doctorName, consultedAt));
 
         Button deleteBtn = new Button("Supprimer la consultation", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.DANGER);
         deleteBtn.addActionListener(e -> delete());
@@ -191,8 +208,23 @@ public class Doctor extends JFrame {
         }
     }
 
-    private void save() {
-        // TODO: @evanchr
+    private void save(SidebarRow doctorName,
+                      SidebarRow consultedAt
+		) {
+            try {
+                selectedConsultation.setConsultedAt(consultedAt.getDate());
+            } catch (FormatException err) {
+                // TODO: Implement ErrorMessageView
+                System.err.println(err.getMessage());
+            }
+            selectedConsultation.setDoctorName(doctorName.getText());
+            try {
+                consultCtrl.update(selectedConsultation);
+                setSelected(selectedConsultation); // To update the view
+            } catch (NotFoundException | ProcessingException err) {
+                // TODO: Implement ErrorMessageView
+                System.err.println(err.getMessage());
+            }
     }
 
     private void delete() {
@@ -204,5 +236,16 @@ public class Doctor extends JFrame {
             // TODO: Implement ErrorMessageView
             System.err.print(err.getMessage());
         }
+    }
+
+    private void setPathology(String pathology, boolean checkboxState) {
+        final List<String> pathologies = selectedConsultation.getDiagnosedPathologies();
+        final boolean contains = pathologies.contains(pathology);
+        if (checkboxState && !contains) {
+            pathologies.add(pathology);
+        } else if (!checkboxState && contains) {
+            pathologies.remove(pathology);
+        }
+        selectedConsultation.setDiagnosedPathologies(pathologies.toArray(new String[pathologies.size()]));
     }
 }
