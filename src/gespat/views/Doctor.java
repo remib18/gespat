@@ -172,7 +172,7 @@ public class Doctor extends JFrame {
         Separator separator = new Separator();
         template.add(separator, In.SIDEBAR_BODY);
 
-        SidebarRow consultedAt = new SidebarRow("Date de la consultation", selectedConsultation.getConsultedAt());
+        SidebarRow consultedAt = new SidebarRow("Date de la consultation :", selectedConsultation.getConsultedAt());
         template.add(consultedAt, In.SIDEBAR_BODY);
 
         SidebarRow doctorName = new SidebarRow("Docteur : ", selectedConsultation.getDoctorName(), true);

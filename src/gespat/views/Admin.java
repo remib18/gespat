@@ -105,19 +105,19 @@ public class Admin extends JFrame {
         SidebarRow lastname = new SidebarRow("Nom :", selectedPatient.getLastname(), true);
         template.add(lastname, In.SIDEBAR_BODY);
 
-        SidebarRow firstname = new SidebarRow("Prénom", selectedPatient.getFirstname(), true);
+        SidebarRow firstname = new SidebarRow("Prénom :", selectedPatient.getFirstname(), true);
         template.add(firstname, In.SIDEBAR_BODY);
 
-        SidebarRow birthAt = new SidebarRow("Date de naissance", selectedPatient.getBirthAt(), true);
+        SidebarRow birthAt = new SidebarRow("Date de naissance :", selectedPatient.getBirthAt(), true);
         template.add(birthAt, In.SIDEBAR_BODY);
 
-        SidebarRow socialId = new SidebarRow("Numéro de sécurité sociale", "" + selectedPatient.getSocialId(), true);
+        SidebarRow socialId = new SidebarRow("Numéro de sécurité sociale :", "" + selectedPatient.getSocialId(), true);
         template.add(socialId, In.SIDEBAR_BODY);
 
         Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);
         saveBtn.addActionListener(e -> save(lastname, firstname, birthAt, socialId));
 
-        Button deleteBtn = new Button("Supprimer le patient", Button.Size.LARGE, Button.Style.FILLED, Button.Color.DANGER);
+        Button deleteBtn = new Button("Supprimer le patient", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.DANGER);
         deleteBtn.addActionListener(e -> delete());
 
         // template.add(saveBtn, In.SIDEBAR_FOOTER);
