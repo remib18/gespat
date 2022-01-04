@@ -8,8 +8,12 @@ public class XSpaceBetween extends JPanel {
     public static final String WEST = BorderLayout.WEST;
     public static final String EAST = BorderLayout.EAST;
 
-    public XSpaceBetween() {
+    public XSpaceBetween(Component[] cps) {
         init();
+
+        setLayout(new BorderLayout());
+        add(cps[0], BorderLayout.WEST);
+        add(cps[1], BorderLayout.EAST);
     }
 
     public XSpaceBetween(Component a, Component b) {
@@ -25,6 +29,7 @@ public class XSpaceBetween extends JPanel {
         setOpaque(true);
         EventQueue.invokeLater(() -> {
             try {
+                setPreferredSize(new Dimension(10000, getPreferredSize().height));
                 setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
                 setBackground(getParent().getBackground());
             } catch (NullPointerException err) { /**/ }

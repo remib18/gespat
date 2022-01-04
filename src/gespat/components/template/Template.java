@@ -192,15 +192,25 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 
     private void resize(Component cp) {
         panelWidth = cp.getWidth();
-        panelHeight = cp.getHeight();
-        sidebarWidth = panelWidth * 2 / 7;
+        panelHeight = Math.max(cp.getHeight(), 575);
+        sidebarWidth = Math.min(Math.max(315, panelWidth * 2 / 7), 335);
 
         main.setPreferredSize(new Dimension(panelWidth - sidebarWidth, panelHeight));
 
-        Dimension sidebarDim = new Dimension(sidebarWidth, panelHeight);
-        sidebar.setPreferredSize(sidebarDim);
-        sidebar.setMaximumSize(sidebarDim);
-        sidebar.setMinimumSize(sidebarDim);
+        Dimension sDim = new Dimension(sidebarWidth, panelHeight);
+        sidebar.setPreferredSize(sDim);
+        sidebar.setMaximumSize(sDim);
+        sidebar.setMinimumSize(sDim);
+
+        Dimension sBodyDim = new Dimension(sDim.width, sidebarBody.getPreferredSize().height);
+        sidebarBody.setPreferredSize(sBodyDim);
+        sidebarBody.setMinimumSize(sBodyDim);
+        sidebarBody.setMaximumSize(sBodyDim);
+
+        Dimension sFooterDim = new Dimension(sDim.width, sidebarFooter.getPreferredSize().height);
+        sidebarFooter.setPreferredSize(sFooterDim);
+        sidebarFooter.setMinimumSize(sFooterDim);
+        sidebarFooter.setMaximumSize(sFooterDim);
     }
 
     @Override
@@ -221,7 +231,6 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         searchBar.setText(s);
         repaint();
         revalidate();
-
     }
 
     /**

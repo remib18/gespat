@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
-public class SidebarRow extends XSpaceBetween {
+public class SidebarRow extends JPanel {
 
     private static final long serialVersionUID = 2835082161395088285L;
 
@@ -126,9 +126,15 @@ public class SidebarRow extends XSpaceBetween {
         } else {
             data = new Label(text);
         }
+        data.setMinimumSize(data.getPreferredSize());
 
-        add(new Label(label), XSpaceBetween.WEST);
-        add(data, XSpaceBetween.EAST);
+        setLayout(new MigLayout("ins 0", "100%"));
+        try {
+            setBackground(getParent().getBackground());
+            setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
+        } catch (NullPointerException ignore) {}
+        add(new Label(label), "west");
+        add(data, "east");
     }
 
     /**
@@ -140,7 +146,7 @@ public class SidebarRow extends XSpaceBetween {
      */
     private void initDate(String label, LocalDate date, boolean canEdit) {
         JPanel inputs = new JPanel();
-        inputs.setLayout(new MigLayout("ins 0", "", "r"));
+        inputs.setLayout(new MigLayout("ins 0", "", ""));
         inputs.setOpaque(false);
         try {
             inputs.add(getDateField(date.getDayOfMonth(), canEdit));
@@ -161,6 +167,11 @@ public class SidebarRow extends XSpaceBetween {
             inputs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Colors.BUTTON_SECONDARY));
         }
 
+        setLayout(new MigLayout("ins 0", "100%"));
+        try {
+            setBackground(getParent().getBackground());
+            setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
+        } catch (NullPointerException ignore) {}
         add(new Label(label), XSpaceBetween.WEST);
         add(inputs, XSpaceBetween.EAST);
     }

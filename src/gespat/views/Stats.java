@@ -13,12 +13,12 @@ public class Stats extends JFrame{
 
     public Stats(PatientController patientController) {
         setTitle("GesPat — Statistiques");
-        setSize(1080, 550);
+        setSize(1080, 575);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         ErrorMessage.setActiveWindow(this);
 
-        final Template<AbstractData> template = new Template<>(978, 550);
+        final Template<AbstractData> template = new Template<>(978, 575);
         // template.setSearchBar(data, model);
 
         add(template);

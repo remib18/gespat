@@ -53,9 +53,9 @@ public class Doctor extends JFrame {
             DeviceController deviceController
     ) {
         setTitle("GesPat — Personnel Médical");
-        setSize(1080, 550);
+        setSize(1080, 575);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setMinimumSize(new Dimension(978, 550));
+        setMinimumSize(new Dimension(978, 575));
 
         ErrorMessage.setActiveWindow(this);
 
@@ -193,7 +193,7 @@ public class Doctor extends JFrame {
         cols.setBorder(BorderFactory.createEmptyBorder(4, 0,0,0));
         template.add(cols, In.SIDEBAR_BODY);
 
-        TextArea details = new TextArea(325, 100);
+        TextArea details = new TextArea(10000, 100);
         template.add(details, In.SIDEBAR_BODY);
 
         Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);

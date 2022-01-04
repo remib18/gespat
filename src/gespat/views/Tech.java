@@ -32,9 +32,9 @@ public class Tech extends JFrame {
 
     public Tech(ConsultationController consultationController) {
         setTitle("GesPat — Technicien");
-        setSize(1080, 550);
+        setSize(1080, 575);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setMinimumSize(new Dimension(978, 550));
+        setMinimumSize(new Dimension(978, 575));
 
         ErrorMessage.setActiveWindow(this);
 
