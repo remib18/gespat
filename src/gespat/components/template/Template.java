@@ -194,7 +194,8 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
     private void resize(Component cp) {
         panelWidth = cp.getWidth();
         panelHeight = Math.max(cp.getHeight(), 575);
-        sidebarWidth = Math.min(Math.max(315, panelWidth * 2 / 7), 335);
+        //sidebarWidth = Math.min(Math.max(315, panelWidth * 2 / 7), 335);
+        sidebarWidth = 325; // Fix issues when resizing
 
         main.setPreferredSize(new Dimension(panelWidth - sidebarWidth, panelHeight));
 
