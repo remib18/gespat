@@ -1,6 +1,10 @@
 package models;
 
+import utils.File;
+
 public abstract class Data implements Comparable<Data> {
+
+    protected final String fs = File.COLUMN_SEPARATOR;
 
     /**
      * @return le paramètre repésentant l'identifiant de la donné

@@ -11,6 +11,7 @@ import controllers.ConsultationController;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Consultation;
+import models.Device;
 import models.Patient;
 import utils.Colors;
 import utils.ConsultationTableModel;
@@ -66,9 +67,9 @@ public class Tech extends JFrame {
 
         panel.add(new Label("Appareillage attribué :"));
 
-        final String equipment = selectedConsultation.getRequiredEquiment();
+        final Device equipment = selectedConsultation.getRequiredEquipment();
 
-        equipmentChkbx = new Checkbox(equipment, selectedConsultation.isGranted());
+        equipmentChkbx = new Checkbox(equipment.getLabel(), equipment.getState() == Device.STATES.ASSIGNED);
         equipmentChkbx.addActionListener(e -> save());
         panel.add(equipmentChkbx);
 
@@ -112,15 +113,8 @@ public class Tech extends JFrame {
     }
 
     private void save() {
-        selectedConsultation.setGranted(equipmentChkbx.isSelected());
-        try {
-            consultCtrl.update(selectedConsultation);
-        } catch (NotFoundException | ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.println(err.getMessage());
-        } finally {
-            updateGraphics();
-        }
+        selectedConsultation.getRequiredEquipment().setState(equipmentChkbx.isSelected());
+        updateGraphics();
     }
 }
 
@@ -131,7 +125,7 @@ final class SearchFilter implements FilterInterface<Consultation> {
         List<Consultation> result = new ArrayList<>();
 
         for (Consultation consultation : data) {
-            if (!consultation.isGranted() && consultation.getRequiredEquiment() != null) {
+            if (!consultation.isGranted() && consultation.getRequiredEquipment() != null) {
                 result.add(consultation);
             }
         }

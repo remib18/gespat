@@ -4,6 +4,7 @@ import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Consultation;
+import models.Device;
 import models.Patient;
 
 import java.time.LocalDate;
@@ -13,19 +14,18 @@ import java.util.List;
 public class ConsultationController extends AbstractController<Consultation> {
 
     /** Instance du PatientController */
-    private PatientController patientCtrl;
-
-    /** Liste du matériel disponible */
-    private final String[] devices = {"Béquille / Canne", "Béquilles (paire)", "Chaise roulant", "Prothèse"};
+    private final PatientController patientCtrl;
+    private final DeviceController deviceCtrl;
 
     /**
      * Crée un objet permettant la manimulation des consultations
      * @param patientCtrl
      * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
      */
-    public ConsultationController(PatientController patientCtrl)
+    public ConsultationController(PatientController patientCtrl, DeviceController deviceCtrl)
             throws ProcessingException {
         this.patientCtrl = patientCtrl;
+        this.deviceCtrl = deviceCtrl;
         this.storeFile = "consultations.txt";
 
         load();
@@ -39,9 +39,11 @@ public class ConsultationController extends AbstractController<Consultation> {
      */
     public ConsultationController(
             PatientController patientCtrl,
+            DeviceController deviceCtrl,
             String storageFile
     ) throws ProcessingException {
         this.patientCtrl = patientCtrl;
+        this.deviceCtrl = deviceCtrl;
         this.storeFile = storageFile;
 
         load();
@@ -53,7 +55,7 @@ public class ConsultationController extends AbstractController<Consultation> {
      * @param doctorName
      * @param consultedAt
      * @param diagnosedPathologies
-     * @param requiredEquiment
+     * @param requiredEquipment
      * @param granted
      * @throws ConflictingDataException
      * @throws ProcessingException
@@ -63,16 +65,17 @@ public class ConsultationController extends AbstractController<Consultation> {
             String doctorName,
             LocalDate consultedAt,
             String[] diagnosedPathologies,
-            String requiredEquiment,
+            Device requiredEquipment,
             boolean granted
     ) throws ConflictingDataException, ProcessingException {
+        Device device = requiredEquipment == null ? deviceCtrl.add(Device.STATES.UNDEFINED, null) : requiredEquipment;
         Consultation consult = new Consultation(
                 getLastInsertedIndex() + 1,
                 patient,
                 doctorName,
                 consultedAt,
                 diagnosedPathologies,
-                requiredEquiment,
+                device,
                 granted
         );
         super.add(consult);
@@ -94,24 +97,18 @@ public class ConsultationController extends AbstractController<Consultation> {
         return pathologies;
     }
 
-    /**
-     * @return l'ensemble des appareils disponibles
-     */
-    public String[] getDevices() {
-        return devices;
-    }
-
     @Override
     protected Consultation makeObjectFromString(String[] object)
             throws NotFoundException, NumberFormatException, ProcessingException {
+        String[] device = {object[5], object[6], object[7]};
         return new Consultation(
                 Integer.parseInt(object[0]),
                 patientCtrl.get(Integer.parseInt(object[1])),
                 object[2],
                 LocalDate.parse(object[3]),
                 object[4].split("|"),
-                object[5],
-                object[6].equals("true")
+                deviceCtrl.makeObjectFromString(device),
+                object[8].equals("true")
         );
     }
 }

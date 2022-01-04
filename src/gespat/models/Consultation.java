@@ -1,7 +1,6 @@
 package models;
 
 import utils.Date;
-import utils.File;
 import controllers.ConsultationController;
 
 import java.time.LocalDate;
@@ -16,7 +15,7 @@ public class Consultation extends Data {
     private String doctorName;
     private LocalDate consultedAt;
     private String[] diagnosedPathologies;
-    private String requiredEquiment;
+    private Device requiredEquipment;
     private boolean granted;
 
     /**
@@ -38,7 +37,7 @@ public class Consultation extends Data {
             String doctorName,
             LocalDate consultedAt,
             String[] diagnosedPathologies,
-            String requiredEquipment,
+            Device requiredEquipment,
             boolean granted
     ) {
         this.id = id;
@@ -46,7 +45,7 @@ public class Consultation extends Data {
         this.doctorName = doctorName;
         this.consultedAt = consultedAt;
         this.diagnosedPathologies = diagnosedPathologies;
-        this.requiredEquiment = requiredEquipment;
+        this.requiredEquipment = requiredEquipment;
         this.granted = granted;
     }
 
@@ -91,8 +90,8 @@ public class Consultation extends Data {
     /**
      * @return le matériel nécessaire
      */
-    public String getRequiredEquiment() {
-        return requiredEquiment;
+    public Device getRequiredEquipment() {
+        return requiredEquipment;
     }
 
     /**
@@ -148,10 +147,10 @@ public class Consultation extends Data {
     }
 
     /**
-     * @param requiredEquiment le matériel nécessaire à définir
+     * @param requiredEquipment le matériel nécessaire à définir
      */
-    public void setRequiredEquiment(String requiredEquiment) {
-        this.requiredEquiment = requiredEquiment;
+    public void setRequiredEquipment(Device requiredEquipment) {
+        this.requiredEquipment = requiredEquipment;
     }
 
     /**
@@ -159,16 +158,15 @@ public class Consultation extends Data {
      */
     @Override
     public String toString() {
-        final String fs = File.COLUMN_SEPARATOR;
         String consultedAt = this.consultedAt == null ? "null" : Date.convert(this.consultedAt);
         String diagnosedPathologies = this.diagnosedPathologies == null ? "null" : String.join("|", this.diagnosedPathologies);
-        return this.id + fs +
-                this.patient.getId() + fs +
-                this.doctorName + fs +
-                consultedAt + fs +
-                diagnosedPathologies + fs +
-                this.requiredEquiment + fs +
-                this.granted;
+        return id + fs +
+               patient.getId() + fs +
+               doctorName + fs +
+               consultedAt + fs +
+               diagnosedPathologies + fs +
+               requiredEquipment + fs +
+               granted;
     }
 
 }

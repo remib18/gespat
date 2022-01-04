@@ -4,6 +4,7 @@ import components.Button;
 import components.Label;
 import components.template.XCenteredContainer;
 import controllers.ConsultationController;
+import controllers.DeviceController;
 import controllers.PatientController;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
@@ -18,8 +19,13 @@ public class Login extends JFrame {
     private static final long serialVersionUID = -2283950897638045412L;
     PatientController patientController;
     ConsultationController consultationController;
+    DeviceController deviceController;
 
-    public Login(PatientController patientController, ConsultationController consultationController) {
+    public Login(
+            PatientController patientController,
+            ConsultationController consultationController,
+            DeviceController deviceController
+    ) {
         setTitle("GesPat");
         setSize(580, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -27,7 +33,7 @@ public class Login extends JFrame {
 
         this.patientController = patientController;
         this.consultationController = consultationController;
-
+        this.deviceController = deviceController;
 
 
         add(this.getContent());
@@ -47,7 +53,7 @@ public class Login extends JFrame {
         // Adding ClickListener to buttons
         button1.addActionListener(e -> new Admin(patientController));
 
-        button2.addActionListener(e -> new Doctor(patientController, consultationController));
+        button2.addActionListener(e -> new Doctor(patientController, consultationController, deviceController));
 
         button3.addActionListener(e -> new Tech(consultationController));
 

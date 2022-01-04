@@ -11,12 +11,14 @@ import components.template.Template;
 import components.template.Template.In;
 import components.template.XSpaceBetween;
 import controllers.ConsultationController;
+import controllers.DeviceController;
 import controllers.PatientController;
 import exceptions.ConflictingDataException;
 import exceptions.FormatException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Consultation;
+import models.Device;
 import models.Patient;
 import utils.Colors;
 import utils.ConsultationTableModel;
@@ -36,18 +38,24 @@ public class Doctor extends JFrame {
     private TableRowsFunctionsInterface<Consultation> tableUtils;
     private PatientController patientCtrl;
     private ConsultationController consultCtrl;
+    private DeviceController deviceCtrl;
     private Consultation selectedConsultation;
     private int activeRow;
 
     private Button createBtn;
 
-    public Doctor(PatientController patientController, ConsultationController consultationController) {
+    public Doctor(
+            PatientController patientController,
+            ConsultationController consultationController,
+            DeviceController deviceController
+    ) {
         setTitle("GesPat — Personnel Médical");
         setSize(1080, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 550));
 
         patientCtrl = patientController;
+        deviceCtrl = deviceController;
         consultCtrl = consultationController;
 
         template.setSearchBar(
@@ -82,19 +90,21 @@ public class Doctor extends JFrame {
 
         panel.add(new Label("Appareillage :"));
 
-        String[] devices = consultCtrl.getDevices();
+        String[] devices = DeviceController.DEVICES;
 
-        for (int i = 0; i < devices.length; i++) {
-            Checkbox device = new Checkbox(devices[i], devices[i].equals(selectedConsultation.getRequiredEquiment()));
-            int finalI = i;
-            device.addActionListener(e -> {
+        for (String device : devices) {
+            Checkbox deviceChkbx = new Checkbox(device, device.equals(selectedConsultation.getRequiredEquipment().getLabel()));
+            deviceChkbx.addActionListener(e -> {
                 Checkbox cp = (Checkbox) e.getSource();
                 if (cp.isSelected()) {
-                    selectedConsultation.setRequiredEquiment(devices[finalI]);
+                    Device equipment = selectedConsultation.getRequiredEquipment();
+                    equipment.setLabel(device);
+                    equipment.setState(Device.STATES.PENDING);
+                    selectedConsultation.setRequiredEquipment(equipment);
                     updateGraphics();
                 }
             });
-            panel.add(device);
+            panel.add(deviceChkbx);
         }
 
         return panel;

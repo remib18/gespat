@@ -1,6 +1,7 @@
 # Storage files
 consultations.txt
 patients.txt
+devices.txt
 
 #
 # Generate by Git Ignore Generator for MacOS#
@@ -240,3 +241,4 @@ fabric.properties
 .vscode/settings.json
 .idea/vcs.xml
 .idea/codeStyles/codeStyleConfig.xml
+devices.txt
