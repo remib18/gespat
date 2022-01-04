@@ -140,11 +140,7 @@ public class Doctor extends JFrame {
             selectedConsultation = consultation;
             activeRow = row;
             template.setResultTableSelectedRow(consultation);
-        } catch (NullPointerException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-            new ErrorMessage(e.getMessage(), ErrorMessage.LEVEL.System);
-            // TODO: handle exception
-        } finally {
+        } catch (NullPointerException ignored) {} finally {
             updateGraphics();
         }
     }
@@ -224,7 +220,7 @@ public class Doctor extends JFrame {
                 btn.getY() + btn.getHeight()
         )).subscribe(patient -> {
             try {
-                Consultation consultation = consultCtrl.add(patient, null, LocalDate.now(), null, null, false);
+                Consultation consultation = consultCtrl.add(patient, "", LocalDate.now(), new String[0], null, false);
                 setSelected(consultation);
             } catch (ProcessingException err) {
                 logger.log(Level.SEVERE, err.getMessage());

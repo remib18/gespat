@@ -32,10 +32,10 @@ public class Main {
         consultationController.clear();
 
         try {
-            patientController.add(new Patient("Jean", "Jack", 123, LocalDate.of(2000, 1, 21)));
-            patientController.add(new Patient("François", "Jack", 12, LocalDate.of(2001, 1, 21)));
-            patientController.add(new Patient("Jeanne", "France", 1, LocalDate.of(2003, 1, 21)));
-            patientController.add(new Patient("Franck", "Morice", 1234, LocalDate.of(2004, 1, 21)));
+            patientController.add("Jean", "Jack", 123, LocalDate.of(2000, 1, 21));
+            patientController.add("François", "Jack", 12, LocalDate.of(2001, 1, 21));
+            patientController.add("Jeanne", "France", 1, LocalDate.of(2003, 1, 21));
+            patientController.add("Franck", "Morice", 1234, LocalDate.of(2004, 1, 21));
         } catch (ConflictingDataException err) {
             logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
         }
