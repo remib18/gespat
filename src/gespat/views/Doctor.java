@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.*;
 
 public class Doctor extends JFrame {
 
@@ -79,6 +80,7 @@ public class Doctor extends JFrame {
         template.add(tableTitle, In.MAIN_BODY);
 
         Button exportBtn = new Button("Exporter", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
+        exportBtn.addActionListener(e -> export(exportBtn));
         template.add(exportBtn.setPosition(Button.Position.END), In.SIDEBAR_HEADER);
 
         sidebarSetup();
@@ -269,6 +271,22 @@ public class Doctor extends JFrame {
             updateGraphics();
         }
     }
+
+    private void export(Button btn) { 
+        try {
+            FileWriter file = new FileWriter("PatientExport.txt");
+            //file.write(selectedConsultation.getPatient());
+            file.write(Integer.toString(selectedConsultation.getId()));
+            //file.write(Date.toString(selectedConsultation.getConsultedAt()));
+            file.write(selectedConsultation.getDoctorName());
+            //file.write(selectedConsultation.getDiagnosedPathologies());
+            //file.write(selectedConsultation.getRequiredEquipment());
+            file.close();
+        } catch (IOException  err){
+            err.printStackTrace();
+        }
+    } //nom patient, num secu, date consult, nom docteur, path et app, details
+
 
     private void setPathology(String pathology, boolean checkboxState) {
         final List<String> pathologies = selectedConsultation.getDiagnosedPathologies();
