@@ -20,7 +20,7 @@ public class PatientTableModel extends AbstractTableModel<Patient> {
         this.ctrl = patientController;
         this.headers.add("Nom");
         this.headers.add("Prénom");
-        this.headers.add("DateUtil de naissance");
+        this.headers.add("Date de naissance");
         this.headers.add("Numéro de sécurité sociale");
         this.headers.add("Action");
     }

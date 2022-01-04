@@ -15,7 +15,7 @@ public class ConsultationTableModel extends AbstractTableModel<Consultation> {
      */
     public ConsultationTableModel() {
         this.headers.add("Nom");
-        this.headers.add("DateUtil de consultation");
+        this.headers.add("Date de consultation");
         this.headers.add("Numéro de sécurité sociale");
         this.headers.add("Action");
     }
