@@ -1,11 +1,9 @@
 package components.search;
 
-import components.table.AbstractTableModel;
-import components.table.Table;
-import components.table.TableListener;
-import components.table.TableRowsFunctionsInterface;
+import components.table.*;
 import models.AbstractData;
 
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -18,7 +16,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
     private List<T> data;
     private List<T> lastSearchResult;
     private final SearchBar sBar;
-    private final Table<T> tableResult;
+    private final ScrollableTable<T> tableResult;
     private T selectedResult = null;
     private final List<FilterInterface<T>> filters = new ArrayList<>();
 
@@ -31,7 +29,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
      * @param data le lot de données à chercher
      * @param tableResult un tableau pour afficher le résultat
      */
-    public Search(SearchBar sBar, List<T> data, Table<T> tableResult) {
+    public Search(SearchBar sBar, List<T> data, ScrollableTable<T> tableResult) {
         this.data = data;
         Collections.sort(this.data);
         this.lastSearchResult = this.data;

@@ -5,6 +5,7 @@ import components.search.Search;
 import components.search.SearchBar;
 import components.search.SearchSelectedListener;
 import components.table.AbstractTableModel;
+import components.table.ScrollableTable;
 import components.table.Table;
 import components.Label;
 import components.Label.Styles;
@@ -197,6 +198,11 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 
         main.setPreferredSize(new Dimension(panelWidth - sidebarWidth, panelHeight));
 
+        Dimension mBodyDim = new Dimension(panelWidth - sidebarWidth, body.getPreferredSize().height);
+        body.setPreferredSize(mBodyDim);
+        body.setMaximumSize(mBodyDim);
+        body.setMinimumSize(mBodyDim);
+
         Dimension sDim = new Dimension(sidebarWidth, panelHeight);
         sidebar.setPreferredSize(sDim);
         sidebar.setMaximumSize(sDim);
@@ -335,7 +341,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         search = new Search<>(
                 searchBar,
                 data,
-                new Table<>(model));
+                new ScrollableTable<>(new Table<>(model)));
         search.addSelectionListener(listener);
         for (FilterInterface<T> filter : filters) {
             search.addFilter(filter);
