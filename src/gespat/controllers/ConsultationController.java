@@ -58,7 +58,7 @@ public class ConsultationController extends AbstractController<Consultation> {
      * @throws ConflictingDataException
      * @throws ProcessingException
      */
-    public void add(
+    public Consultation add(
             Patient patient,
             String doctorName,
             LocalDate consultedAt,
@@ -66,7 +66,7 @@ public class ConsultationController extends AbstractController<Consultation> {
             String requiredEquiment,
             boolean granted
     ) throws ConflictingDataException, ProcessingException {
-        super.add(new Consultation(
+        Consultation consult = new Consultation(
                 getLastInsertedIndex() + 1,
                 patient,
                 doctorName,
@@ -74,7 +74,9 @@ public class ConsultationController extends AbstractController<Consultation> {
                 diagnosedPathologies,
                 requiredEquiment,
                 granted
-        ));
+        );
+        super.add(consult);
+        return consult;
     }
 
     /**

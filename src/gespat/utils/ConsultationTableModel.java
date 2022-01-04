@@ -4,6 +4,8 @@ import components.table.AbstractTableModel;
 import models.Consultation;
 import models.Patient;
 
+import java.time.LocalDate;
+
 public class ConsultationTableModel extends AbstractTableModel<Consultation> {
 
     private static final long serialVersionUID = -958545185021886987L;
@@ -27,10 +29,17 @@ public class ConsultationTableModel extends AbstractTableModel<Consultation> {
         Patient patient = data.get(rowIndex - 1).getPatient();
         switch (columnIndex) {
             case 0:
+                if (patient == null)
+                    return "xxx xxx";
                 return patient.getFullname();
             case 1:
-                return data.get(rowIndex - 1).getConsultedAt().toString();
+                LocalDate consultedAt = data.get(rowIndex - 1).getConsultedAt();
+                if (consultedAt == null)
+                    return "xx/xx/xxx";
+                return Date.getDisplayString(consultedAt);
             case 2:
+                if (patient == null)
+                    return "xxx";
                 return String.valueOf(patient.getSocialId());
 
             default:

@@ -9,6 +9,7 @@ import components.template.SidebarRow;
 import components.template.Template;
 import components.template.Template.In;
 import controllers.ConsultationController;
+import controllers.PatientController;
 import exceptions.ConflictingDataException;
 import exceptions.FormatException;
 import exceptions.NotFoundException;
@@ -19,6 +20,7 @@ import utils.Colors;
 import utils.ConsultationTableModel;
 import views.popups.ConfirmSuppression;
 import net.miginfocom.swing.MigLayout;
+import views.popups.SelectPatient;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,16 +35,20 @@ public class Doctor extends JFrame {
     private static final long serialVersionUID = -3405741868946411966L;
     private final Template<Consultation> template = new Template<>(978, 550);
     private TableRowsFunctionsInterface<Consultation> tableUtils;
+    private PatientController patientCtrl;
     private ConsultationController consultCtrl;
     private Consultation selectedConsultation;
     private int activeRow;
 
-    public Doctor(ConsultationController consultationController) {
+    private Button createBtn;
+
+    public Doctor(PatientController patientController, ConsultationController consultationController) {
         setTitle("GesPat — Personnel Médical");
         setSize(1080, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 550));
 
+        patientCtrl = patientController;
         consultCtrl = consultationController;
 
         template.setSearchBar(
@@ -54,8 +60,8 @@ public class Doctor extends JFrame {
                 }
         );
 
-        Button createBtn = new Button("Nouvelle consultation").setPosition(Button.Position.END);
-        createBtn.addActionListener(e -> create());
+        createBtn = new Button("Nouvelle consultation").setPosition(Button.Position.END);
+        createBtn.addActionListener(e -> create(createBtn));
         template.add(createBtn, In.MAIN_HEADER, "gapleft 0");
 
         Label tableTitle = new Label("Liste des consultations liées au patient", Label.Styles.TITLE);
@@ -146,6 +152,7 @@ public class Doctor extends JFrame {
         template.clear(In.SIDEBAR_BODY);
         template.clear(In.SIDEBAR_FOOTER);
         sidebarSetup();
+        template.updateGUI();
         repaint();
         revalidate();
     }
@@ -158,7 +165,8 @@ public class Doctor extends JFrame {
         }
         final Patient patient = selectedConsultation.getPatient();
 
-        template.add(new SidebarRow("Patient : ", patient.getFullname(), false), In.SIDEBAR_BODY);
+        SidebarRow socialId = new SidebarRow("Patient : ", patient.getFullname(), false);
+        template.add(socialId, In.SIDEBAR_BODY);
 
         template.add(new SidebarRow("Sécurité sociale : ", "" + patient.getSocialId(), false), In.SIDEBAR_BODY);
 
@@ -196,16 +204,24 @@ public class Doctor extends JFrame {
         template.add(deleteBtn, In.SIDEBAR_BODY);
     }
 
-    private void create() {
-        try {
-            // TODO: @evanchr
-            Consultation consultation = null;
-            consultCtrl.add(consultation);
-            setSelected(consultation);
-        } catch (ConflictingDataException | ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.println("[DOCTOR DASH VIEW]: " + err.getMessage());
-        }
+    private void create(Button btn) {
+        (new SelectPatient(
+                patientCtrl.getAll(),
+                template,
+                btn.getTrueX(),
+                btn.getY() + btn.getHeight()
+        )).subscribe(patient -> {
+            try {
+                Consultation consultation = consultCtrl.add(patient, null, null, null, null, false);
+                consultCtrl.add(consultation);
+                setSelected(consultation);
+            } catch (ConflictingDataException | ProcessingException err) {
+                // TODO: Implement ErrorMessageView
+                System.err.println("[DOCTOR DASH VIEW]: " + err.getMessage());
+            } finally {
+                updateGraphics();
+            }
+        });
     }
 
     private void save(SidebarRow doctorName,
@@ -225,6 +241,7 @@ public class Doctor extends JFrame {
                 // TODO: Implement ErrorMessageView
                 System.err.println(err.getMessage());
             }
+            updateGraphics();
     }
 
     private void delete() {
@@ -235,6 +252,8 @@ public class Doctor extends JFrame {
             /* The patient obviously exists */ } catch (ProcessingException err) {
             // TODO: Implement ErrorMessageView
             System.err.print(err.getMessage());
+        } finally {
+            updateGraphics();
         }
     }
 

@@ -1,11 +1,14 @@
 package components.template;
 
 import components.inputs.Text;
+import components.Label;
 import exceptions.FormatException;
 import utils.Colors;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.BorderLayout;
+import javax.swing.text.JTextComponent;
 import java.time.LocalDate;
 
 public class SidebarRow extends JPanel {
@@ -96,7 +99,12 @@ public class SidebarRow extends JPanel {
      * @return le texte
      */
     public String getText() {
-        return ((Text) getComponent(1)).getText();
+        Component cp = getComponent(1);
+        try {
+            return ((Text) cp).getText();
+        } catch (ClassCastException err) {
+            return ((Label) cp).getText();
+        }
     }
 
     /**

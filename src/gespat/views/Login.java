@@ -47,7 +47,7 @@ public class Login extends JFrame {
         // Adding ClickListener to buttons
         button1.addActionListener(e -> new Admin(patientController));
 
-        button2.addActionListener(e -> new Doctor(consultationController));
+        button2.addActionListener(e -> new Doctor(patientController, consultationController));
 
         button3.addActionListener(e -> new Tech(consultationController));
 

@@ -61,6 +61,8 @@ public class Consultation extends Data {
      * @return les pathologies diagnostiqués
      */
     public List<String> getDiagnosedPathologies() {
+        if (diagnosedPathologies == null)
+            return new ArrayList<>(Arrays.asList(new String[0]));
         return new ArrayList<>(Arrays.asList(diagnosedPathologies));
     }
 
@@ -98,6 +100,8 @@ public class Consultation extends Data {
      */
     @Override
     public String getSearchableFields() {
+        if (this.patient == null)
+            return "xxx xxx";
         return this.patient.getFullname();
     }
 
@@ -156,11 +160,13 @@ public class Consultation extends Data {
     @Override
     public String toString() {
         final String fs = File.COLUMN_SEPARATOR;
+        String consultedAt = this.consultedAt == null ? "null" : Date.convert(this.consultedAt);
+        String diagnosedPathologies = this.diagnosedPathologies == null ? "null" : String.join("|", this.diagnosedPathologies);
         return this.id + fs +
                 this.patient.getId() + fs +
                 this.doctorName + fs +
-                Date.convert(this.consultedAt) + fs +
-                String.join("|", this.diagnosedPathologies) + fs +
+                consultedAt + fs +
+                diagnosedPathologies + fs +
                 this.requiredEquiment + fs +
                 this.granted;
     }

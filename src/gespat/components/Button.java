@@ -227,4 +227,8 @@ public class Button extends JButton {
         this.repaint();
         return this;
     }
+
+    public int getTrueX() {
+        return getX() + getXPos();
+    }
 }
