@@ -1,6 +1,7 @@
 package views;
 
 import components.Button;
+import components.Separator;
 import components.inputs.Checkbox;
 import components.Label;
 import components.inputs.TextArea;
@@ -23,12 +24,8 @@ import views.popups.ConfirmSuppression;
 import net.miginfocom.swing.MigLayout;
 import views.popups.SelectPatient;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Box;
-import java.awt.Dimension;
-import java.awt.Component;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -167,25 +164,25 @@ public class Doctor extends JFrame {
         }
         final Patient patient = selectedConsultation.getPatient();
 
-        SidebarRow socialId = new SidebarRow("Patient : ", patient.getFullname(), false);
+        SidebarRow socialId = new SidebarRow("Patient : ", patient.getFullname());
         template.add(socialId, In.SIDEBAR_BODY);
 
-        template.add(new SidebarRow("Sécurité sociale : ", "" + patient.getSocialId(), false), In.SIDEBAR_BODY);
+        template.add(new SidebarRow("Sécurité sociale : ", "" + patient.getSocialId()), In.SIDEBAR_BODY);
+
+        Separator separator = new Separator();
+        template.add(separator, In.SIDEBAR_BODY);
 
         SidebarRow consultedAt = new SidebarRow("Date de la consultation", selectedConsultation.getConsultedAt());
         template.add(consultedAt, In.SIDEBAR_BODY);
 
-        SidebarRow doctorName = new SidebarRow("Docteur : ", patient.getFullname());
+        SidebarRow doctorName = new SidebarRow("Docteur : ", selectedConsultation.getDoctorName(), true);
         template.add(doctorName, In.SIDEBAR_BODY);
 
-        JPanel pathApp = new XSpaceBetween();
+        XSpaceBetween cols = new XSpaceBetween(getPathologiesCheckboxes(), getDevicesCheckboxes());
+        cols.setBorder(BorderFactory.createEmptyBorder(4, 0,0,0));
+        template.add(cols, In.SIDEBAR_BODY);
 
-        pathApp.add(getPathologiesCheckboxes(), BorderLayout.WEST);
-        pathApp.add(getDevicesCheckboxes(), BorderLayout.EAST);
-
-        template.add(pathApp, In.SIDEBAR_BODY);
-
-        TextArea details = new TextArea(325, 200);
+        TextArea details = new TextArea(325, 100);
         template.add(details, In.SIDEBAR_BODY);
 
         Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);
