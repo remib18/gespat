@@ -131,7 +131,7 @@ final class SearchFilter implements FilterInterface<Consultation> {
         List<Consultation> result = new ArrayList<>();
 
         for (Consultation consultation : data) {
-            if (!consultation.isGranted()) {
+            if (!consultation.isGranted() && consultation.getRequiredEquiment() != null) {
                 result.add(consultation);
             }
         }
