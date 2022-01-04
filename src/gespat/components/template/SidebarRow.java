@@ -3,15 +3,14 @@ package components.template;
 import components.inputs.Text;
 import components.Label;
 import exceptions.FormatException;
+import net.miginfocom.swing.MigLayout;
 import utils.Colors;
 
-import javax.swing.JPanel;
-import java.awt.Component;
-import java.awt.BorderLayout;
-import javax.swing.text.JTextComponent;
+import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 
-public class SidebarRow extends JPanel {
+public class SidebarRow extends XSpaceBetween {
 
     private static final long serialVersionUID = 2835082161395088285L;
 
@@ -22,7 +21,8 @@ public class SidebarRow extends JPanel {
      * @param date  date par défaut
      */
     public SidebarRow(String label, LocalDate date) {
-        initDate(label, date, false);
+        super();
+        EventQueue.invokeLater(() -> initDate(label, date, false));
     }
 
     /**
@@ -33,7 +33,8 @@ public class SidebarRow extends JPanel {
      * @param canEdit définit si la donnée est modifiable
      */
     public SidebarRow(String label, LocalDate date, boolean canEdit) {
-        initDate(label, date, canEdit);
+        super();
+        EventQueue.invokeLater(() -> initDate(label, date, canEdit));
     }
 
     /**
@@ -43,7 +44,8 @@ public class SidebarRow extends JPanel {
      * @param text  texte par défaut
      */
     public SidebarRow(String label, String text) {
-        init(label, text, false);
+        super();
+        EventQueue.invokeLater(() -> init(label, text, false));
     }
 
     /**
@@ -54,7 +56,8 @@ public class SidebarRow extends JPanel {
      * @param canEdit définit si la donnée est modifiable
      */
     public SidebarRow(String label, String text, boolean canEdit) {
-        init(label, text, canEdit);
+        super();
+        EventQueue.invokeLater(() -> init(label, text, canEdit));
     }
 
     /**
@@ -84,11 +87,10 @@ public class SidebarRow extends JPanel {
     }
 
     private Component getDateField(String data, boolean canEdit) {
-        Component field;
         if (canEdit) {
-            field = new Text(40, 20);
+            Text field = new Text(40, 20);
             field.setForeground(Colors.TEXT_ON_PRIMARY);
-            ((Text) field).setText(data);
+            field.setText(data);
             return field;
         }
         return new Label(data);
@@ -109,15 +111,9 @@ public class SidebarRow extends JPanel {
 
     /**
      * Initialise le composant (texte)
-     *
-     * @param label
-     * @param text
-     * @param canEdit
      */
     private void init(String label, String text, boolean canEdit) {
-        setOpaque(false);
         Component data;
-
         if (canEdit) {
             data = new Text(50, 20);
             data.setForeground(Colors.TEXT_ON_PRIMARY);
@@ -126,9 +122,8 @@ public class SidebarRow extends JPanel {
             data = new Label(text);
         }
 
-        setLayout(new BorderLayout());
-        add(new Label(label), BorderLayout.WEST);
-        add(data, BorderLayout.EAST);
+        add(new Label(label), XSpaceBetween.WEST);
+        add(data, XSpaceBetween.EAST);
     }
 
     /**
@@ -139,23 +134,28 @@ public class SidebarRow extends JPanel {
      * @param canEdit
      */
     private void initDate(String label, LocalDate date, boolean canEdit) {
-        setOpaque(false);
-
         JPanel inputs = new JPanel();
+        inputs.setLayout(new MigLayout("ins 0", "", "r"));
         inputs.setOpaque(false);
         try {
             inputs.add(getDateField(date.getDayOfMonth(), canEdit));
+            inputs.add(new Label("/"));
             inputs.add(getDateField(date.getMonthValue(), canEdit));
+            inputs.add(new Label("/"));
             inputs.add(getDateField(date.getYear(), canEdit));
         } catch (NullPointerException err) {
             inputs.add(getDateField("Jour", true));
             inputs.add(getDateField("Mois", true));
             inputs.add(getDateField("Année", true));
         }
+        inputs.setMinimumSize(inputs.getPreferredSize());
 
-        setLayout(new BorderLayout());
-        add(new Label(label), BorderLayout.WEST);
-        add(inputs, BorderLayout.EAST);
+        if (canEdit) {
+            inputs.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Colors.BUTTON_SECONDARY));
+        }
+
+        add(new Label(label), XSpaceBetween.WEST);
+        add(inputs, XSpaceBetween.EAST);
     }
 
 }

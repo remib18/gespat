@@ -8,6 +8,7 @@ import components.table.TableRowsFunctionsInterface;
 import components.template.SidebarRow;
 import components.template.Template;
 import components.template.Template.In;
+import components.template.XSpaceBetween;
 import controllers.ConsultationController;
 import controllers.PatientController;
 import exceptions.ConflictingDataException;
@@ -177,9 +178,7 @@ public class Doctor extends JFrame {
         SidebarRow doctorName = new SidebarRow("Docteur : ", patient.getFullname());
         template.add(doctorName, In.SIDEBAR_BODY);
 
-        JPanel pathApp = new JPanel();
-        pathApp.setLayout(new BorderLayout());
-        pathApp.setOpaque(false);
+        JPanel pathApp = new XSpaceBetween();
 
         pathApp.add(getPathologiesCheckboxes(), BorderLayout.WEST);
         pathApp.add(getDevicesCheckboxes(), BorderLayout.EAST);
