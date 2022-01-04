@@ -13,7 +13,9 @@ public class Separator extends JComponent {
 	}
 
 	private void init() {
-		setPreferredSize(new Dimension(getParent().getSize().width, 9));
+		try {
+			setPreferredSize(new Dimension(getParent().getSize().width, 9));
+		} catch (NullPointerException err) { /**/ }
 		setBackground(Colors.BUTTON_SECONDARY);
 		repaint();
 	}

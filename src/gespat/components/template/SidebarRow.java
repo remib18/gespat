@@ -69,8 +69,13 @@ public class SidebarRow extends XSpaceBetween {
         JPanel panel = ((JPanel) getComponent(1));
         try {
             int day = Integer.parseInt(((Text) panel.getComponent(0)).getText());
-            int month = Integer.parseInt(((Text) panel.getComponent(1)).getText());
-            int year = Integer.parseInt(((Text) panel.getComponent(2)).getText());
+            int month = Integer.parseInt(((Text) panel.getComponent(2)).getText());
+            int year = Integer.parseInt(((Text) panel.getComponent(4)).getText());
+            return LocalDate.of(year, month, day);
+        } catch (ClassCastException err) {
+            int day = Integer.parseInt(((Label) panel.getComponent(0)).getText());
+            int month = Integer.parseInt(((Label) panel.getComponent(2)).getText());
+            int year = Integer.parseInt(((Label) panel.getComponent(4)).getText());
             return LocalDate.of(year, month, day);
         } catch (java.lang.NumberFormatException | java.time.DateTimeException e) {
             /* Throw the exception */ }

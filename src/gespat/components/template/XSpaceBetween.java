@@ -24,8 +24,10 @@ public class XSpaceBetween extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(true);
         EventQueue.invokeLater(() -> {
-            setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
-            setBackground(getParent().getBackground());
+            try {
+                setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
+                setBackground(getParent().getBackground());
+            } catch (NullPointerException err) { /**/ }
         });
     }
 
