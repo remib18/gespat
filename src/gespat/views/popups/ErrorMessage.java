@@ -8,7 +8,7 @@ public class ErrorMessage {
     private static Component component = null;
 
     public enum LEVEL {
-        User, System
+        User, System, Info
     }
 
     /**
@@ -30,7 +30,7 @@ public class ErrorMessage {
         switch (level) {
             case User: return "Oups, il semberait que vous ayez oublié quelque chose !";
             case System: return "Un problème s'est produit...";
-            default: return "%%%";
+            default: return "Message";
         }
     }
 
@@ -38,7 +38,7 @@ public class ErrorMessage {
         switch (level) {
             case User: return JOptionPane.WARNING_MESSAGE;
             case System: return JOptionPane.ERROR_MESSAGE;
-            default: return getMessageType(LEVEL.System);
+            default: return JOptionPane.INFORMATION_MESSAGE;
         }
     }
 

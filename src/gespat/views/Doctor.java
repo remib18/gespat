@@ -22,6 +22,8 @@ import models.Device;
 import models.Patient;
 import utils.Colors;
 import utils.ConsultationTableModel;
+import utils.Date;
+import utils.File;
 import views.popups.ConfirmSuppression;
 import net.miginfocom.swing.MigLayout;
 import views.popups.ErrorMessage;
@@ -30,6 +32,7 @@ import views.popups.SelectPatient;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -272,20 +275,40 @@ public class Doctor extends JFrame {
         }
     }
 
-    private void export(Button btn) { 
-        try {
-            FileWriter file = new FileWriter("PatientExport.txt");
-            //file.write(selectedConsultation.getPatient());
-            file.write(Integer.toString(selectedConsultation.getId()));
-            //file.write(Date.toString(selectedConsultation.getConsultedAt()));
-            file.write(selectedConsultation.getDoctorName());
-            //file.write(selectedConsultation.getDiagnosedPathologies());
-            //file.write(selectedConsultation.getRequiredEquipment());
-            file.close();
-        } catch (IOException  err){
-            err.printStackTrace();
+    private void export(Button btn) {
+        List<String> msg = new ArrayList<>();
+        msg.add("Détails de la consultation");
+        msg.add("");
+        msg.add("");
+        msg.add("Consultation numéro : " + selectedConsultation.getId());
+        msg.add("Date de la consultation : " + Date.getDisplayString(selectedConsultation.getConsultedAt()));
+        msg.add("Ausculté par le•a docteur•esse : " + selectedConsultation.getDoctorName());
+        msg.add("");
+        msg.add("Associé au patient :");
+        msg.add("Nom et prénom : " + selectedConsultation.getPatient().getFullname());
+        msg.add("Numéro de sécurité sociale : " + selectedConsultation.getPatient().getSocialId());
+        msg.add("");
+        msg.add("Liste des pathologies diagnostiquées :");
+        for (String pathology : selectedConsultation.getDiagnosedPathologies()) {
+            msg.add("  — " + pathology + "\n");
         }
-    } //nom patient, num secu, date consult, nom docteur, path et app, details
+        msg.add("");
+        msg.add("Observations du docteur :");
+        msg.add("/");
+        msg.add("");
+        msg.add("Appareil nécessaire :");
+        Device equipment = selectedConsultation.getRequiredEquipment();
+        msg.add("  — " + equipment.getLabel() + " (statut : " + equipment.getState().name().toLowerCase() + ")");
+
+        String file = "export-" + selectedConsultation.getId() + ".txt";
+
+        try {
+            (new File<String>()).saveData(msg, file);
+            new ErrorMessage("Fiche de consultation exportée sous " + file + ".", ErrorMessage.LEVEL.Info);
+        } catch (ProcessingException e) {
+            new ErrorMessage("Erreur lors de l'enregistrement du fichier " + file + ".", ErrorMessage.LEVEL.System);
+        }
+    }
 
 
     private void setPathology(String pathology, boolean checkboxState) {

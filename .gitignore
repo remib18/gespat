@@ -2,6 +2,7 @@
 consultations.txt
 patients.txt
 devices.txt
+export-*.txt
 
 #
 # Generate by Git Ignore Generator for MacOS#
