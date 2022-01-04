@@ -1,7 +1,7 @@
 package views;
 
 import components.Button;
-import components.Checkbox;
+import components.inputs.Checkbox;
 import components.Label;
 import components.inputs.TextArea;
 import components.table.TableRowsFunctionsInterface;
@@ -214,7 +214,6 @@ public class Doctor extends JFrame {
         )).subscribe(patient -> {
             try {
                 Consultation consultation = consultCtrl.add(patient, null, LocalDate.now(), null, null, false);
-                consultCtrl.add(consultation);
                 setSelected(consultation);
             } catch (ConflictingDataException | ProcessingException err) {
                 // TODO: Implement ErrorMessageView

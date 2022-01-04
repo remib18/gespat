@@ -1,7 +1,7 @@
 package views;
 
 import components.Button;
-import components.Checkbox;
+import components.inputs.Checkbox;
 import components.Label;
 import components.search.FilterInterface;
 import components.template.SidebarRow;

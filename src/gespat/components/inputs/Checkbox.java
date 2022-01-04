@@ -1,4 +1,6 @@
-package components;
+package components.inputs;
+
+import utils.Colors;
 
 import javax.swing.*;
 
@@ -12,6 +14,7 @@ public class Checkbox extends JCheckBox {
      */
     public Checkbox(String string) {
         super(string);
+        init();
     }
 
     /**
@@ -21,6 +24,11 @@ public class Checkbox extends JCheckBox {
      */
     public Checkbox(String string, boolean checked) {
         super(string, checked);
+        init();
+    }
+
+    private void init() {
+        setForeground(Colors.TEXT_ON_PRIMARY);
     }
 
 }
