@@ -67,7 +67,7 @@ public class Main {
 
             consultationController.add(
                     patientController.get(12),
-                    "Rodolph",
+                    "Rodolphe",
                     LocalDate.of(2000, 5, 22),
                     pathologies3,
                     device3,
