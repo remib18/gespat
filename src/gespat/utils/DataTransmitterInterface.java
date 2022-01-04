@@ -2,5 +2,5 @@ package utils;
 
 public interface DataTransmitterInterface<T> {
 
-    public void transmit(T data);
+    void transmit(T data);
 }

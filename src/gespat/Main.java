@@ -10,10 +10,12 @@ import models.Patient;
 import views.Login;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
+
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static PatientController patientController;
     private static ConsultationController consultationController;
@@ -24,6 +26,8 @@ public class Main {
      * @throws ProcessingException
      */
     public static void genData() throws ProcessingException {
+        logger.log(Level.INFO, "Génération de données test");
+
         patientController.clear();
         consultationController.clear();
 
@@ -32,7 +36,9 @@ public class Main {
             patientController.add(new Patient("François", "Jack", 12, LocalDate.of(2001, 1, 21)));
             patientController.add(new Patient("Jeanne", "France", 1, LocalDate.of(2003, 1, 21)));
             patientController.add(new Patient("Franck", "Morice", 1234, LocalDate.of(2004, 1, 21)));
-        } catch (ConflictingDataException e1) { /**/ }
+        } catch (ConflictingDataException err) {
+            logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
+        }
 
         String[] pathologies1 = {"death"};
         String[] pathologies2 = {"cancer", "weird"};
@@ -44,7 +50,9 @@ public class Main {
             device1 = deviceController.add(Device.STATES.UNDEFINED, null);
             device2 = deviceController.add(Device.STATES.PENDING, DeviceController.DEVICES[2]);
             device3 = deviceController.add(Device.STATES.ASSIGNED, DeviceController.DEVICES[3]);
-        } catch (ConflictingDataException ignored) {}
+        } catch (ConflictingDataException err) {
+            logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
+        }
 
         try {
             consultationController.add(
@@ -73,12 +81,14 @@ public class Main {
                     device3,
                     false
             );
-        } catch (NotFoundException | ConflictingDataException e) { /**/ }
-
+        } catch (NotFoundException | ConflictingDataException e) {
+            logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
+        }
     }
 
     /** Point de démarage de l'application */
     public static void main(String[] args) {
+        logger.log(Level.INFO, "Lancement de l'application");
         try {
             // On charge les données
             patientController = new PatientController();
@@ -88,11 +98,12 @@ public class Main {
             // Simulation de données pour le développement
             genData();
 
+            logger.log(Level.INFO, "Application démarée");
             // On lance la fenêtre de connexion
             new Login(patientController, consultationController, deviceController);
         } catch (ProcessingException e) {
             // En cas de problème lors de la gestion des fichiers
-            System.err.println(e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
         }
     }
 

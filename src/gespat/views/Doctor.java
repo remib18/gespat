@@ -24,25 +24,28 @@ import utils.Colors;
 import utils.ConsultationTableModel;
 import views.popups.ConfirmSuppression;
 import net.miginfocom.swing.MigLayout;
+import views.popups.ErrorMessage;
 import views.popups.SelectPatient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Doctor extends JFrame {
 
     private static final long serialVersionUID = -3405741868946411966L;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final Template<Consultation> template = new Template<>(978, 550);
     private TableRowsFunctionsInterface<Consultation> tableUtils;
-    private PatientController patientCtrl;
-    private ConsultationController consultCtrl;
-    private DeviceController deviceCtrl;
+    private final PatientController patientCtrl;
+    private final ConsultationController consultCtrl;
     private Consultation selectedConsultation;
     private int activeRow;
 
-    private Button createBtn;
+    private final Button createBtn;
 
     public Doctor(
             PatientController patientController,
@@ -54,8 +57,9 @@ public class Doctor extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 550));
 
+        ErrorMessage.setActiveWindow(this);
+
         patientCtrl = patientController;
-        deviceCtrl = deviceController;
         consultCtrl = consultationController;
 
         template.setSearchBar(
@@ -121,9 +125,8 @@ public class Doctor extends JFrame {
         final List<String> patientPathologies = selectedConsultation.getDiagnosedPathologies();
         final List<String> pathologies = consultCtrl.getAllPathologies();
 
-        for (int i = 0; i < pathologies.size(); i++) {
-            String pathologyString = pathologies.get(i);
-            Checkbox pathology = new Checkbox(pathologies.get(i), patientPathologies.contains(pathologyString));
+        for (String pathologyString : pathologies) {
+            Checkbox pathology = new Checkbox(pathologyString, patientPathologies.contains(pathologyString));
             pathology.addActionListener(e -> setPathology(pathologyString, ((Checkbox) e.getSource()).isSelected()));
             panel.add(pathology);
         }
@@ -138,6 +141,8 @@ public class Doctor extends JFrame {
             activeRow = row;
             template.setResultTableSelectedRow(consultation);
         } catch (NullPointerException e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            new ErrorMessage(e.getMessage(), ErrorMessage.LEVEL.System);
             // TODO: handle exception
         } finally {
             updateGraphics();
@@ -221,9 +226,12 @@ public class Doctor extends JFrame {
             try {
                 Consultation consultation = consultCtrl.add(patient, null, LocalDate.now(), null, null, false);
                 setSelected(consultation);
-            } catch (ConflictingDataException | ProcessingException err) {
-                // TODO: Implement ErrorMessageView
-                System.err.println("[DOCTOR DASH VIEW]: " + err.getMessage());
+            } catch (ProcessingException err) {
+                logger.log(Level.SEVERE, err.getMessage());
+                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            } catch (ConflictingDataException err) {
+                logger.log(Level.WARNING, err.getMessage());
+                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
             } finally {
                 updateGraphics();
             }
@@ -236,16 +244,19 @@ public class Doctor extends JFrame {
             try {
                 selectedConsultation.setConsultedAt(consultedAt.getDate());
             } catch (FormatException err) {
-                // TODO: Implement ErrorMessageView
-                System.err.println(err.getMessage());
+                logger.log(Level.SEVERE, err.getMessage());
+                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
             }
             selectedConsultation.setDoctorName(doctorName.getText());
             try {
                 consultCtrl.update(selectedConsultation);
                 setSelected(selectedConsultation); // To update the view
-            } catch (NotFoundException | ProcessingException err) {
-                // TODO: Implement ErrorMessageView
-                System.err.println(err.getMessage());
+            } catch (ProcessingException err) {
+                logger.log(Level.SEVERE, err.getMessage());
+                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            } catch (NotFoundException err) {
+                logger.log(Level.WARNING, err.getMessage());
+                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
             }
             updateGraphics();
     }
@@ -256,8 +267,8 @@ public class Doctor extends JFrame {
             setSelected(Math.max(activeRow - 1, 0));
         } catch (NotFoundException err) {
             /* The patient obviously exists */ } catch (ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.print(err.getMessage());
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
         } finally {
             updateGraphics();
         }
@@ -271,6 +282,6 @@ public class Doctor extends JFrame {
         } else if (!checkboxState && contains) {
             pathologies.remove(pathology);
         }
-        selectedConsultation.setDiagnosedPathologies(pathologies.toArray(new String[pathologies.size()]));
+        selectedConsultation.setDiagnosedPathologies(pathologies.toArray(new String[0]));
     }
 }

@@ -8,6 +8,7 @@ import controllers.DeviceController;
 import controllers.PatientController;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
+import views.popups.ErrorMessage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,9 +18,9 @@ import java.awt.Dimension;
 public class Login extends JFrame {
 
     private static final long serialVersionUID = -2283950897638045412L;
-    PatientController patientController;
-    ConsultationController consultationController;
-    DeviceController deviceController;
+    final PatientController patientController;
+    final ConsultationController consultationController;
+    final DeviceController deviceController;
 
     public Login(
             PatientController patientController,
@@ -30,6 +31,8 @@ public class Login extends JFrame {
         setSize(580, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setBackground(Colors.PRIMARY);
+
+        ErrorMessage.setActiveWindow(this);
 
         this.patientController = patientController;
         this.consultationController = consultationController;

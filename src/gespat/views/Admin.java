@@ -14,18 +14,22 @@ import exceptions.ProcessingException;
 import models.Patient;
 import utils.PatientTableModel;
 import views.popups.ConfirmSuppression;
+import views.popups.ErrorMessage;
 
 import javax.swing.JFrame;
 import javax.swing.Box;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Admin extends JFrame {
 
     private static final long serialVersionUID = -7747571669269392475L;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final Template<Patient> template = new Template<>(978, 550);
     private TableRowsFunctionsInterface<Patient> tableUtils;
-    private PatientController patientCtrl;
+    private final PatientController patientCtrl;
     private Patient selectedPatient;
     private int activeRow;
 
@@ -34,6 +38,8 @@ public class Admin extends JFrame {
         setSize(1080, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 550));
+
+        ErrorMessage.setActiveWindow(this);
 
         this.patientCtrl = patientController;
 
@@ -66,7 +72,9 @@ public class Admin extends JFrame {
             selectedPatient = patient;
             activeRow = row;
             template.setResultTableSelectedRow(patient);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException err) {
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
             //TODO: handle exception
         } finally {
             updateGraphics();
@@ -135,9 +143,12 @@ public class Admin extends JFrame {
             Patient patient = new Patient("xxx", "xxx", 0, null);
             patientCtrl.add(patient);
             setSelected(patient);
-        } catch (ConflictingDataException | ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.println("[ADMIN DASH VIEW]: " + err.getMessage());
+        } catch (ProcessingException err) {
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+        } catch (ConflictingDataException err) {
+            logger.log(Level.WARNING, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
         } catch (IllegalArgumentException err) {
             activeRow--;
         } finally {
@@ -156,16 +167,19 @@ public class Admin extends JFrame {
         try {
             selectedPatient.setBirthAt(birthAt.getDate());
         } catch (FormatException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.println(err.getMessage());
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
         }
         selectedPatient.setSocialId(Integer.parseInt(socialId.getText()));
         try {
             patientCtrl.update(selectedPatient);
             updateGraphics();
-        } catch (NotFoundException | ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.println(err.getMessage());
+        } catch (ProcessingException err) {
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+        } catch (NotFoundException err) {
+            logger.log(Level.WARNING, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
         }
     }
 
@@ -173,10 +187,9 @@ public class Admin extends JFrame {
         try {
             patientCtrl.remove(selectedPatient, ConfirmSuppression.getPopup());
             setSelected(Math.max(activeRow - 1, 0));
-        } catch (NotFoundException err) {
-            /* The patient obviously exists */ } catch (ProcessingException err) {
-            // TODO: Implement ErrorMessageView
-            System.err.print(err.getMessage());
+        } catch (NotFoundException ignore) {} catch (ProcessingException err) {
+            logger.log(Level.SEVERE, err.getMessage());
+            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
         }
     }
 

@@ -7,11 +7,14 @@ import exceptions.ProcessingException;
 import models.Patient;
 
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PatientTableModel extends AbstractTableModel<Patient> {
 
     private static final long serialVersionUID = 7024694580497279586L;
-    PatientController ctrl;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    final PatientController ctrl;
 
     /**
      * Crée un modèle de tableau pour la vue AdminDash
@@ -53,16 +56,14 @@ public class PatientTableModel extends AbstractTableModel<Patient> {
                 return String.valueOf(socialId);
 
             default:
-                // TODO: Add actions
+                // TODO: Add actions buttons
                 int id = data.get(rowIndex - 1).getId();
                 delete.addActionListener(e -> {
                     try {
                         ctrl.remove(ctrl.get(id), true);
                         setDataSet(ctrl.getAll());
                     } catch (NotFoundException | ProcessingException err) {
-                        // TODO: Implement ErrorMessageView
-                        System.err.println(
-                                "[PATIENT TABLE MODEL – GET VALUE AT (ActionListener)]: Erreur lors du chargement des données / de la suppression.");
+                        logger.log(Level.SEVERE, "Erreur lors du chargement des données / de la suppression.");
                     }
                 });
                 return delete;

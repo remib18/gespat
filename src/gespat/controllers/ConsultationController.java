@@ -101,6 +101,7 @@ public class ConsultationController extends AbstractController<Consultation> {
     protected Consultation makeObjectFromString(String[] object)
             throws NotFoundException, NumberFormatException, ProcessingException {
         String[] device = {object[5], object[6], object[7]};
+        //noinspection EmpryBranchInAlteration
         return new Consultation(
                 Integer.parseInt(object[0]),
                 patientCtrl.get(Integer.parseInt(object[1])),

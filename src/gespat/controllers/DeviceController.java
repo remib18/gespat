@@ -26,7 +26,7 @@ public class DeviceController extends AbstractController<Device> {
 	}
 
 	@Override
-	protected Device makeObjectFromString(String[] object) throws NotFoundException, NumberFormatException, ProcessingException {
+	protected Device makeObjectFromString(String[] object) throws NumberFormatException {
 		return new Device(
 				Integer.parseInt(object[0]),
 				Device.STATES.valueOf(object[1]),

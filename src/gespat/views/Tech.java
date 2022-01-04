@@ -8,14 +8,13 @@ import components.template.SidebarRow;
 import components.template.Template;
 import components.template.Template.In;
 import controllers.ConsultationController;
-import exceptions.NotFoundException;
-import exceptions.ProcessingException;
 import models.Consultation;
 import models.Device;
 import models.Patient;
 import utils.Colors;
 import utils.ConsultationTableModel;
 import net.miginfocom.swing.MigLayout;
+import views.popups.ErrorMessage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,7 +27,6 @@ public class Tech extends JFrame {
 
     private static final long serialVersionUID = 7342776234650502381L;
     private final Template<Consultation> template = new Template<>(978, 550);
-    private ConsultationController consultCtrl;
     private Consultation selectedConsultation = null;
     private Checkbox equipmentChkbx;
 
@@ -38,7 +36,7 @@ public class Tech extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 550));
 
-        consultCtrl = consultationController;
+        ErrorMessage.setActiveWindow(this);
 
         List<FilterInterface<Consultation>> filters = new ArrayList<>();
         filters.add(new SearchFilter());
@@ -46,9 +44,7 @@ public class Tech extends JFrame {
         template.setSearchBar(
                 consultationController.getAll(),
                 new ConsultationTableModel(),
-                (consultation, tUtils) -> {
-                    setSelected(consultation);
-                },
+                (consultation, tUtils) -> setSelected(consultation),
                 filters);
 
         Label tableTitle = new Label("Résultat de la recherche", Label.Styles.TITLE);

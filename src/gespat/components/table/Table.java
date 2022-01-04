@@ -12,9 +12,9 @@ public class Table<T extends Data> extends JTable {
     private static final long serialVersionUID = -4513960817544981475L;
 
     /** Liste des écouteurs */
-    protected List<TableListener> tableListeners = new ArrayList<>();
+    protected final List<TableListener<T>> tableListeners = new ArrayList<>();
 
-    private int colNumb;
+    private final int colNumb;
 
     /**
      * Création d'un tableau selon le model fournit
@@ -38,7 +38,7 @@ public class Table<T extends Data> extends JTable {
      * Ajoute un écouteur
      * @param listener
      */
-    public void addTableListener(TableListener listener) {
+    public void addTableListener(TableListener<T> listener) {
         tableListeners.add(listener);
     }
 

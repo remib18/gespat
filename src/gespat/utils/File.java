@@ -23,7 +23,7 @@ public class File<T> {
     public String[][] getData(String file) throws ProcessingException {
         try (
                 FileReader fr = new FileReader(file);
-                Scanner sc = new Scanner(fr);
+                Scanner sc = new Scanner(fr)
         ) {
 
             ArrayList<String[]> strs = new ArrayList<>();
@@ -56,7 +56,7 @@ public class File<T> {
      */
     public void saveData(List<T> data, String file) throws ProcessingException {
         try (
-                FileWriter fw = new FileWriter(file);
+                FileWriter fw = new FileWriter(file)
         ) {
             for (T entry : data) {
                 fw.write(entry.toString());

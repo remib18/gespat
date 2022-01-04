@@ -11,7 +11,7 @@ import java.util.List;
 public class SelectPatient {
 
     private final JPopupMenu popupMenu = new JPopupMenu("Patients");
-    private List<Patient> data;
+    private final List<Patient> data;
     private final List<DataTransmitterInterface<Patient>> listeners = new ArrayList<>();
 
     public SelectPatient(List<Patient> data, Container container, int x, int y) {

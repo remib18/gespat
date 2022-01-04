@@ -32,7 +32,7 @@ public class PatientController extends AbstractController<Patient> {
 
     @Override
     protected Patient makeObjectFromString(String[] object)
-            throws NotFoundException, NumberFormatException, ProcessingException {
+            throws NumberFormatException {
         return new Patient(
                 object[0],
                 object[1],

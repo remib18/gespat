@@ -17,7 +17,7 @@ public abstract class AbstractTableModel<T extends Data> extends javax.swing.tab
     protected List<T> data;
 
     /** Liste des noms de colone */
-    protected List<String> headers = new ArrayList<>();
+    protected final List<String> headers = new ArrayList<>();
 
     /**
      * @return le nombre de colones

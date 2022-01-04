@@ -6,11 +6,12 @@ import controllers.ConsultationController;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Consultation extends Data {
 
-    private int id;
+    private final int id;
     private Patient patient;
     private String doctorName;
     private LocalDate consultedAt;
@@ -61,7 +62,7 @@ public class Consultation extends Data {
      */
     public List<String> getDiagnosedPathologies() {
         if (diagnosedPathologies == null)
-            return new ArrayList<>(Arrays.asList(new String[0]));
+            return new ArrayList<>(Collections.emptyList());
         return new ArrayList<>(Arrays.asList(diagnosedPathologies));
     }
 

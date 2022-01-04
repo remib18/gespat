@@ -28,7 +28,7 @@ public class Device extends Data {
 
 	@Override
 	public String toString() {
-		return Integer.toString(id) + fs +
+		return id + fs +
 			   state + fs +
 			   label;
 	}

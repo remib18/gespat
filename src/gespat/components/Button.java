@@ -5,15 +5,19 @@ import utils.Colors;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Button extends JButton {
+
+    private static final long serialVersionUID = 7968751094886354977L;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public enum Color { PRIMARY, SECONDARY, SUCCESS, INFO, WARNING, DANGER }
 
     public enum Position { START, CENTER, END}
     public enum Size { SMALL, LARGE }
     public enum Style { FILLED, OUTLINED }
-    private static final long serialVersionUID = 7968751094886354977L;
 
     private static final Size defaultSize = Size.LARGE;
     private static final Style defaultStyle = Style.FILLED;
@@ -86,12 +90,11 @@ public class Button extends JButton {
      */
     private int getXPos() {
         switch (position) {
-            case START:
-                return 0;
             case CENTER:
                 return (this.getWidth() - this.getTrueWidth()) / 2;
             case END:
                 return this.getWidth() - this.getTrueWidth();
+            case START:
             default:
                 return 0;
         }
@@ -151,8 +154,7 @@ public class Button extends JButton {
             case SUCCESS:
             case INFO:
             case WARNING:
-                // TODO: Button Warning, Info & Success
-                System.err.println("[BUTTON – INIT: Couleur non implémenté.]");
+                logger.log(Level.SEVERE, "Couleur non implémentée.");
                 break;
 
             case DANGER:
@@ -195,6 +197,7 @@ public class Button extends JButton {
 
             g2d.setColor(getParentBackground());
 
+            //noinspection SuspiciousNameCombination
             g2d.fill(new RoundRectangle2D.Double(
                     this.getXPos() + this.outlineStrokeWidth,
                     this.outlineStrokeWidth,

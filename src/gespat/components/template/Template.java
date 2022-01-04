@@ -22,16 +22,21 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Template<T extends Data> extends JPanel implements ComponentListener {
 
-    /** Différentes positions du template */
+    /**
+     * Différentes positions du template
+     */
     public enum In {
         MAIN_HEADER, MAIN_BODY,
         SIDEBAR_HEADER, SIDEBAR_BODY, SIDEBAR_FOOTER
     }
 
     private static final long serialVersionUID = -4176427088749241304L;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private int panelWidth;
     private int panelHeight;
@@ -64,30 +69,29 @@ public class Template<T extends Data> extends JPanel implements ComponentListene
         init();
 
         // Permet le reset et la résolution de bugs d'affichage
-        EventQueue.invokeLater(() -> {
-            resize(this);
-        });
+        EventQueue.invokeLater(() -> resize(this));
     }
 
     /**
      * @apiNote Unsupported
-     * @deprecated (1.0, , change to add(Component, TemplatePositions))
      * @see Template#add(Component, In)
+     * @deprecated (1.0, , change to add ( Component, TemplatePositions))
      */
+    @SuppressWarnings("GrazieInspection")
     @Deprecated
     @Override
     public Component add(Component comp) {
-        System.err.println("[Template — ADD]: Unsupported implementation.");
+        logger.log(Level.SEVERE, "Implémentation non supportée.");
         return null;
     }
 
     /**
      * Ajoute un élément à la position indiqué et le retourne.
      *
-     * @see In pour les différentes options de positionnement
-     * @param  comp composant à ajouter
-     * @param  pos position où insérer le composant
+     * @param comp composant à ajouter
+     * @param pos  position où insérer le composant
      * @return le composant fournit
+     * @see In pour les différentes options de positionnement
      */
     public Component add(Component comp, In pos) {
         switch (pos) {
@@ -112,8 +116,7 @@ public class Template<T extends Data> extends JPanel implements ComponentListene
                 break;
 
             default:
-                // TODO: throw unsuported value
-                System.err.println("[TEMPLATE – ADD]: Position inhéxistante.");
+                logger.log(Level.SEVERE, "Position inhéxistante.");
                 break;
         }
         return this;
@@ -122,11 +125,11 @@ public class Template<T extends Data> extends JPanel implements ComponentListene
     /**
      * Ajoute un élément à la position indiqué et le retourne.
      *
-     * @see In pour les différentes options de positionnement
      * @param comp   composant à ajouter
      * @param pos    position où insérer le composant
      * @param params paramètres de disposition
-     * @return       le composant fournit
+     * @return le composant fournit
+     * @see In pour les différentes options de positionnement
      */
     public Component add(Component comp, In pos, String params) {
         switch (pos) {
@@ -147,8 +150,7 @@ public class Template<T extends Data> extends JPanel implements ComponentListene
                 break;
 
             default:
-                // TODO: throw unsuported value
-                System.err.println("[TEMPLATE – ADD]: Position inhéxistante.");
+                logger.log(Level.SEVERE, "Position inhéxistante.");
                 break;
         }
         return this;
@@ -165,7 +167,7 @@ public class Template<T extends Data> extends JPanel implements ComponentListene
                 break;
 
             default:
-                System.err.println("[TEMPLATE – CLEAR]: Méthode non implémenté.");
+                logger.log(Level.SEVERE, "Méthode non implémentée.");
                 break;
         }
     }

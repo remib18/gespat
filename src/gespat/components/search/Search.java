@@ -22,7 +22,7 @@ public class Search<T extends Data> implements DocumentListener {
     private T selectedResult = null;
     private final List<FilterInterface<T>> filters = new ArrayList<>();
 
-    private List<SearchSelectedListener<T>> subscribedSelectionListeners = new ArrayList<>();
+    private final List<SearchSelectedListener<T>> subscribedSelectionListeners = new ArrayList<>();
 
     /**
      * Permet d'effectuer une recherche dans un tableau.

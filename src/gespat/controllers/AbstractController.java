@@ -13,13 +13,13 @@ import java.util.List;
 public abstract class AbstractController<T extends Data> {
 
     /** Liste des données */
-    protected List<T> data = new ArrayList<>();
+    protected final List<T> data = new ArrayList<>();
 
     /** Fichier de stockage */
     protected String storeFile;
 
     /** Listeners sur la mise à jour des données */
-    protected List<TableListener> tableUpdateListeners = new ArrayList<>();
+    protected final List<TableListener<T>> tableUpdateListeners = new ArrayList<>();
 
 
     /**
@@ -44,7 +44,7 @@ public abstract class AbstractController<T extends Data> {
      * Utile dans le cas de plusieurs instances
      * @param listener
      */
-    public void addTableUpdateListener(TableListener listener) {
+    public void addTableUpdateListener(TableListener<T> listener) {
         tableUpdateListeners.add(listener);
     }
 
@@ -118,7 +118,7 @@ public abstract class AbstractController<T extends Data> {
      * Publie l'évènement TableUpdate
      */
     protected void publishTableUpdate() {
-        tableUpdateListeners.forEach(item -> item.onTableUpdate());
+        tableUpdateListeners.forEach(TableListener::onTableUpdate);
     }
 
     /**
