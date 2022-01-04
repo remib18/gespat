@@ -2,7 +2,7 @@ package views;
 
 import components.template.Template;
 import controllers.PatientController;
-import models.Data;
+import models.AbstractData;
 import views.popups.ErrorMessage;
 
 import javax.swing.JFrame;
@@ -18,7 +18,7 @@ public class Stats extends JFrame{
 
         ErrorMessage.setActiveWindow(this);
 
-        final Template<Data> template = new Template<>(978, 550);
+        final Template<AbstractData> template = new Template<>(978, 550);
         // template.setSearchBar(data, model);
 
         add(template);

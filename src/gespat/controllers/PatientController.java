@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
@@ -18,26 +19,19 @@ public class PatientController extends AbstractController<Patient> {
         load();
     }
 
-    /**
-     * Crée un objet permettant la manimulation des consultations
-     * @param storageFile - Utilisation d'un fichier de stockage différent.
-     * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
-     */
-    public PatientController(String storageFile)
-            throws ProcessingException {
-        this.storeFile = storageFile;
-
-        load();
+    public Patient add(String firstname, String lastname, int socialId, LocalDate birthAt) throws ConflictingDataException, ProcessingException {
+        return super.add(new Patient(getLastInsertedIndex() + 1, firstname, lastname, socialId, birthAt));
     }
 
     @Override
     protected Patient makeObjectFromString(String[] object)
             throws NumberFormatException {
         return new Patient(
-                object[0],
+                Integer.parseInt(object[0]),
                 object[1],
-                Integer.parseInt(object[2]),
-                LocalDate.parse(object[3])
+                object[2],
+                Integer.parseInt(object[3]),
+                LocalDate.parse(object[4])
         );
     }
 

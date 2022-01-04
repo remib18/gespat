@@ -1,10 +1,10 @@
 package components.search;
 
-import models.Data;
+import models.AbstractData;
 
 import java.util.List;
 
-public interface FilterInterface<T extends Data> {
+public interface FilterInterface<T extends AbstractData> {
 
     List<T> newFilter(List<T> data);
 }

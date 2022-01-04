@@ -1,12 +1,11 @@
 package models;
 
-public class Device extends Data {
+public class Device extends AbstractData {
 
 	public enum STATES {
 		UNDEFINED, PENDING, ASSIGNED
 	}
 
-	private final int id;
 	private STATES state;
 	private String label;
 
@@ -14,11 +13,6 @@ public class Device extends Data {
 		this.id = id;
 		this.state = state;
 		this.label = label;
-	}
-
-	@Override
-	public int getId() {
-		return id;
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package components.table;
 
-import models.Data;
+import models.AbstractData;
 
-public interface TableListener<T extends Data> {
+public interface TableListener<T extends AbstractData> {
 
     /**
      * Fournit la donnée issue de la ligne selectionnée

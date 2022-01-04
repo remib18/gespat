@@ -1,12 +1,12 @@
 package components.table;
 
-import models.Data;
+import models.AbstractData;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractTableModel<T extends Data> extends javax.swing.table.AbstractTableModel {
+public abstract class AbstractTableModel<T extends AbstractData> extends javax.swing.table.AbstractTableModel {
 
     private static final long serialVersionUID = 8145852153886651759L;
 

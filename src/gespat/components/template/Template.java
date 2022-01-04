@@ -8,7 +8,7 @@ import components.table.AbstractTableModel;
 import components.table.Table;
 import components.Label;
 import components.Label.Styles;
-import models.Data;
+import models.AbstractData;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
 
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Template<T extends Data> extends JPanel implements ComponentListener {
+public class Template<T extends AbstractData> extends JPanel implements ComponentListener {
 
     /**
      * Différentes positions du template

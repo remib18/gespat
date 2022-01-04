@@ -5,7 +5,7 @@ import utils.Date;
 
 import java.time.LocalDate;
 
-public class Patient extends Data {
+public class Patient extends AbstractData {
 
     private String firstname;
     private String lastname;
@@ -17,12 +17,14 @@ public class Patient extends Data {
      * Utiliser un PatientManager pour instancier et sauvegarder des patients.
      * @see PatientController
      *
+     * @param id
      * @param firstname
      * @param lastname
      * @param socialId
      * @param birthAt
      */
-    public Patient(String firstname, String lastname, int socialId, LocalDate birthAt) {
+    public Patient(int id, String firstname, String lastname, int socialId, LocalDate birthAt) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.socialId = socialId;
@@ -48,14 +50,6 @@ public class Patient extends Data {
      */
     public String getFullname() {
         return this.lastname + ' ' + this.firstname;
-    }
-
-    /**
-     * @return l'identifiant du patient (son numéro de sécurité sociale en somme)
-     */
-    @Override
-    public int getId() {
-        return socialId;
     }
 
     /**

@@ -9,9 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Consultation extends Data {
+public class Consultation extends AbstractData {
 
-    private final int id;
     private Patient patient;
     private String doctorName;
     private LocalDate consultedAt;
@@ -71,14 +70,6 @@ public class Consultation extends Data {
      */
     public String getDoctorName() {
         return doctorName;
-    }
-
-    /**
-     * @return l'identifiant de la consultation
-     */
-    @Override
-    public int getId() {
-        return this.id;
     }
 
     /**

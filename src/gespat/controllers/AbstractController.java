@@ -4,13 +4,13 @@ import components.table.TableListener;
 import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
-import models.Data;
+import models.AbstractData;
 import utils.File;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractController<T extends Data> {
+public abstract class AbstractController<T extends AbstractData> {
 
     /** Liste des données */
     protected final List<T> data = new ArrayList<>();
@@ -28,7 +28,7 @@ public abstract class AbstractController<T extends Data> {
      * @throws ConflictingDataException si une donnée avec le même identifiant existe déjà.
      * @throws ProcessingException
      */
-    public void add(T object) throws ConflictingDataException, ProcessingException {
+    protected T add(T object) throws ConflictingDataException, ProcessingException {
         try {
             get(object.getId());
             throw new ConflictingDataException("[ABS CTRL — ADD]: Une donnée avec le même identifiant existe déjà.");
@@ -37,6 +37,7 @@ public abstract class AbstractController<T extends Data> {
         }
         save();
         publishTableUpdate();
+        return object;
     }
 
     /**

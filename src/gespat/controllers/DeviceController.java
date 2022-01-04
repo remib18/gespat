@@ -1,7 +1,6 @@
 package controllers;
 
 import exceptions.ConflictingDataException;
-import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Device;
 
@@ -16,13 +15,11 @@ public class DeviceController extends AbstractController<Device> {
 	}
 
 	public Device add(Device.STATES state, String label) throws ConflictingDataException, ProcessingException {
-		Device device = new Device(
+		return add(new Device(
 				getLastInsertedIndex() + 1,
 				state,
 				label
-		);
-		super.add(device);
-		return device;
+		));
 	}
 
 	@Override

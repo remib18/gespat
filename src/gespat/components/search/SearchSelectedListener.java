@@ -1,9 +1,9 @@
 package components.search;
 
 import components.table.TableRowsFunctionsInterface;
-import models.Data;
+import models.AbstractData;
 
-public interface SearchSelectedListener<T extends Data>{
+public interface SearchSelectedListener<T extends AbstractData>{
 
     /**
      * Fournit la donnée issue de la sélection du tableau des resultats de recherche.

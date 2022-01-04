@@ -1,13 +1,13 @@
 package components.table;
 
-import models.Data;
+import models.AbstractData;
 import utils.Colors;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table<T extends Data> extends JTable {
+public class Table<T extends AbstractData> extends JTable {
 
     private static final long serialVersionUID = -4513960817544981475L;
 

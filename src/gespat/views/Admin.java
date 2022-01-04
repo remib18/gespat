@@ -140,8 +140,7 @@ public class Admin extends JFrame {
 
     private void create() {
         try {
-            Patient patient = new Patient("xxx", "xxx", 0, null);
-            patientCtrl.add(patient);
+            Patient patient = patientCtrl.add("xxx", "xxx", 0, null);
             setSelected(patient);
         } catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());

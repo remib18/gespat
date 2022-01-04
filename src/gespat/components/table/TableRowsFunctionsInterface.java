@@ -1,8 +1,8 @@
 package components.table;
 
-import models.Data;
+import models.AbstractData;
 
-public interface TableRowsFunctionsInterface<T extends Data> {
+public interface TableRowsFunctionsInterface<T extends AbstractData> {
 
     int getRowIndex(T data);
 

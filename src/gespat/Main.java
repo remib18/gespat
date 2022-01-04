@@ -51,12 +51,12 @@ public class Main {
             device2 = deviceController.add(Device.STATES.PENDING, DeviceController.DEVICES[2]);
             device3 = deviceController.add(Device.STATES.ASSIGNED, DeviceController.DEVICES[3]);
         } catch (ConflictingDataException err) {
-            logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
+            logger.log(Level.SEVERE, "Erreur lors de la génération des appareils");
         }
 
         try {
             consultationController.add(
-                    patientController.get(123),
+                    patientController.get(1),
                     "Gérard",
                     LocalDate.now(),
                     pathologies1,
@@ -65,7 +65,7 @@ public class Main {
             );
 
             consultationController.add(
-                    patientController.get(123),
+                    patientController.get(1),
                     "Darmanin",
                     LocalDate.of(2020, 1, 5),
                     pathologies2,
@@ -74,7 +74,7 @@ public class Main {
             );
 
             consultationController.add(
-                    patientController.get(12),
+                    patientController.get(0),
                     "Rodolphe",
                     LocalDate.of(2000, 5, 22),
                     pathologies3,
@@ -82,7 +82,7 @@ public class Main {
                     false
             );
         } catch (NotFoundException | ConflictingDataException e) {
-            logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
+            logger.log(Level.SEVERE, "Erreur lors de la génération des données");
         }
     }
 

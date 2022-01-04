@@ -32,24 +32,6 @@ public class ConsultationController extends AbstractController<Consultation> {
     }
 
     /**
-     * Crée un objet permettant la manimulation des consultations
-     * @param patientCtrl
-     * @param storageFile - Utilisation d'un fichier de stockage différent.
-     * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
-     */
-    public ConsultationController(
-            PatientController patientCtrl,
-            DeviceController deviceCtrl,
-            String storageFile
-    ) throws ProcessingException {
-        this.patientCtrl = patientCtrl;
-        this.deviceCtrl = deviceCtrl;
-        this.storeFile = storageFile;
-
-        load();
-    }
-
-    /**
      * Crée une nouvelle consultation
      * @param patient
      * @param doctorName
@@ -69,7 +51,7 @@ public class ConsultationController extends AbstractController<Consultation> {
             boolean granted
     ) throws ConflictingDataException, ProcessingException {
         Device device = requiredEquipment == null ? deviceCtrl.add(Device.STATES.UNDEFINED, null) : requiredEquipment;
-        Consultation consult = new Consultation(
+        return add(new Consultation(
                 getLastInsertedIndex() + 1,
                 patient,
                 doctorName,
@@ -77,9 +59,7 @@ public class ConsultationController extends AbstractController<Consultation> {
                 diagnosedPathologies,
                 device,
                 granted
-        );
-        super.add(consult);
-        return consult;
+        ));
     }
 
     /**

@@ -2,14 +2,18 @@ package models;
 
 import utils.File;
 
-public abstract class Data implements Comparable<Data> {
+public abstract class AbstractData implements Comparable<AbstractData> {
 
     protected final String fs = File.COLUMN_SEPARATOR;
+
+    protected int id;
 
     /**
      * @return le paramètre repésentant l'identifiant de la donné
      */
-    public abstract int getId();
+    public int getId() {
+        return id;
+    }
 
     /**
      * @return le paramètre sélectionné pour la recherche
@@ -23,7 +27,7 @@ public abstract class Data implements Comparable<Data> {
     public abstract String toString();
 
     @Override
-    public int compareTo(Data obj) {
+    public int compareTo(AbstractData obj) {
         return this.getSearchableFields().compareTo(obj.getSearchableFields());
     }
 

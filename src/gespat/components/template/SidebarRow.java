@@ -150,7 +150,9 @@ public class SidebarRow extends XSpaceBetween {
             inputs.add(getDateField(date.getYear(), canEdit));
         } catch (NullPointerException err) {
             inputs.add(getDateField("Jour", true));
+            inputs.add(new Label("/"));
             inputs.add(getDateField("Mois", true));
+            inputs.add(new Label("/"));
             inputs.add(getDateField("Année", true));
         }
         inputs.setMinimumSize(inputs.getPreferredSize());

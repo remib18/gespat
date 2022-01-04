@@ -4,7 +4,7 @@ import components.table.AbstractTableModel;
 import components.table.Table;
 import components.table.TableListener;
 import components.table.TableRowsFunctionsInterface;
-import models.Data;
+import models.AbstractData;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Search<T extends Data> implements DocumentListener {
+public class Search<T extends AbstractData> implements DocumentListener {
 
     private List<T> data;
     private List<T> lastSearchResult;
