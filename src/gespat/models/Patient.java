@@ -116,7 +116,8 @@ public class Patient extends Data {
     @Override
     public String toString() {
         final String fs = File.COLUMN_SEPARATOR;
-        return this.lastname + fs + this.firstname + fs + this.socialId + fs + Date.convert(this.birthAt);
+        final String date = birthAt == null ? "null" : Date.convert(this.birthAt);
+        return this.lastname + fs + this.firstname + fs + this.socialId + fs + date;
     }
 
 }

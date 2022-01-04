@@ -40,13 +40,15 @@ public class Date {
     }
 
     public static String getDisplayString(LocalDate date) {
-        String monthVal = "" + date.getMonthValue();
+        String month = "" + date.getMonthValue();
+        String day = "" + date.getDayOfMonth();
 
-        // Rajout du 0 devant si on a un mois < 10
-        String month = monthVal.length() > 1 ? monthVal : "0" + monthVal;
+        // Rajout du 0 devant si on a un mois/jour < 10
+        day = day.length() > 1 ? day : "0" + day;
+        month = month.length() > 1 ? month : "0" + month;
 
         // On retourne la date formattée
-        return date.getDayOfMonth() + "/" + month + "/" + date.getYear();
+        return day + "/" + month + "/" + date.getYear();
     }
 
     private Date() {

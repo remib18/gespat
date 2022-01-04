@@ -41,10 +41,10 @@ public class File<T> {
                     FileWriter fw = new FileWriter(file)
             ) {
                 fw.write("");
-            } catch (Exception e2) {
-                throw new ProcessingException("[FILE MANAGER – SAVE DATA]: Impossible de créer le fichier.");
+            } catch (Exception err) {
+                throw new ProcessingException("[FILE – SAVE DATA]: Impossible de créer le fichier.");
             }
-            throw new ProcessingException("[FILE MANAGER – SAVE DATA]: Le fichier n'existe pas, un nouveau va être créer.");
+            throw new ProcessingException("[FILE – SAVE DATA]: Le fichier n'existe pas, un nouveau va être créer.");
         }
     }
 
@@ -63,9 +63,7 @@ public class File<T> {
                 fw.write('\n');
             }
         } catch (IOException e) {
-            throw new ProcessingException("[FILE MANAGER – SAVE DATA]: Impossible d'écrire dans le fichier.");
-        } catch (NullPointerException e) {
-            System.out.println("[FILE MANAGER – SAVE DATA]: " + e.getMessage());
+            throw new ProcessingException("[FILE – SAVE DATA]: Impossible d'écrire dans le fichier.");
         }
     }
 }

@@ -28,6 +28,7 @@ import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.BorderLayout;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Doctor extends JFrame {
@@ -212,7 +213,7 @@ public class Doctor extends JFrame {
                 btn.getY() + btn.getHeight()
         )).subscribe(patient -> {
             try {
-                Consultation consultation = consultCtrl.add(patient, null, null, null, null, false);
+                Consultation consultation = consultCtrl.add(patient, null, LocalDate.now(), null, null, false);
                 consultCtrl.add(consultation);
                 setSelected(consultation);
             } catch (ConflictingDataException | ProcessingException err) {
