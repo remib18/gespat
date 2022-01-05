@@ -231,14 +231,16 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
      * Notamment utile si des composants sont ajoutées ou supprimer
      */
     public void updateGUI() {
-        search.update();
-        repaint();
-        revalidate();
-        String s = searchBar.getText();
-        searchBar.setText("  ");
-        searchBar.setText(s);
-        repaint();
-        revalidate();
+        try {
+            search.update();
+            repaint();
+            revalidate();
+            String s = searchBar.getText();
+            searchBar.setText("  ");
+            searchBar.setText(s);
+            repaint();
+            revalidate();
+        } catch (IllegalStateException ignore) {}
     }
 
     /**
@@ -344,7 +346,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         search = new Search<>(
                 searchBar,
                 data,
-                new ScrollableTable<>(table));
+                table);//new ScrollableTable<>(table));
         search.addSelectionListener(listener);
         for (FilterInterface<T> filter : filters) {
             search.addFilter(filter);

@@ -1,14 +1,12 @@
 package controllers;
 
 import exceptions.ConflictingDataException;
+import exceptions.NotFoundException;
 import exceptions.ProcessingException;
-import models.Consultation;
 import models.Patient;
 import utils.StateManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PatientController extends AbstractController<Patient> {
 

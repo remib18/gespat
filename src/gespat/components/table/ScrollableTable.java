@@ -23,7 +23,7 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 	private void init() {
 
 		setViewportBorder(null);
-
+/*
 		setLayout(new ScrollPaneLayout() {
 			@Override
 			public void layoutContainer(Container parent) {
@@ -96,7 +96,7 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 				super.setThumbBounds(x, y, width, height);
 				scrollbar.repaint();
 			}
-		});
+		});*/
 		setForeground(Colors.TEXT_ON_PRIMARY);
 		setBackground(Colors.PRIMARY);
 		setBorder(null);

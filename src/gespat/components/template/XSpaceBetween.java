@@ -1,5 +1,7 @@
 package components.template;
 
+import utils.threads.ThreadUtils;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,13 +29,13 @@ public class XSpaceBetween extends JPanel {
     private void init() {
         setLayout(new BorderLayout());
         setOpaque(true);
-        EventQueue.invokeLater(() -> {
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> {
             try {
                 setPreferredSize(new Dimension(10000, getPreferredSize().height));
                 setMinimumSize(new Dimension(getParent().getSize().width - 32, getPreferredSize().height));
                 setBackground(getParent().getBackground());
             } catch (NullPointerException err) { /**/ }
-        });
+        }, "XSpaceBetween UI Load"));
     }
 
     @Override

@@ -121,13 +121,13 @@ final class SearchFilter implements FilterInterface<Consultation> {
 		List<Consultation> result = new ArrayList<>();
 
 		for (Consultation consultation : data) {
-			if (consultation != null) {
-				if (
-					!consultation.getRequiredEquipment().getLabel().equals("null")
-					&& consultation.getRequiredEquipment().getState() != Device.STATES.ASSIGNED
-				) {
-					result.add(consultation);
-				}
+			if (
+				consultation != null
+				&& consultation.getRequiredEquipment().getLabel() != null
+				&& !consultation.getRequiredEquipment().getLabel().equals("null")
+				&& consultation.getRequiredEquipment().getState() != Device.STATES.ASSIGNED
+			) {
+				result.add(consultation);
 			}
 		}
 

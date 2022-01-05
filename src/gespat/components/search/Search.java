@@ -16,7 +16,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
     private List<T> data;
     private List<T> lastSearchResult;
     private final SearchBar sBar;
-    private final ScrollableTable<T> tableResult;
+    private final Table<T> tableResult;
     private T selectedResult = null;
     private final List<FilterInterface<T>> filters = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
      * @param data le lot de données à chercher
      * @param tableResult un tableau pour afficher le résultat
      */
-    public Search(SearchBar sBar, List<T> data, ScrollableTable<T> tableResult) {
+    public Search(SearchBar sBar, List<T> data, Table<T> tableResult) {
         this.data = data;
         Collections.sort(this.data);
         this.lastSearchResult = this.data;
