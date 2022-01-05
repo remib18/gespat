@@ -4,6 +4,8 @@ import utils.Colors;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Label extends JLabel {
 
@@ -19,7 +21,7 @@ public class Label extends JLabel {
      */
     public Label(String text) {
         super(text);
-        this.init(Styles.DEFAULT, Colors.TEXT_ON_PRIMARY);
+        init(Styles.DEFAULT, Colors.TEXT_ON_PRIMARY);
     }
 
     /**
@@ -28,7 +30,7 @@ public class Label extends JLabel {
      */
     public Label(String text, Styles style) {
         super(text);
-        this.init(style, Colors.TEXT_ON_PRIMARY);
+        init(style, Colors.TEXT_ON_PRIMARY);
     }
 
     /**
@@ -37,7 +39,7 @@ public class Label extends JLabel {
      */
     public Label(String text, Styles style, Color color) {
         super(text);
-        this.init(style, color);
+        init(style, color);
     }
 
     /**
@@ -47,8 +49,8 @@ public class Label extends JLabel {
      */
     public Label(String text, Styles style, String name) {
         super(text);
-        this.init(style, Colors.TEXT_ON_PRIMARY);
-        this.setName(name);
+        init(style, Colors.TEXT_ON_PRIMARY);
+        setName(name);
     }
 
     /**
@@ -63,14 +65,14 @@ public class Label extends JLabel {
         // Choix de la taille de la police
         switch (style) {
             case TITLE:
-                this.setFont(new Font("Arial", Font.PLAIN, 20));
+                setFont(new Font("Arial", Font.PLAIN, 20));
                 break;
 
             case DEFAULT:
-                this.setFont(new Font("Arial", Font.PLAIN, 16));
+                setFont(new Font("Arial", Font.PLAIN, 16));
                 break;
             default:
-                System.err.println("[LABEL — INIT]: Style non supporté.");
+                Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, "Style non supporté.");
                 break;
         }
     }
