@@ -4,7 +4,6 @@ import components.table.*;
 import models.AbstractData;
 import utils.threads.ThreadUtils;
 
-import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;

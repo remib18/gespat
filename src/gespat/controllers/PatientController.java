@@ -1,7 +1,6 @@
 package controllers;
 
 import exceptions.ConflictingDataException;
-import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
 import utils.StateManager;

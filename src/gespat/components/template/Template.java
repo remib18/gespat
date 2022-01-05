@@ -9,7 +9,6 @@ import components.table.ScrollableTable;
 import components.table.Table;
 import components.Label;
 import components.Label.Styles;
-import components.table.TableListener;
 import models.AbstractData;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
