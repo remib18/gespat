@@ -21,7 +21,7 @@ import models.Consultation;
 import models.Device;
 import models.Patient;
 import utils.Colors;
-import utils.ConsultationTableModel;
+import utils.tableModels.ConsultationTableModel;
 import utils.Date;
 import utils.File;
 import views.popups.ConfirmSuppression;
@@ -29,6 +29,7 @@ import net.miginfocom.swing.MigLayout;
 import views.popups.UserMessage;
 import views.popups.SelectPatient;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;

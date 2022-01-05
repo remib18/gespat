@@ -2,32 +2,33 @@ package components.inputs;
 
 import utils.Colors;
 
-import javax.swing.JTextArea;
-import java.awt.EventQueue;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
 public class TextArea extends JTextArea {
 
-    private static final long serialVersionUID = 4892749904730741971L;
+	private static final long serialVersionUID = 4892749904730741971L;
 
-    /**
-     * Création d'un champ de type TextArea
-     * @param width largeur
-     * @param heigth hauteur
-     */
-    public TextArea(int width, int heigth) {
-        EventQueue.invokeLater(() -> init(width, heigth));
-    }
+	/**
+	 * Création d'un champ de type TextArea
+	 *
+	 * @param width  largeur
+	 * @param height hauteur
+	 */
+	public TextArea(int width, int height) {
+		EventQueue.invokeLater(() -> init(width, height));
+	}
 
-    /**
-     * Initisation du composant
-     * @param width
-     * @param heigth
-     */
-    private void init(int width, int heigth) {
-        this.setMinimumSize(new Dimension(100, 20));
-        this.setPreferredSize(new Dimension(width, heigth));
+	/**
+	 * Initialisation du composant
+	 *
+	 * @param width  largeur
+	 * @param height hauteur
+	 */
+	private void init(int width, int height) {
+		this.setMinimumSize(new Dimension(100, 20));
+		this.setPreferredSize(new Dimension(width, height));
 
-        this.setBackground(Colors.PRIMARY);
-    }
+		this.setBackground(Colors.PRIMARY);
+	}
 }

@@ -12,7 +12,7 @@ import models.Consultation;
 import models.Device;
 import models.Patient;
 import utils.Colors;
-import utils.ConsultationTableModel;
+import utils.tableModels.ConsultationTableModel;
 import net.miginfocom.swing.MigLayout;
 import views.popups.UserMessage;
 

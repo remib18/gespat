@@ -5,7 +5,6 @@ import utils.Colors;
 import utils.threads.ThreadUtils;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.TableModel;
 import java.awt.*;
 

@@ -8,21 +8,40 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe utilitaire pour la gestion de l'état de l'application.
+ * Permet notamment la sauvegarde du dernier index ajouté pour chaque type de donnée.
+ */
 public class StateManager {
 
 	private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private static final StateManager STATE = new StateManager();
 
-	public enum DataType { Patient, Consultation, Device }
+	/**
+	 * Types de données possibles
+	 */
+	public enum DataType {Patient, Consultation, Device}
 
+	// Données sauvegardées dans un fichier :
 	private Integer lastPatientIndexInserted;
 	private Integer lastConsultationIndexInserted;
 	private Integer lastDeviceIndexInserted;
 
+	/**
+	 * Obtenir la state actualisée.
+	 *
+	 * @return la state.
+	 */
 	public static StateManager getState() {
 		return STATE;
 	}
 
+	/**
+	 * Obtenir l'index de la prochaine insertion pour le modèle de donnée renseigné
+	 *
+	 * @param type modèle de donnée
+	 * @return l'index
+	 */
 	public Integer getNextInsertionIndex(DataType type) {
 		switch (type) {
 			case Patient:
@@ -37,10 +56,16 @@ public class StateManager {
 				lastDeviceIndexInserted++;
 				save();
 				return lastDeviceIndexInserted;
-			default: return null;
+			default:
+				return null;
 		}
 	}
 
+	/**
+	 * Une erreur s'est produite et la donnée n'a pas été insérée.
+	 *
+	 * @param type modèle de donnée
+	 */
 	public void narrowNextInsertionIndex(DataType type) {
 		switch (type) {
 			case Patient:
@@ -53,6 +78,11 @@ public class StateManager {
 		save();
 	}
 
+	/**
+	 * Reinitialisation de l'index
+	 *
+	 * @param type modèle de donnée
+	 */
 	public void clearData(DataType type) {
 		switch (type) {
 			case Patient:
@@ -65,6 +95,11 @@ public class StateManager {
 		save();
 	}
 
+	/**
+	 * Utilisez la méthode <code>getState</code>
+	 *
+	 * @see StateManager#getState
+	 */
 	protected StateManager() {
 		try {
 			logger.log(Level.INFO, "Application State : loading...;");
@@ -76,6 +111,11 @@ public class StateManager {
 		}
 	}
 
+	/**
+	 * Charge l'état de l'application à partir du fichier
+	 *
+	 * @throws ProcessingException en cas de problème lors du chargement des fichiers
+	 */
 	private void load() throws ProcessingException {
 		String[][] dataPats = new File<Integer>().getData("app-state.txt");
 		if (dataPats == null) {
@@ -89,6 +129,9 @@ public class StateManager {
 		lastDeviceIndexInserted = Integer.parseInt(dataPats[2][0]);
 	}
 
+	/**
+	 * Enregistre l'état de l'application dans un fichier
+	 */
 	private void save() {
 		List<Integer> data = new ArrayList<>();
 		data.add(lastPatientIndexInserted);

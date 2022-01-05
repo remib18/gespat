@@ -35,14 +35,16 @@ public abstract class AbstractController<T extends AbstractData> {
     /**
      * Ajoute la donnée.
      * @param object donnée à ajouter.
+     *
      * @throws ConflictingDataException si une donnée avec le même identifiant existe déjà.
-     * @throws ProcessingException
+     * @throws ProcessingException en cas de problème lors de la sauvegarde ou du chargement des données
      */
     protected T add(T object) throws ConflictingDataException, ProcessingException {
         try {
+            // Vérification de l'existence de la donnée
             get(object.getId());
             StateManager.getState().narrowNextInsertionIndex(stateDataType);
-            throw new ConflictingDataException("[ABS CTRL — ADD]: Une donnée avec le même identifiant existe déjà.");
+            throw new ConflictingDataException("Une donnée avec le même identifiant existe déjà.");
         } catch (NotFoundException e) {
             data.add(object);
         }
@@ -54,7 +56,7 @@ public abstract class AbstractController<T extends AbstractData> {
     /**
      * Ajoute un évènement permettant d'écouter les mises à jour de données
      * Utile dans le cas de plusieurs instances
-     * @param listener
+     * @param listener l'évènement
      */
     public void addTableUpdateListener(TableListener<T> listener) {
         tableUpdateListeners.add(listener);
@@ -62,8 +64,7 @@ public abstract class AbstractController<T extends AbstractData> {
 
     /**
      * Supprime l'ensemble des données
-     * @throws ProcessingException
-     * @hidden
+     * @throws ProcessingException en cas de problème lors de la sauvegarde ou du chargement des données
      */
     public void clear() throws ProcessingException {
         data.clear();
@@ -75,7 +76,7 @@ public abstract class AbstractController<T extends AbstractData> {
     /**
      * Retourne la donnée
      * @param id identifiant
-     * @return donnée correspondente
+     * @return   donnée correspondente
      * @throws NotFoundException si la donnée n'a pas été trouvée.
      */
     public T get(int id) throws NotFoundException {
@@ -99,7 +100,7 @@ public abstract class AbstractController<T extends AbstractData> {
      * @throws ProcessingException si les données sont impossibles à charger.
      */
     protected void load() throws ProcessingException {
-        //clear();
+        data.clear();
         final String[][] newData = (new File<T>()).getData(storeFile);
         if (newData == null) {
             return;

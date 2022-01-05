@@ -1,6 +1,16 @@
 package utils;
 
+/**
+ * Permet la transmission d'une donnée
+ *
+ * @param <T>
+ */
 public interface DataTransmitterInterface<T> {
 
-    void transmit(T data);
+	/**
+	 * Gère comment la donnée est exécutée
+	 *
+	 * @param data Donnée transmise
+	 */
+	void transmit(T data);
 }

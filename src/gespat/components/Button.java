@@ -11,228 +11,235 @@ import java.util.logging.Logger;
 
 public class Button extends JButton {
 
-    private static final long serialVersionUID = 7968751094886354977L;
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private static final long serialVersionUID = 7968751094886354977L;
+	private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private static final Size defaultSize = Size.LARGE;
+	private static final Style defaultStyle = Style.FILLED;
+	private static final Color defaultColor = Color.SECONDARY;
 
-    public enum Color { PRIMARY, SECONDARY, SUCCESS, INFO, WARNING, DANGER }
+	private boolean styleOutline = false;
+	private int padding;
+	private double outlineStrokeWidth;
+	private Position position = Position.CENTER;
 
-    public enum Position { START, CENTER, END}
-    public enum Size { SMALL, LARGE }
-    public enum Style { FILLED, OUTLINED }
+	public enum Color {PRIMARY, SECONDARY, SUCCESS, INFO, WARNING, DANGER}
 
-    private static final Size defaultSize = Size.LARGE;
-    private static final Style defaultStyle = Style.FILLED;
-    private static final Color defaultColor = Color.SECONDARY;
+	public enum Position {START, CENTER, END}
 
-    private boolean styleOutline = false;
-    private int padding;
-    private double outlineStrokeWidth;
-    private Position position = Position.CENTER;
+	public enum Size {SMALL, LARGE}
 
-    /**
-     * Crée un nouveau bouton
-     * @param text titre du bouton
-     */
-    public Button(String text) {
-        super(text);
-        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(defaultSize, defaultStyle, defaultColor), "Button UI Load"));
-    }
+	public enum Style {FILLED, OUTLINED}
 
-    /**
-     * Crée un nouveau bouton
-     * @param text titre du bouton
-     * @param size taille du bouton parmis <code>ButtonSizes</code>
-     */
-    public Button(String text, Size size) {
-        super(text);
-        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, defaultStyle, defaultColor), "Button UI Load"));
-    }
+	/**
+	 * Créer un nouveau bouton
+	 *
+	 * @param text titre du bouton
+	 */
+	public Button(String text) {
+		super(text);
+		EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(defaultSize, defaultStyle, defaultColor), "Button UI Load"));
+	}
 
-    /**
-     * Crée un nouveau bouton
-     * @param text titre du bouton
-     * @param size taille du bouton
-     * @param style style du bouton
-     */
-    public Button(String text, Size size, Style style) {
-        super(text);
-        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, defaultColor), "Button UI Load"));
-    }
+	/**
+	 * Crée un nouveau bouton
+	 *
+	 * @param text titre du bouton
+	 * @param size taille du bouton parmis <code>ButtonSizes</code>
+	 */
+	public Button(String text, Size size) {
+		super(text);
+		EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, defaultStyle, defaultColor), "Button UI Load"));
+	}
 
-    /**
-     * Crée un nouveau bouton
-     * @param text titre du bouton
-     * @param size taille du bouton
-     * @param style style du bouton
-     * @param color couleur du bouton
-     */
-    public Button(String text, Size size, Style style, Color color) {
-        super(text);
-        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, color), "Button UI Load"));
-    }
+	/**
+	 * Crée un nouveau bouton
+	 *
+	 * @param text  titre du bouton
+	 * @param size  taille du bouton
+	 * @param style style du bouton
+	 */
+	public Button(String text, Size size, Style style) {
+		super(text);
+		EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, defaultColor), "Button UI Load"));
+	}
 
-    /**
-     * @return la couleur de fond du parent
-     */
-    private java.awt.Color getParentBackground() {
-        return this.getParent().getBackground();
-    }
+	/**
+	 * Crée un nouveau bouton
+	 *
+	 * @param text  titre du bouton
+	 * @param size  taille du bouton
+	 * @param style style du bouton
+	 * @param color couleur du bouton
+	 */
+	public Button(String text, Size size, Style style, Color color) {
+		super(text);
+		EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, color), "Button UI Load"));
+	}
 
-    /**
-     * @return la taille réelle du composant
-     */
-    public int getTrueWidth() {
-        Graphics2D g2d = (Graphics2D) getGraphics();
-        return g2d.getFontMetrics().stringWidth(this.getText()) + 2 * padding;
-    }
+	/**
+	 * @return la couleur de fond du parent
+	 */
+	private java.awt.Color getParentBackground() {
+		return this.getParent().getBackground();
+	}
 
-    /**
-     * @return la position du bouton pour qu'il soit centré
-     */
-    private int getXPos() {
-        switch (position) {
-            case CENTER:
-                return (this.getWidth() - this.getTrueWidth()) / 2;
-            case END:
-                return this.getWidth() - this.getTrueWidth();
-            case START:
-            default:
-                return 0;
-        }
-    }
+	/**
+	 * @return la taille réelle du composant
+	 */
+	public int getTrueWidth() {
+		Graphics2D g2d = (Graphics2D) getGraphics();
+		return g2d.getFontMetrics().stringWidth(this.getText()) + 2 * padding;
+	}
 
-    /**
-     * Création du bouton avec les paramètres
-     * @param size
-     * @param style
-     * @param color
-     */
-    private void init(Size size, Style style, Color color) {
-        // Annulation des styles par défaut du bouton
-        // Pour permettre les coins arrondis
-        this.setContentAreaFilled(false);
-        this.setBorderPainted(false);
-        this.setOpaque(false);
+	/**
+	 * @return la position du bouton pour qu'il soit centré
+	 */
+	private int getXPos() {
+		switch (position) {
+			case CENTER:
+				return (this.getWidth() - this.getTrueWidth()) / 2;
+			case END:
+				return this.getWidth() - this.getTrueWidth();
+			case START:
+			default:
+				return 0;
+		}
+	}
 
-        // Choix de la taille du bouton
-        // Définit aussi la taille de la police
-        switch (size) {
-            case SMALL:
-                this.padding = 10;
-                this.outlineStrokeWidth = 1.5;
-                this.setFont(new Font("Arial", Font.PLAIN, 14));
-                this.setPreferredSize(new Dimension(0, 21));
-                break;
+	/**
+	 * Création du bouton avec les paramètres
+	 *
+	 * @param size
+	 * @param style
+	 * @param color
+	 */
+	private void init(Size size, Style style, Color color) {
+		// Annulation des styles par défaut du bouton
+		// Pour permettre les coins arrondis
+		this.setContentAreaFilled(false);
+		this.setBorderPainted(false);
+		this.setOpaque(false);
 
-            case LARGE:
-                this.padding = 15;
-                this.outlineStrokeWidth = 2;
-                this.setFont(new Font("Arial", Font.PLAIN, 16));
-                this.setPreferredSize(new Dimension(0, 41));
-                break;
-        }
+		// Choix de la taille du bouton
+		// Définit aussi la taille de la police
+		switch (size) {
+			case SMALL:
+				this.padding = 10;
+				this.outlineStrokeWidth = 1.5;
+				this.setFont(new Font("Arial", Font.PLAIN, 14));
+				this.setPreferredSize(new Dimension(0, 21));
+				break;
 
-        // Choix du style du boutton
-        switch (style) {
-            case FILLED:break;
+			case LARGE:
+				this.padding = 15;
+				this.outlineStrokeWidth = 2;
+				this.setFont(new Font("Arial", Font.PLAIN, 16));
+				this.setPreferredSize(new Dimension(0, 41));
+				break;
+		}
 
-            case OUTLINED:
-                this.styleOutline = true;
-                break;
-        }
+		// Choix du style du boutton
+		switch (style) {
+			case FILLED:
+				break;
 
-        switch (color) {
-            case PRIMARY:
-                this.setBackground(Colors.BUTTON_PRIMARY);
-                this.setForeground(this.styleOutline ? Colors.TEXT_ON_SECONDARY : Colors.TEXT_ON_PRIMARY);
-                break;
+			case OUTLINED:
+				this.styleOutline = true;
+				break;
+		}
 
-            case SECONDARY:
-                this.setBackground(Colors.BUTTON_SECONDARY);
-                this.setForeground(this.styleOutline ? Colors.TEXT_ON_PRIMARY : Colors.TEXT_ON_SECONDARY);
-                break;
+		switch (color) {
+			case PRIMARY:
+				this.setBackground(Colors.BUTTON_PRIMARY);
+				this.setForeground(this.styleOutline ? Colors.TEXT_ON_SECONDARY : Colors.TEXT_ON_PRIMARY);
+				break;
 
-            case SUCCESS:
-            case INFO:
-            case WARNING:
-                logger.log(Level.SEVERE, "Couleur non implémentée.");
-                break;
+			case SECONDARY:
+				this.setBackground(Colors.BUTTON_SECONDARY);
+				this.setForeground(this.styleOutline ? Colors.TEXT_ON_PRIMARY : Colors.TEXT_ON_SECONDARY);
+				break;
 
-            case DANGER:
-                this.setBackground(Colors.BUTTON_DANGER);
-                this.setForeground(Colors.BUTTON_DANGER);
-                break;
-        }
-    }
+			case SUCCESS:
+			case INFO:
+			case WARNING:
+				logger.log(Level.SEVERE, "Couleur non implémentée.");
+				break;
 
-    /**
-     * Dessine le bouton
-     */
-    @Override
-    protected void paintComponent(Graphics g) {
-        // Préparation
-        Graphics2D g2d = (Graphics2D) g.create();
-        RenderingHints hints = new RenderingHints(
-                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
-        );
-        g2d.setRenderingHints(hints);
+			case DANGER:
+				this.setBackground(Colors.BUTTON_DANGER);
+				this.setForeground(Colors.BUTTON_DANGER);
+				break;
+		}
+	}
 
-        // Change la couleur de dessin par celle du fond du bouton
-        g2d.setColor(getBackground());
+	/**
+	 * Dessine le bouton
+	 */
+	@Override
+	protected void paintComponent(Graphics g) {
+		// Préparation
+		Graphics2D g2d = (Graphics2D) g.create();
+		RenderingHints hints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
+		);
+		g2d.setRenderingHints(hints);
 
-        // Calcul de la largeur du bouton
-        double w = this.getTrueWidth();
+		// Change la couleur de dessin par celle du fond du bouton
+		g2d.setColor(getBackground());
 
-        // Dessine un rectangle arrondi
-        g2d.fill(new RoundRectangle2D.Double(
-                this.getXPos(), 0,
-                w, (double) getHeight() - 1,
-                15, 15
-        ));
+		// Calcul de la largeur du bouton
+		double w = this.getTrueWidth();
 
-        // Si le bouton est de style outlined,
-        // Dessine un autre rectangle arrondi au milieu du précédent avec la couleur du parent
-        if (this.styleOutline) {
-            double stroke = this.outlineStrokeWidth * 2;
-            double radius = 15 - this.outlineStrokeWidth;
+		// Dessine un rectangle arrondi
+		g2d.fill(new RoundRectangle2D.Double(
+				this.getXPos(), 0,
+				w, (double) getHeight() - 1,
+				15, 15
+		));
 
-            g2d.setColor(getParentBackground());
+		// Si le bouton est de style outlined,
+		// Dessine un autre rectangle arrondi au milieu du précédent avec la couleur du parent
+		if (this.styleOutline) {
+			double stroke = this.outlineStrokeWidth * 2;
+			double radius = 15 - this.outlineStrokeWidth;
 
-            //noinspection SuspiciousNameCombination
-            g2d.fill(new RoundRectangle2D.Double(
-                    this.getXPos() + this.outlineStrokeWidth,
-                    this.outlineStrokeWidth,
-                    w - stroke,
-                    getHeight() - 1 - stroke,
-                    radius, radius
-            ));
-        }
+			g2d.setColor(getParentBackground());
 
-        // Paramétrage de la couleur du texte
-        g2d.setColor(getForeground());
+			//noinspection SuspiciousNameCombination
+			g2d.fill(new RoundRectangle2D.Double(
+					this.getXPos() + this.outlineStrokeWidth,
+					this.outlineStrokeWidth,
+					w - stroke,
+					getHeight() - 1 - stroke,
+					radius, radius
+			));
+		}
 
-        // Calcul du placement du texte en horizontal
-        int y = this.getHeight() / 2 + this.getFont().getSize() / 2 - 2;
+		// Paramétrage de la couleur du texte
+		g2d.setColor(getForeground());
 
-        // Dessin du texte
-        g2d.drawString(this.getText(), this.getXPos() + padding, y);
+		// Calcul du placement du texte en horizontal
+		int y = this.getHeight() / 2 + this.getFont().getSize() / 2 - 2;
 
-        // On a terminé
-        g2d.dispose();
-    }
+		// Dessin du texte
+		g2d.drawString(this.getText(), this.getXPos() + padding, y);
 
-    /**
-     * Retourne le bouton avec une position définie
-     * @param pos position du bouton
-     * @return
-     */
-    public Button setPosition(Position pos) {
-        this.position = pos;
-        this.repaint();
-        return this;
-    }
+		// On a terminé
+		g2d.dispose();
+	}
 
-    public int getTrueX() {
-        return getX() + getXPos();
-    }
+	/**
+	 * Retourne le bouton avec une position définie
+	 *
+	 * @param pos position du bouton
+	 */
+	public Button setPosition(Position pos) {
+		this.position = pos;
+		this.repaint();
+		return this;
+	}
+
+	public int getTrueX() {
+		return getX() + getXPos();
+	}
 }

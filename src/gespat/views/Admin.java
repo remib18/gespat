@@ -12,7 +12,7 @@ import exceptions.FormatException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
-import utils.PatientTableModel;
+import utils.tableModels.PatientTableModel;
 import views.popups.ConfirmSuppression;
 import views.popups.UserMessage;
 
@@ -28,11 +28,14 @@ public class Admin extends JFrame {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private final Template<Patient> template = new Template<>(978, 550);
-    private TableRowsFunctionsInterface<Patient> tableUtils;
     private final PatientController patientCtrl;
-    private Patient selectedPatient;
     private int activeRow;
+    private TableRowsFunctionsInterface<Patient> tableUtils;
+    private Patient selectedPatient;
 
+    /**
+     * Création d'une page pour les administrateurs
+     */
     public Admin(PatientController patientController) {
         setTitle("GesPat — Personnel d'administration");
         setSize(1080, 575);
@@ -72,9 +75,7 @@ public class Admin extends JFrame {
             selectedPatient = patient;
             activeRow = row;
             template.setResultTableSelectedRow(patient);
-        } catch (NullPointerException err) {
-            //TODO: handle exception
-        } finally {
+        } catch (NullPointerException ignore) {} finally {
             updateGraphics();
         }
     }
@@ -92,6 +93,9 @@ public class Admin extends JFrame {
         }
     }
 
+    /**
+     * Met à jour l'interface après une modification
+     */
     private void updateGraphics() {
         template.clear(In.SIDEBAR_BODY);
         template.clear(In.SIDEBAR_FOOTER);
@@ -101,10 +105,13 @@ public class Admin extends JFrame {
         revalidate();
     }
 
+    /**
+     * Mise en place de l'interface latérale
+     */
     private void sidebarSetup() {
         if (selectedPatient == null) {
             // Si aucun patient n'est selectionner, on affiche un message.
-            template.add(new Label("Selectionnez un patient."), In.SIDEBAR_BODY);
+            template.add(new Label("Sélectionnez un patient."), In.SIDEBAR_BODY);
             return;
         }
 
@@ -136,6 +143,9 @@ public class Admin extends JFrame {
         template.add(deleteBtn, In.SIDEBAR_BODY);
     }
 
+    /**
+     * Permet de créer un nouveau formulaire patient
+     */
     private void create() {
         try {
             Patient patient = patientCtrl.add("xxx", "xxx", 0, null);
@@ -153,6 +163,13 @@ public class Admin extends JFrame {
         }
     }
 
+    /**
+     * Permet d'enregistrer
+     * @param lastname
+     * @param firstname
+     * @param birthAt
+     * @param socialId
+     */
     private void save(
             SidebarRow lastname,
             SidebarRow firstname,

@@ -8,10 +8,16 @@ import java.awt.geom.Rectangle2D;
 
 public class Separator extends JComponent {
 
+	/**
+	 * Composant servant à séparer deux autres composants
+	 */
 	public Separator() {
 		EventQueue.invokeLater(this::init);
 	}
 
+	/**
+	 * Initialisation de la taille et de la couleur du séparateur
+	 */
 	private void init() {
 		try {
 			setPreferredSize(new Dimension(10000, 9));
@@ -20,11 +26,14 @@ public class Separator extends JComponent {
 		repaint();
 	}
 
+	/**
+	 * Dessine le séparateur
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		RenderingHints hints = new RenderingHints(
-			RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
+				RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
 		);
 		g2d.setRenderingHints(hints);
 
