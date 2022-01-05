@@ -5,6 +5,7 @@ import components.Label;
 import exceptions.FormatException;
 import net.miginfocom.swing.MigLayout;
 import utils.Colors;
+import utils.threads.ThreadUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class SidebarRow extends JPanel {
      */
     public SidebarRow(String label, LocalDate date) {
         super();
-        EventQueue.invokeLater(() -> initDate(label, date, false));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> initDate(label, date, false), "SidebarRow UI Load"));
     }
 
     /**
@@ -34,7 +35,7 @@ public class SidebarRow extends JPanel {
      */
     public SidebarRow(String label, LocalDate date, boolean canEdit) {
         super();
-        EventQueue.invokeLater(() -> initDate(label, date, canEdit));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> initDate(label, date, canEdit), "SidebarRow UI Load"));
     }
 
     /**
@@ -45,7 +46,7 @@ public class SidebarRow extends JPanel {
      */
     public SidebarRow(String label, String text) {
         super();
-        EventQueue.invokeLater(() -> init(label, text, false));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(label, text, false), "SidebarRow UI Load"));
     }
 
     /**
@@ -57,7 +58,7 @@ public class SidebarRow extends JPanel {
      */
     public SidebarRow(String label, String text, boolean canEdit) {
         super();
-        EventQueue.invokeLater(() -> init(label, text, canEdit));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(label, text, canEdit), "SidebarRow UI Load"));
     }
 
     /**

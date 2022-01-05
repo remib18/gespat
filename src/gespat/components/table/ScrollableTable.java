@@ -2,6 +2,7 @@ package components.table;
 
 import models.AbstractData;
 import utils.Colors;
+import utils.threads.ThreadUtils;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -16,7 +17,7 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 		super(table, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER);
 		this.table = table;
 
-		EventQueue.invokeLater(this::init);
+		EventQueue.invokeLater(() -> ThreadUtils.run(this::init, "ScrollBarTable UI Load"));
 	}
 
 	private void init() {

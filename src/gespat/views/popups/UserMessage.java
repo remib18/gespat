@@ -17,7 +17,6 @@ public class UserMessage {
      */
     @SuppressWarnings("MagicConstant")
     public UserMessage(String message, LEVEL level) {
-        // TODO Auto-generated constructor stub
         JOptionPane.showMessageDialog(component, message, getTitle(level), getMessageType(level));
 
     }

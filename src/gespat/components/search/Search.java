@@ -2,6 +2,7 @@ package components.search;
 
 import components.table.*;
 import models.AbstractData;
+import utils.threads.ThreadUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -48,7 +49,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
 
         });
 
-        EventQueue.invokeLater(this::displayResult);
+        EventQueue.invokeLater(() -> ThreadUtils.run(this::displayResult, "Search UI Load"));
     }
 
     public void addSelectionListener(SearchSelectedListener<T> listener) {

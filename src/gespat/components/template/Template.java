@@ -13,6 +13,7 @@ import components.table.TableListener;
 import models.AbstractData;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
+import utils.threads.ThreadUtils;
 
 import javax.swing.*;
 import java.awt.Dimension;
@@ -71,7 +72,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         init();
 
         // Permet le reset et la résolution de bugs d'affichage
-        EventQueue.invokeLater(() -> resize(this));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> resize(this), "Template UI Load"));
     }
 
     /**

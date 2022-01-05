@@ -235,3 +235,4 @@ fabric.properties
 .vscode/settings.json
 .idea/vcs.xml
 .idea/codeStyles/codeStyleConfig.xml
+.idea/.name

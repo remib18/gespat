@@ -1,6 +1,7 @@
 package components.inputs;
 
 import utils.Colors;
+import utils.threads.ThreadUtils;
 
 import javax.swing.JTextField;
 import java.awt.Dimension;
@@ -16,7 +17,8 @@ public class Text extends JTextField {
      * @param heigth
      */
     public Text(int width, int heigth) {
-        EventQueue.invokeLater(() -> init(width, heigth));
+
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(width, heigth), "Text UI Load"));
     }
 
     /**

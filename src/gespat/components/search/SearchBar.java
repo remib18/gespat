@@ -2,6 +2,7 @@ package components.search;
 
 import components.inputs.Text;
 import utils.Colors;
+import utils.threads.ThreadUtils;
 
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -16,14 +17,8 @@ public class SearchBar extends Text {
      */
     public SearchBar() {
         super(10000, 41);
-        EventQueue.invokeLater(() -> {
-            init();
 
-            // Fix quand la sidebar est seule dans le conteneur
-            // TODO: Remove this
-            setText(" ");
-            setText("");
-        });
+        EventQueue.invokeLater(() -> ThreadUtils.run(this::init, "SearchBar UI Load"));
     }
 
     /**

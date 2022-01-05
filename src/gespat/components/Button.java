@@ -1,6 +1,7 @@
 package components;
 
 import utils.Colors;
+import utils.threads.ThreadUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +35,7 @@ public class Button extends JButton {
      */
     public Button(String text) {
         super(text);
-        EventQueue.invokeLater(() -> init(defaultSize, defaultStyle, defaultColor));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(defaultSize, defaultStyle, defaultColor), "Button UI Load"));
     }
 
     /**
@@ -44,7 +45,7 @@ public class Button extends JButton {
      */
     public Button(String text, Size size) {
         super(text);
-        EventQueue.invokeLater(() -> init(size, defaultStyle, defaultColor));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, defaultStyle, defaultColor), "Button UI Load"));
     }
 
     /**
@@ -55,7 +56,7 @@ public class Button extends JButton {
      */
     public Button(String text, Size size, Style style) {
         super(text);
-        EventQueue.invokeLater(() -> init(size, style, defaultColor));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, defaultColor), "Button UI Load"));
     }
 
     /**
@@ -67,7 +68,7 @@ public class Button extends JButton {
      */
     public Button(String text, Size size, Style style, Color color) {
         super(text);
-        EventQueue.invokeLater(() -> init(size, style, color));
+        EventQueue.invokeLater(() -> ThreadUtils.run(() -> init(size, style, color), "Button UI Load"));
     }
 
     /**
