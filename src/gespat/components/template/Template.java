@@ -234,6 +234,9 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         search.update();
         repaint();
         revalidate();
+        String s = searchBar.getText();
+        searchBar.setText("  ");
+        searchBar.setText(s);
         repaint();
         revalidate();
     }

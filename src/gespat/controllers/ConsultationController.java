@@ -80,6 +80,21 @@ public class ConsultationController extends AbstractController<Consultation> {
         return pathologies;
     }
 
+    public List<Consultation> getAll(Patient patient) {
+        List<Consultation> consultations = new ArrayList<>();
+        for (Consultation c : data) {
+            if (c.getPatient().equals(patient))
+                consultations.add(c);
+        }
+        return consultations;
+    }
+
+    void batchRemove(List<Consultation> consultations) throws NotFoundException, ProcessingException {
+        for (Consultation consultation: consultations) {
+            remove(consultation, true);
+        }
+    }
+
     @Override
     protected Consultation makeObjectFromString(String[] object)
             throws NotFoundException, NumberFormatException, ProcessingException {

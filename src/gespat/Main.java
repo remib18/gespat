@@ -96,6 +96,7 @@ public class Main {
             patientController = new PatientController();
             deviceController = new DeviceController();
             consultationController = new ConsultationController(patientController, deviceController);
+            patientController.setConsultCtrl(consultationController);
 
             // Simulation de données pour le développement
             //genData();
