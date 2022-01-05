@@ -16,9 +16,8 @@ import utils.tableModels.PatientTableModel;
 import views.popups.ConfirmSuppression;
 import views.popups.UserMessage;
 
-import javax.swing.JFrame;
-import javax.swing.Box;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,17 +68,28 @@ public class Admin extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * TODO remi
+     *
+     * @param patient
+     */
     private void setSelected(Patient patient) {
         try {
             int row = tableUtils.getRowIndex(patient);
             selectedPatient = patient;
             activeRow = row;
             template.setResultTableSelectedRow(patient);
-        } catch (NullPointerException ignore) {} finally {
+        } catch (NullPointerException ignore) {
+        } finally {
             updateGraphics();
         }
     }
 
+    /**
+     * TODO remi
+     *
+     * @param patient
+     */
     private void setSelected(int row) {
         try {
             Patient patient = tableUtils.getData(row);
@@ -110,7 +120,7 @@ public class Admin extends JFrame {
      */
     private void sidebarSetup() {
         if (selectedPatient == null) {
-            // Si aucun patient n'est selectionner, on affiche un message.
+            // Si aucun patient n'est sélectionné, on affiche un message.
             template.add(new Label("Sélectionnez un patient."), In.SIDEBAR_BODY);
             return;
         }
@@ -164,11 +174,12 @@ public class Admin extends JFrame {
     }
 
     /**
-     * Permet d'enregistrer
-     * @param lastname
-     * @param firstname
-     * @param birthAt
-     * @param socialId
+     * Permet d'enregistrer les modifications apporter au formulaire patient
+     *
+     * @param lastname  nom de famille du patient
+     * @param firstname prénom du patient
+     * @param birthAt   date de naissance du patient
+     * @param socialId  numéro de sécurité sociale du patient
      */
     private void save(
             SidebarRow lastname,
@@ -197,11 +208,15 @@ public class Admin extends JFrame {
         }
     }
 
+    /**
+     * Permet de supprimer un dossier patient
+     */
     private void delete() {
         try {
             patientCtrl.remove(selectedPatient, ConfirmSuppression.getPopup());
             setSelected(Math.max(activeRow - 1, 0));
-        } catch (NotFoundException ignore) {} catch (ProcessingException err) {
+        } catch (NotFoundException ignore) {
+        } catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());
             new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         }

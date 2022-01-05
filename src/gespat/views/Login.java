@@ -6,14 +6,12 @@ import components.template.XCenteredContainer;
 import controllers.ConsultationController;
 import controllers.DeviceController;
 import controllers.PatientController;
-import utils.Colors;
 import net.miginfocom.swing.MigLayout;
+import utils.Colors;
 import views.popups.UserMessage;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Box;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
 public class Login extends JFrame {
 
@@ -22,6 +20,9 @@ public class Login extends JFrame {
     final ConsultationController consultationController;
     final DeviceController deviceController;
 
+    /**
+     * Création de la page d'accueil
+     */
     public Login(
             PatientController patientController,
             ConsultationController consultationController,
@@ -43,6 +44,9 @@ public class Login extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Ajout des différents boutons permettant de se connecter
+     */
     private JPanel getButtons() {
         JPanel buttonContainer = new JPanel();
         buttonContainer.setLayout(new MigLayout());
@@ -68,6 +72,9 @@ public class Login extends JFrame {
         return buttonContainer;
     }
 
+    /**
+     * Ajout d'informations permettant à l'utilisateur de se repérer
+     */
     private XCenteredContainer getContent() {
         final XCenteredContainer container = new XCenteredContainer(Colors.PRIMARY);
 
