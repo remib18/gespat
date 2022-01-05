@@ -47,7 +47,7 @@ public class Doctor extends JFrame {
     private final ConsultationController consultCtrl;
     private Consultation selectedConsultation;
     private int activeRow;
-
+    private final Button exportBtn;
     private final Button createBtn;
 
     public Doctor(
@@ -81,7 +81,7 @@ public class Doctor extends JFrame {
         Label tableTitle = new Label("Liste des consultations liées au patient", Label.Styles.TITLE);
         template.add(tableTitle, In.MAIN_BODY);
 
-        Button exportBtn = new Button("Exporter", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
+        exportBtn = new Button("Exporter", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
         exportBtn.addActionListener(e -> export(exportBtn));
         template.add(exportBtn.setPosition(Button.Position.END), In.SIDEBAR_HEADER);
 
@@ -173,10 +173,15 @@ public class Doctor extends JFrame {
 
     private void sidebarSetup() {
         if (selectedConsultation == null) {
-            // Si aucun patient n'est selectionner, on affiche un message.
+            // Si aucun patient n'est selectionner, on affiche un message et on masque le bouton d'export.
             template.add(new Label("Selectionnez un patient."), In.SIDEBAR_BODY);
+            exportBtn.setVisible(false);
+
             return;
         }
+        // On re-définit le bouton d'export visible.
+        exportBtn.setVisible(true);
+
         final Patient patient = selectedConsultation.getPatient();
 
         SidebarRow socialId = new SidebarRow("Patient : ", patient.getFullname());
@@ -198,10 +203,11 @@ public class Doctor extends JFrame {
         template.add(cols, In.SIDEBAR_BODY);
 
         TextArea details = new TextArea(10000, 100);
+        details.setText(selectedConsultation.getObservations());
         template.add(details, In.SIDEBAR_BODY);
 
         Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);
-        saveBtn.addActionListener(e -> save(doctorName, consultedAt));
+        saveBtn.addActionListener(e -> save(doctorName, consultedAt, details));
 
         Button deleteBtn = new Button("Supprimer la consultation", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.DANGER);
         deleteBtn.addActionListener(e -> delete());
@@ -224,7 +230,7 @@ public class Doctor extends JFrame {
                 btn.getY() + btn.getHeight()
         )).subscribe(patient -> {
             try {
-                Consultation consultation = consultCtrl.add(patient, "", LocalDate.now(), new String[0], null, false);
+                Consultation consultation = consultCtrl.add(patient, "Nom", LocalDate.now(), new String[0], null, "Observations");
                 setSelected(consultation);
             } catch (ProcessingException err) {
                 logger.log(Level.SEVERE, err.getMessage());
@@ -239,7 +245,8 @@ public class Doctor extends JFrame {
     }
 
     private void save(SidebarRow doctorName,
-                      SidebarRow consultedAt
+                      SidebarRow consultedAt,
+                      TextArea observations
 		) {
             try {
                 selectedConsultation.setConsultedAt(consultedAt.getDate());
@@ -248,6 +255,7 @@ public class Doctor extends JFrame {
                 new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
             }
             selectedConsultation.setDoctorName(doctorName.getText());
+            selectedConsultation.setObservations(observations.getText());
             try {
                 consultCtrl.update(selectedConsultation);
                 setSelected(selectedConsultation); // To update the view
@@ -293,7 +301,7 @@ public class Doctor extends JFrame {
         }
         msg.add("");
         msg.add("Observations du docteur :");
-        msg.add("/");
+        msg.add(selectedConsultation.getObservations());
         msg.add("");
         msg.add("Appareil nécessaire :");
         Device equipment = selectedConsultation.getRequiredEquipment();

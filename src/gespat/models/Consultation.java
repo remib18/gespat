@@ -16,8 +16,7 @@ public class Consultation extends AbstractData {
     private LocalDate consultedAt;
     private String[] diagnosedPathologies;
     private Device requiredEquipment;
-    private boolean granted;
-
+    private String observations;
     /**
      * Nouvelle consultation.
      * Utiliser un ConsultationManager pour créer et enregistrer une consultation correctement.
@@ -29,7 +28,7 @@ public class Consultation extends AbstractData {
      * @param consultedAt
      * @param diagnosedPathologies
      * @param requiredEquipment
-     * @param granted
+     * @param observations
      */
     public Consultation(
             int id,
@@ -38,7 +37,7 @@ public class Consultation extends AbstractData {
             LocalDate consultedAt,
             String[] diagnosedPathologies,
             Device requiredEquipment,
-            boolean granted
+            String observations
     ) {
         this.id = id;
         this.patient = patient;
@@ -46,7 +45,7 @@ public class Consultation extends AbstractData {
         this.consultedAt = consultedAt;
         this.diagnosedPathologies = diagnosedPathologies;
         this.requiredEquipment = requiredEquipment;
-        this.granted = granted;
+        this.observations = observations;
     }
 
     /**
@@ -97,13 +96,6 @@ public class Consultation extends AbstractData {
     }
 
     /**
-     * @return le statut de l'atribution du matériel
-     */
-    public boolean isGranted() {
-        return granted;
-    }
-
-    /**
      * @param consultedAt la date de consultation à définir
      */
     public void setConsultedAt(LocalDate consultedAt) {
@@ -125,13 +117,6 @@ public class Consultation extends AbstractData {
     }
 
     /**
-     * @param granted le statut de l'atribution du matériel à définir
-     */
-    public void setGranted(boolean granted) {
-        this.granted = granted;
-    }
-
-    /**
      * @param patient le patient correspondant à définir
      */
     public void setPatient(Patient patient) {
@@ -143,6 +128,14 @@ public class Consultation extends AbstractData {
      */
     public void setRequiredEquipment(Device requiredEquipment) {
         this.requiredEquipment = requiredEquipment;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
     }
 
     /**
@@ -158,7 +151,7 @@ public class Consultation extends AbstractData {
                consultedAt + fs +
                diagnosedPathologies + fs +
                requiredEquipment + fs +
-               granted;
+               observations;
     }
 
 }

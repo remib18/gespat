@@ -5,10 +5,9 @@ import controllers.PatientController;
 import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
-import models.Consultation;
 import models.Device;
-import models.Patient;
 import views.Login;
+import views.popups.UserMessage;
 
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -37,7 +36,7 @@ public class Main {
             patientController.add("Jean", "Jack", 123, LocalDate.of(2000, 1, 21));
             patientController.add("François", "Jack", 12, LocalDate.of(2001, 1, 21));
             patientController.add("Jeanne", "France", 1, LocalDate.of(2003, 1, 21));
-            patientController.add("Franck", "Morice", 1234, LocalDate.of(2004, 1, 21));
+            patientController.add("Franck", "Sebastien", 1234, LocalDate.of(2004, 1, 21));
         } catch (ConflictingDataException err) {
             logger.log(Level.SEVERE, "Erreur lors de la génération des patients");
         }
@@ -63,16 +62,16 @@ public class Main {
                     LocalDate.now(),
                     pathologies1,
                     device1,
-                    false
+                    "Oh bah non il est mort..."
             );
 
             consultationController.add(
                     patientController.get(1),
-                    "Darmanin",
+                    "Monique",
                     LocalDate.of(2020, 1, 5),
                     pathologies2,
                     device2,
-                    false
+                    "Oh le con."
             );
 
             consultationController.add(
@@ -81,7 +80,7 @@ public class Main {
                     LocalDate.of(2000, 5, 22),
                     pathologies3,
                     device3,
-                    false
+                    "Hate it."
             );
         } catch (NotFoundException | ConflictingDataException e) {
             logger.log(Level.SEVERE, "Erreur lors de la génération des données");
@@ -89,7 +88,7 @@ public class Main {
     }
 
 
-    /** Point de démarage de l'application */
+    /** Point de démarrage de l'application */
     public static void main(String[] args) {
         logger.log(Level.INFO, "Lancement de l'application");
         try {
@@ -101,12 +100,13 @@ public class Main {
             // Simulation de données pour le développement
             //genData();
 
-            logger.log(Level.INFO, "Application démarée");
+            logger.log(Level.INFO, "Application démarrée");
             // On lance la fenêtre de connexion
             new Login(patientController, consultationController, deviceController);
         } catch (ProcessingException e) {
             // En cas de problème lors de la gestion des fichiers
             logger.log(Level.WARNING, e.getMessage());
+            new UserMessage("Un problème est survenu lors du traitement des données.", UserMessage.LEVEL.Severe);
         }
     }
 

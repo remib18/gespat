@@ -9,6 +9,7 @@ import components.table.ScrollableTable;
 import components.table.Table;
 import components.Label;
 import components.Label.Styles;
+import components.table.TableListener;
 import models.AbstractData;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
@@ -233,9 +234,6 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         search.update();
         repaint();
         revalidate();
-        String s = searchBar.getText();
-        searchBar.setText("  ");
-        searchBar.setText(s);
         repaint();
         revalidate();
     }
@@ -339,10 +337,11 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
      */
     public void setSearchBar(List<T> data, AbstractTableModel<T> model, SearchSelectedListener<T> listener,
                              List<FilterInterface<T>> filters) {
+        Table<T> table = new Table<>(model);
         search = new Search<>(
                 searchBar,
                 data,
-                new ScrollableTable<>(new Table<>(model)));
+                new ScrollableTable<>(table));
         search.addSelectionListener(listener);
         for (FilterInterface<T> filter : filters) {
             search.addFilter(filter);

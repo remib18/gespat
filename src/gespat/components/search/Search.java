@@ -93,6 +93,8 @@ public class Search<T extends AbstractData> implements DocumentListener {
     }
 
     public T getSelected() {
+        if (lastSearchResult == null) return null;
+        if (!lastSearchResult.contains(selectedResult)) return null;
         return selectedResult;
     }
 
@@ -119,6 +121,10 @@ public class Search<T extends AbstractData> implements DocumentListener {
     @Override
     public void insertUpdate(DocumentEvent e) {
         update();
+
+        // vérifie que la donnée sélectionnée existe toujours
+        // force à récupérer à nouveau la donnée sélectionner
+        publishSelectionListener();
     }
 
     public void update() {

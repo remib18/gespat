@@ -6,6 +6,8 @@ import utils.Colors;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Table<T extends AbstractData> extends JTable {
 
@@ -94,6 +96,11 @@ public class Table<T extends AbstractData> extends JTable {
      * @param row index de la ligne à selectionner
      */
     public void setSelectedRow(int row) {
-        addRowSelectionInterval(row, row);
+        // TODO: catch IllegalArgumentException
+        try {
+            addRowSelectionInterval(row, row);
+        } catch (IllegalArgumentException err) {
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, "Impossible de sélectionner la donnée inexistante dans la table (id: " + row + ").");
+        }
     }
 }

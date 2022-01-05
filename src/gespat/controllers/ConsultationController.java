@@ -41,7 +41,7 @@ public class ConsultationController extends AbstractController<Consultation> {
      * @param consultedAt
      * @param diagnosedPathologies
      * @param requiredEquipment
-     * @param granted
+     * @param observations
      * @throws ConflictingDataException
      * @throws ProcessingException
      */
@@ -51,7 +51,7 @@ public class ConsultationController extends AbstractController<Consultation> {
             LocalDate consultedAt,
             String[] diagnosedPathologies,
             Device requiredEquipment,
-            boolean granted
+            String observations
     ) throws ConflictingDataException, ProcessingException {
         Device device = requiredEquipment == null ? deviceCtrl.add(Device.STATES.UNDEFINED, null) : requiredEquipment;
         return add(new Consultation(
@@ -61,7 +61,7 @@ public class ConsultationController extends AbstractController<Consultation> {
                 consultedAt,
                 diagnosedPathologies,
                 device,
-                granted
+                observations
         ));
     }
 
@@ -85,7 +85,6 @@ public class ConsultationController extends AbstractController<Consultation> {
             throws NotFoundException, NumberFormatException, ProcessingException {
         String[] device = {object[5], object[6], object[7]};
         List<String> pathologies = Regex.getMatches("[^|]+", object[4]);
-        //pathologies.remove("");
         //noinspection EmpryBranchInAlteration
         return new Consultation(
                 Integer.parseInt(object[0]),
@@ -94,7 +93,7 @@ public class ConsultationController extends AbstractController<Consultation> {
                 LocalDate.parse(object[3]),
                 pathologies.toArray(new String[0]),
                 deviceCtrl.makeObjectFromString(device),
-                object[8].equals("true")
+                object[8]
         );
     }
 }
