@@ -54,8 +54,8 @@ public class Table<T extends AbstractData> extends JTable {
 
         // Paramétrage de la colonne Action pour afficher des boutons
 
-        // Choix des taille de colonnes
-        // Remarque: les tailles sont volontairement élevés pour que le tableau remplisse la colone
+        // Choix des tailles de colonnes
+        // Remarque : les tailles sont volontairement élevées pour que le tableau remplisse la colonne
         for (int i = 0; i < colNumb; i++) {
             if (i == colNumb - 3) {
                 this.getColumnModel().getColumn(i).setPreferredWidth(500);
@@ -69,7 +69,7 @@ public class Table<T extends AbstractData> extends JTable {
         // Choix de la taille des lignes
         this.setRowHeight(35);
 
-        // Dessin de de grille du tableau
+        // Dessin de la grille du tableau
         this.setGridColor(Colors.SECONDARY);
         this.setShowVerticalLines(false);
         this.setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));

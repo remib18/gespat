@@ -14,7 +14,7 @@ import exceptions.ProcessingException;
 import models.Patient;
 import utils.PatientTableModel;
 import views.popups.ConfirmSuppression;
-import views.popups.ErrorMessage;
+import views.popups.UserMessage;
 
 import javax.swing.JFrame;
 import javax.swing.Box;
@@ -39,7 +39,7 @@ public class Admin extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 575));
 
-        ErrorMessage.setActiveWindow(this);
+        UserMessage.setActiveWindow(this);
 
         this.patientCtrl = patientController;
 
@@ -142,10 +142,10 @@ public class Admin extends JFrame {
             setSelected(patient);
         } catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         } catch (ConflictingDataException err) {
             logger.log(Level.WARNING, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Warning);
         } catch (IllegalArgumentException err) {
             activeRow--;
         } finally {
@@ -165,7 +165,7 @@ public class Admin extends JFrame {
             selectedPatient.setBirthAt(birthAt.getDate());
         } catch (FormatException err) {
             logger.log(Level.SEVERE, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         }
         selectedPatient.setSocialId(Integer.parseInt(socialId.getText()));
         try {
@@ -173,10 +173,10 @@ public class Admin extends JFrame {
             updateGraphics();
         } catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         } catch (NotFoundException err) {
             logger.log(Level.WARNING, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Warning);
         }
     }
 
@@ -186,7 +186,7 @@ public class Admin extends JFrame {
             setSelected(Math.max(activeRow - 1, 0));
         } catch (NotFoundException ignore) {} catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         }
     }
 

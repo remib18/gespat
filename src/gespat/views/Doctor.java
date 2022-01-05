@@ -26,7 +26,7 @@ import utils.Date;
 import utils.File;
 import views.popups.ConfirmSuppression;
 import net.miginfocom.swing.MigLayout;
-import views.popups.ErrorMessage;
+import views.popups.UserMessage;
 import views.popups.SelectPatient;
 
 import javax.swing.*;
@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.*;
 
 public class Doctor extends JFrame {
 
@@ -61,7 +60,7 @@ public class Doctor extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 575));
 
-        ErrorMessage.setActiveWindow(this);
+        UserMessage.setActiveWindow(this);
 
         patientCtrl = patientController;
         consultCtrl = consultationController;
@@ -229,10 +228,10 @@ public class Doctor extends JFrame {
                 setSelected(consultation);
             } catch (ProcessingException err) {
                 logger.log(Level.SEVERE, err.getMessage());
-                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+                new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
             } catch (ConflictingDataException err) {
                 logger.log(Level.WARNING, err.getMessage());
-                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
+                new UserMessage(err.getMessage(), UserMessage.LEVEL.Warning);
             } finally {
                 updateGraphics();
             }
@@ -246,7 +245,7 @@ public class Doctor extends JFrame {
                 selectedConsultation.setConsultedAt(consultedAt.getDate());
             } catch (FormatException err) {
                 logger.log(Level.SEVERE, err.getMessage());
-                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+                new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
             }
             selectedConsultation.setDoctorName(doctorName.getText());
             try {
@@ -254,10 +253,10 @@ public class Doctor extends JFrame {
                 setSelected(selectedConsultation); // To update the view
             } catch (ProcessingException err) {
                 logger.log(Level.SEVERE, err.getMessage());
-                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+                new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
             } catch (NotFoundException err) {
                 logger.log(Level.WARNING, err.getMessage());
-                new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.User);
+                new UserMessage(err.getMessage(), UserMessage.LEVEL.Warning);
             }
             updateGraphics();
     }
@@ -269,7 +268,7 @@ public class Doctor extends JFrame {
         } catch (NotFoundException err) {
             /* The patient obviously exists */ } catch (ProcessingException err) {
             logger.log(Level.SEVERE, err.getMessage());
-            new ErrorMessage(err.getMessage(), ErrorMessage.LEVEL.System);
+            new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
         } finally {
             updateGraphics();
         }
@@ -304,9 +303,9 @@ public class Doctor extends JFrame {
 
         try {
             (new File<String>()).saveData(msg, file);
-            new ErrorMessage("Fiche de consultation exportée sous " + file + ".", ErrorMessage.LEVEL.Info);
+            new UserMessage("Fiche de consultation exportée sous " + file + ".", UserMessage.LEVEL.Info);
         } catch (ProcessingException e) {
-            new ErrorMessage("Erreur lors de l'enregistrement du fichier " + file + ".", ErrorMessage.LEVEL.System);
+            new UserMessage("Erreur lors de l'enregistrement du fichier " + file + ".", UserMessage.LEVEL.Severe);
         }
     }
 

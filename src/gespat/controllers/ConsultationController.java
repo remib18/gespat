@@ -20,7 +20,7 @@ public class ConsultationController extends AbstractController<Consultation> {
     private final DeviceController deviceCtrl;
 
     /**
-     * Crée un objet permettant la manimulation des consultations
+     * Crée un objet permettant la manipulation des consultations
      * @param patientCtrl
      * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
      */

@@ -7,6 +7,7 @@ import exceptions.ProcessingException;
 import models.AbstractData;
 import utils.File;
 import utils.StateManager;
+import views.popups.UserMessage;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public abstract class AbstractController<T extends AbstractData> {
     }
 
     /**
-     * Ajoute un évènement permetant d'écouter les mises à jours de données
+     * Ajoute un évènement permettant d'écouter les mises à jour de données
      * Utile dans le cas de plusieurs instances
      * @param listener
      */
@@ -74,7 +75,7 @@ public abstract class AbstractController<T extends AbstractData> {
     /**
      * Retourne la donnée
      * @param id identifiant
-     * @return donnée corespondante
+     * @return donnée correspondente
      * @throws NotFoundException si la donnée n'a pas été trouvée.
      */
     public T get(int id) throws NotFoundException {
@@ -95,7 +96,7 @@ public abstract class AbstractController<T extends AbstractData> {
 
     /**
      * Charge le jeu de données à partir du fichier.
-     * @throws ProcessingException si les données sont impossible à charger.
+     * @throws ProcessingException si les données sont impossibles à charger.
      */
     protected void load() throws ProcessingException {
         //clear();
@@ -109,7 +110,8 @@ public abstract class AbstractController<T extends AbstractData> {
             }
             catch (ConflictingDataException | NullPointerException | ArrayIndexOutOfBoundsException e) { /**/ }
             catch (NotFoundException | DateTimeParseException e) {
-                logger.log(Level.WARNING, "Donnée corrompu interceptée et supprimée.");
+                new UserMessage("Une donnée corrompue à été interceptée et supprimée.", UserMessage.LEVEL.Warning);
+                logger.log(Level.WARNING, "Donnée corrompue interceptée et supprimée.");
             }
         }
     }
@@ -117,7 +119,7 @@ public abstract class AbstractController<T extends AbstractData> {
     /**
      * Converti un tableau de chaine de caractère en donnée.
      * @param object la donnée.
-     * @return l'objet correpondant.
+     * @return l'objet correspondant.
      */
     protected abstract T makeObjectFromString(String[] object)
             throws NotFoundException, NumberFormatException, ProcessingException;
@@ -148,7 +150,7 @@ public abstract class AbstractController<T extends AbstractData> {
      * Supprime la donnée.
      * @param object donnée à supprimer.
      * @param confirmation validation de l'utilisateur via l'interface.
-     * @throws NotFoundException si l donnée à supprimer n'existe pas.
+     * @throws NotFoundException si la donnée à supprimer n'existe pas.
      * @throws ProcessingException
      */
     public void remove(T object, boolean confirmation) throws NotFoundException, ProcessingException {
@@ -162,7 +164,7 @@ public abstract class AbstractController<T extends AbstractData> {
 
     /**
      * Enregistre le jeu de données dans le fichier.
-     * @throws ProcessingException si les données sont impossible à sauvegarder.
+     * @throws ProcessingException si les données sont impossibles à sauvegarder.
      */
     protected void save() throws ProcessingException {
         (new File<T>()).saveData(data, storeFile);
@@ -170,7 +172,7 @@ public abstract class AbstractController<T extends AbstractData> {
 
     /**
      * Met à jour les informations d'une donnée
-     * @param data la donnée mofifiée
+     * @param data la donnée modifiée
      * @throws ProcessingException
      * @throws NotFoundException
      */
@@ -178,7 +180,7 @@ public abstract class AbstractController<T extends AbstractData> {
         remove(data.getId(), true);
         try {
             add(data);
-        } catch (ConflictingDataException e) {/* La donnée ne peut être en conflit car elle a été supprimé préalablement */}
+        } catch (ConflictingDataException e) {/* La donnée ne peut être en conflit, car elle a été supprimée préalablement */}
     }
 
 }

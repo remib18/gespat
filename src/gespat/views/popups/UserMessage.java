@@ -3,12 +3,12 @@ package views.popups;
 import javax.swing.*;
 import java.awt.*;
 
-public class ErrorMessage {
+public class UserMessage {
 
     private static Component component = null;
 
     public enum LEVEL {
-        User, System, Info
+        Info, Warning, Severe
     }
 
     /**
@@ -16,7 +16,7 @@ public class ErrorMessage {
      * @param message
      */
     @SuppressWarnings("MagicConstant")
-    public ErrorMessage(String message, LEVEL level) {
+    public UserMessage(String message, LEVEL level) {
         // TODO Auto-generated constructor stub
         JOptionPane.showMessageDialog(component, message, getTitle(level), getMessageType(level));
 
@@ -28,16 +28,16 @@ public class ErrorMessage {
 
     private String getTitle(LEVEL level) {
         switch (level) {
-            case User: return "Oups, il semberait que vous ayez oublié quelque chose !";
-            case System: return "Un problème s'est produit...";
+            case Warning: return "Oups, un problème est survenu...";
+            case Severe: return "Une erreure s'est produite...";
             default: return "Message";
         }
     }
 
     private int getMessageType(LEVEL level) {
         switch (level) {
-            case User: return JOptionPane.WARNING_MESSAGE;
-            case System: return JOptionPane.ERROR_MESSAGE;
+            case Warning: return JOptionPane.WARNING_MESSAGE;
+            case Severe: return JOptionPane.ERROR_MESSAGE;
             default: return JOptionPane.INFORMATION_MESSAGE;
         }
     }

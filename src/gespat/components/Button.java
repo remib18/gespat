@@ -182,7 +182,7 @@ public class Button extends JButton {
         // Calcul de la largeur du bouton
         double w = this.getTrueWidth();
 
-        // Dessine un rectangle arrondis
+        // Dessine un rectangle arrondi
         g2d.fill(new RoundRectangle2D.Double(
                 this.getXPos(), 0,
                 w, (double) getHeight() - 1,
@@ -190,7 +190,7 @@ public class Button extends JButton {
         ));
 
         // Si le bouton est de style outlined,
-        // Dessine un autre rectangle arrondis au milieu du précédent avec la couleur du parent
+        // Dessine un autre rectangle arrondi au milieu du précédent avec la couleur du parent
         if (this.styleOutline) {
             double stroke = this.outlineStrokeWidth * 2;
             double radius = 15 - this.outlineStrokeWidth;

@@ -45,7 +45,7 @@ public class SearchBar extends Text {
         this.setMinimumSize(new Dimension(100, 20));
         this.setPreferredSize(new Dimension(10000, 41));
 
-        // Réglage de de couleur de fond
+        // Réglage de la couleur de fond
         this.setBackground(Colors.SECONDARY);
         this.setOpaque(false);
     }

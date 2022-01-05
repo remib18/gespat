@@ -117,7 +117,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
                 break;
 
             default:
-                logger.log(Level.SEVERE, "Position inhéxistante.");
+                logger.log(Level.SEVERE, "Position inexistante.");
                 break;
         }
         return this;
@@ -151,7 +151,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
                 break;
 
             default:
-                logger.log(Level.SEVERE, "Position inhéxistante.");
+                logger.log(Level.SEVERE, "Position inexistante.");
                 break;
         }
         return this;
@@ -226,8 +226,8 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
     }
 
     /**
-     * Effectue un recalcul de l'affichage de la sidebar
-     * Notamment utile si des composants sont ajouter ou supprimer
+     * Effectue un re-calcul de l'affichage de la sidebar
+     * Notamment utile si des composants sont ajoutées ou supprimer
      */
     public void updateGUI() {
         search.update();
@@ -241,7 +241,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
     }
 
     /**
-     * ConstrColorst le layout
+     * Construit le layout
      */
     private void init() {
         // Attribution des LayoutManager
@@ -268,7 +268,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         // Attribution du layout
         main.setLayout(new BorderLayout());
 
-        // Redimentionnement
+        // Redimensionnement
         main.setPreferredSize(new Dimension(panelWidth - sidebarWidth, panelHeight));
 
         // Changement des couleurs
@@ -289,7 +289,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         // Attribution du layout
         sidebar.setLayout(new BorderLayout());
 
-        // Redimentionnement
+        // Redimensionnement
         Dimension sDim = new Dimension(sidebarWidth, panelHeight);
         sidebar.setPreferredSize(sDim);
         sidebar.setMinimumSize(sDim);
@@ -305,7 +305,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
         sidebar.add(sidebarBody);
         sidebar.add(sidebarFooter, BorderLayout.SOUTH);
 
-        // Attribution des donnés générales
+        // Attribution des données générales
         JPanel titleContainer = new JPanel();
         titleContainer.setLayout(new MigLayout("", "", "c"));
         titleContainer.setOpaque(false);
@@ -321,7 +321,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
     /**
      * Ajoute au template la barre de recherche et le tableau des résultats.
      *
-     * @param data     correspond aux donnés parmis lesquels effectuer la recherche
+     * @param data     correspond aux donnés parmi lesquels effectuer la recherche
      * @param model    correspond au model de tableau
      * @param listener l'écouteur à placer sur la recherche
      */
@@ -332,7 +332,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
     /**
      * Ajoute au template la barre de recherche et le tableau des résultats.
      *
-     * @param data     correspond aux donnés parmis lesquels effectuer la recherche
+     * @param data     correspond aux donnés parmi lesquels effectuer la recherche
      * @param model    correspond au model de tableau
      * @param listener l'écouteur à placer sur la recherche
      * @param filters  l'ensemble des filtres à appliquer

@@ -54,7 +54,7 @@ public abstract class AbstractTableModel<T extends AbstractData> extends javax.s
     /**
      * Définit un nouveau jeu de donnée pour le tableau
      * @apiNote cette méthode supprime les anciennes données
-     * @param data la liste des données contenus dans le tableau
+     * @param data la liste des données contenues dans le tableau
      */
     public void setDataSet(List<T> data) {
         this.data = data;

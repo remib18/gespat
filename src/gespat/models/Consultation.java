@@ -57,7 +57,7 @@ public class Consultation extends AbstractData {
     }
 
     /**
-     * @return les pathologies diagnostiqués
+     * @return les pathologies diagnostiquées
      */
     public List<String> getDiagnosedPathologies() {
         if (diagnosedPathologies == null)
@@ -111,7 +111,7 @@ public class Consultation extends AbstractData {
     }
 
     /**
-     * @param diagnosedPathologies les pathologies diagnostiqués à définir
+     * @param diagnosedPathologies les pathologies diagnostiquées à définir
      */
     public void setDiagnosedPathologies(String[] diagnosedPathologies) {
         this.diagnosedPathologies = diagnosedPathologies;

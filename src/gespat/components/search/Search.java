@@ -24,8 +24,8 @@ public class Search<T extends AbstractData> implements DocumentListener {
 
     /**
      * Permet d'effectuer une recherche dans un tableau.
-     * Le tableau sera automatiquement créer.
-     * @param sBar la barre de recherche lié, doit être positionner dans une entête du template
+     * Le tableau sera automatiquement créé.
+     * @param sBar la barre de recherche liée, doit être positionnée dans un entête du template
      * @param data le lot de données à chercher
      * @param tableResult un tableau pour afficher le résultat
      */
@@ -56,8 +56,8 @@ public class Search<T extends AbstractData> implements DocumentListener {
     }
 
     /**
-     * Ecoute chaque changement de la barre de recherche
-     * Note: je n'ai jamais vu ce cas s'exécuter, je suppose qu'il s'agit des changements effectuer par le code.
+     * Écoute chaque changement de la barre de recherche
+     * Note : je n'ai jamais vu ce cas s'exécuter, je suppose qu'il s'agit des changements effectuer par le code.
      */
     @Override
     public void changedUpdate(DocumentEvent e) {
@@ -69,7 +69,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
      */
     @SuppressWarnings("unchecked")
     private void displayResult() {
-        // On établit le conteneur, possible car la barre de recherche doit toujours être dans un header de template
+        // On établit le conteneur, possible, car la barre de recherche doit toujours être dans un header de template
         final Container cont = (Container) sBar.getParent().getParent().getComponent(1);
 
         // On supprime l'ancien tableau

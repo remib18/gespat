@@ -14,7 +14,7 @@ import models.Patient;
 import utils.Colors;
 import utils.ConsultationTableModel;
 import net.miginfocom.swing.MigLayout;
-import views.popups.ErrorMessage;
+import views.popups.UserMessage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,7 +36,7 @@ public class Tech extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setMinimumSize(new Dimension(978, 575));
 
-        ErrorMessage.setActiveWindow(this);
+        UserMessage.setActiveWindow(this);
 
         List<FilterInterface<Consultation>> filters = new ArrayList<>();
         filters.add(new SearchFilter());

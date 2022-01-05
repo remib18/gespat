@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class PatientController extends AbstractController<Patient> {
 
     /**
-     * Crée un objet permettant la manimulation des consultations
+     * Crée un objet permettant la manipulation des consultations
      * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
      */
     public PatientController() throws ProcessingException {

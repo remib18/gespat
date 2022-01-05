@@ -8,7 +8,7 @@ import controllers.DeviceController;
 import controllers.PatientController;
 import utils.Colors;
 import net.miginfocom.swing.MigLayout;
-import views.popups.ErrorMessage;
+import views.popups.UserMessage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,7 +32,7 @@ public class Login extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setBackground(Colors.PRIMARY);
 
-        ErrorMessage.setActiveWindow(this);
+        UserMessage.setActiveWindow(this);
 
         this.patientController = patientController;
         this.consultationController = consultationController;

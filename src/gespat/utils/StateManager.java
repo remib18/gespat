@@ -1,7 +1,7 @@
 package utils;
 
 import exceptions.ProcessingException;
-import views.popups.ErrorMessage;
+import views.popups.UserMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class StateManager {
 			load();
 			logger.log(Level.INFO, "Application State : loaded.");
 		} catch (ProcessingException err) {
-			new ErrorMessage("Erreur lors du chargement de l'application.", ErrorMessage.LEVEL.System);
+			new UserMessage("Erreur lors du chargement de l'application.", UserMessage.LEVEL.Severe);
 			logger.log(Level.SEVERE, "Application State : error during loading.");
 		}
 	}
@@ -97,9 +97,9 @@ public class StateManager {
 		try {
 			new File<Integer>().saveData(data, "app-state.txt");
 		} catch (ProcessingException e) {
-			new ErrorMessage("Attention, une erreur système est survenue." +
+			new UserMessage("Attention, une erreur système est survenue." +
 					" En cas de fermeture de l'application, des données risquent d'être perdue.",
-					ErrorMessage.LEVEL.System);
+					UserMessage.LEVEL.Severe);
 			logger.log(Level.SEVERE, "Erreur lors de l'enregistrement de l'état de l'application.");
 		}
 	}
