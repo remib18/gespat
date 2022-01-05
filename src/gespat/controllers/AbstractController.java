@@ -6,17 +6,26 @@ import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.AbstractData;
 import utils.File;
+import utils.StateManager;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AbstractController<T extends AbstractData> {
+
+    protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /** Liste des données */
     protected final List<T> data = new ArrayList<>();
 
     /** Fichier de stockage */
     protected String storeFile;
+
+    /** Clé utilisée pour utiliser la state */
+    protected StateManager.DataType stateDataType;
 
     /** Listeners sur la mise à jour des données */
     protected final List<TableListener<T>> tableUpdateListeners = new ArrayList<>();
@@ -31,6 +40,7 @@ public abstract class AbstractController<T extends AbstractData> {
     protected T add(T object) throws ConflictingDataException, ProcessingException {
         try {
             get(object.getId());
+            StateManager.getState().narrowNextInsertionIndex(stateDataType);
             throw new ConflictingDataException("[ABS CTRL — ADD]: Une donnée avec le même identifiant existe déjà.");
         } catch (NotFoundException e) {
             data.add(object);
@@ -56,6 +66,7 @@ public abstract class AbstractController<T extends AbstractData> {
      */
     public void clear() throws ProcessingException {
         data.clear();
+        StateManager.getState().clearData(stateDataType);
         save();
         publishTableUpdate();
     }
@@ -82,16 +93,12 @@ public abstract class AbstractController<T extends AbstractData> {
         return data;
     }
 
-    protected int getLastInsertedIndex() {
-        return data.size() - 1;
-    }
-
     /**
      * Charge le jeu de données à partir du fichier.
      * @throws ProcessingException si les données sont impossible à charger.
      */
     protected void load() throws ProcessingException {
-        clear();
+        //clear();
         final String[][] newData = (new File<T>()).getData(storeFile);
         if (newData == null) {
             return;
@@ -101,8 +108,8 @@ public abstract class AbstractController<T extends AbstractData> {
                 add(makeObjectFromString(object));
             }
             catch (ConflictingDataException | NullPointerException | ArrayIndexOutOfBoundsException e) { /**/ }
-            catch (NotFoundException e) {
-                System.err.println("[ABS CTRL — LOAD]: Donnée corrompu interceptée et supprimée.");
+            catch (NotFoundException | DateTimeParseException e) {
+                logger.log(Level.WARNING, "Donnée corrompu interceptée et supprimée.");
             }
         }
     }

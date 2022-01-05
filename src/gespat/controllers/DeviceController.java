@@ -3,6 +3,7 @@ package controllers;
 import exceptions.ConflictingDataException;
 import exceptions.ProcessingException;
 import models.Device;
+import utils.StateManager;
 
 public class DeviceController extends AbstractController<Device> {
 
@@ -10,13 +11,14 @@ public class DeviceController extends AbstractController<Device> {
 
 	public DeviceController() throws ProcessingException {
 		storeFile = "devices.txt";
+		stateDataType = StateManager.DataType.Device;
 
 		load();
 	}
 
 	public Device add(Device.STATES state, String label) throws ConflictingDataException, ProcessingException {
 		return add(new Device(
-				getLastInsertedIndex() + 1,
+				StateManager.getState().getNextInsertionIndex(StateManager.DataType.Device),
 				state,
 				label
 		));

@@ -3,6 +3,7 @@ consultations.txt
 patients.txt
 devices.txt
 export-*.txt
+app-state.txt
 
 #
 # Generate by Git Ignore Generator for MacOS#

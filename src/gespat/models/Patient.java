@@ -109,7 +109,7 @@ public class Patient extends AbstractData {
     @Override
     public String toString() {
         final String date = birthAt == null ? "null" : Date.convert(this.birthAt);
-        return this.lastname + fs + this.firstname + fs + this.socialId + fs + date;
+        return this.id + fs + this.lastname + fs + this.firstname + fs + this.socialId + fs + date;
     }
 
 }

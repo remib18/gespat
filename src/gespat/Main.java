@@ -5,6 +5,7 @@ import controllers.PatientController;
 import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
+import models.Consultation;
 import models.Device;
 import models.Patient;
 import views.Login;
@@ -28,8 +29,9 @@ public class Main {
     public static void genData() throws ProcessingException {
         logger.log(Level.INFO, "Génération de données test");
 
-        patientController.clear();
         consultationController.clear();
+        patientController.clear();
+        deviceController.clear();
 
         try {
             patientController.add("Jean", "Jack", 123, LocalDate.of(2000, 1, 21));
@@ -86,6 +88,7 @@ public class Main {
         }
     }
 
+
     /** Point de démarage de l'application */
     public static void main(String[] args) {
         logger.log(Level.INFO, "Lancement de l'application");
@@ -96,7 +99,7 @@ public class Main {
             consultationController = new ConsultationController(patientController, deviceController);
 
             // Simulation de données pour le développement
-            genData();
+            //genData();
 
             logger.log(Level.INFO, "Application démarée");
             // On lance la fenêtre de connexion

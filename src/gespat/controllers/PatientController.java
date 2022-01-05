@@ -4,6 +4,7 @@ import exceptions.ConflictingDataException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
+import utils.StateManager;
 
 import java.time.LocalDate;
 
@@ -14,13 +15,20 @@ public class PatientController extends AbstractController<Patient> {
      * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
      */
     public PatientController() throws ProcessingException {
-        this.storeFile = "patients.txt";
+        storeFile = "patients.txt";
+        stateDataType = StateManager.DataType.Patient;
 
         load();
     }
 
     public Patient add(String firstname, String lastname, int socialId, LocalDate birthAt) throws ConflictingDataException, ProcessingException {
-        return super.add(new Patient(getLastInsertedIndex() + 1, firstname, lastname, socialId, birthAt));
+        return super.add(new Patient(
+                StateManager.getState().getNextInsertionIndex(StateManager.DataType.Patient),
+                firstname,
+                lastname,
+                socialId,
+                birthAt
+        ));
     }
 
     @Override

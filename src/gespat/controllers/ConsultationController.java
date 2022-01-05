@@ -6,6 +6,8 @@ import exceptions.ProcessingException;
 import models.Consultation;
 import models.Device;
 import models.Patient;
+import utils.Regex;
+import utils.StateManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ public class ConsultationController extends AbstractController<Consultation> {
             throws ProcessingException {
         this.patientCtrl = patientCtrl;
         this.deviceCtrl = deviceCtrl;
-        this.storeFile = "consultations.txt";
+        storeFile = "consultations.txt";
+        stateDataType = StateManager.DataType.Patient;
 
         load();
     }
@@ -52,7 +55,7 @@ public class ConsultationController extends AbstractController<Consultation> {
     ) throws ConflictingDataException, ProcessingException {
         Device device = requiredEquipment == null ? deviceCtrl.add(Device.STATES.UNDEFINED, null) : requiredEquipment;
         return add(new Consultation(
-                getLastInsertedIndex() + 1,
+                StateManager.getState().getNextInsertionIndex(StateManager.DataType.Consultation),
                 patient,
                 doctorName,
                 consultedAt,
@@ -81,13 +84,15 @@ public class ConsultationController extends AbstractController<Consultation> {
     protected Consultation makeObjectFromString(String[] object)
             throws NotFoundException, NumberFormatException, ProcessingException {
         String[] device = {object[5], object[6], object[7]};
+        List<String> pathologies = Regex.getMatches("[^|]+", object[4]);
+        //pathologies.remove("");
         //noinspection EmpryBranchInAlteration
         return new Consultation(
                 Integer.parseInt(object[0]),
                 patientCtrl.get(Integer.parseInt(object[1])),
                 object[2],
                 LocalDate.parse(object[3]),
-                object[4].split("|"),
+                pathologies.toArray(new String[0]),
                 deviceCtrl.makeObjectFromString(device),
                 object[8].equals("true")
         );
