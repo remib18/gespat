@@ -20,9 +20,6 @@ public class Login extends JFrame {
 	final ConsultationController consultationController;
 	final DeviceController deviceController;
 
-	/**
-	 * Création de la page d'accueil
-	 */
 	public Login(
 			PatientController patientController,
 			ConsultationController consultationController,
@@ -44,9 +41,6 @@ public class Login extends JFrame {
 		setVisible(true);
 	}
 
-	/**
-	 * Ajout des différents boutons permettant de se connecter
-	 */
 	private JPanel getButtons() {
 		JPanel buttonContainer = new JPanel();
 		buttonContainer.setLayout(new MigLayout());
@@ -72,9 +66,6 @@ public class Login extends JFrame {
 		return buttonContainer;
 	}
 
-	/**
-	 * Ajout d'informations permettant à l'utilisateur de se repérer
-	 */
 	private XCenteredContainer getContent() {
 		final XCenteredContainer container = new XCenteredContainer(Colors.PRIMARY);
 
@@ -86,7 +77,7 @@ public class Login extends JFrame {
 		container.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		Button goToStats = new Button("Y aller", Button.Size.SMALL);
-		goToStats.addActionListener(e -> new Stats());
+		goToStats.addActionListener(e -> new Stats(consultationController,deviceController));
 		container.add(goToStats);
 
 		return container;
