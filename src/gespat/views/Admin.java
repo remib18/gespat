@@ -180,8 +180,9 @@ public class Admin extends JFrame {
 	}
 
 	private void delete() {
+		if (!ConfirmSuppression.getPopup(this)) return;
 		try {
-			patientCtrl.remove(selectedPatient, ConfirmSuppression.getPopup());
+			patientCtrl.remove(selectedPatient, true);
 			setSelected(Math.max(activeRow - 1, 0));
 			new UserMessage("Patient supprimé.", UserMessage.LEVEL.Info);
 		} catch (NotFoundException ignore) {

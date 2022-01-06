@@ -290,8 +290,9 @@ public class Doctor extends JFrame {
 	}
 
 	private void delete() {
+		if (!ConfirmSuppression.getPopup(this)) return;
 		try {
-			consultCtrl.remove(selectedConsultation, ConfirmSuppression.getPopup());
+			consultCtrl.remove(selectedConsultation, true);
 			setSelected(Math.max(activeRow - 1, 0));
 			new UserMessage("Consultation supprimée avec succès.", UserMessage.LEVEL.Info);
 		} catch (NotFoundException err) {
