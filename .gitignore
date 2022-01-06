@@ -235,3 +235,7 @@ fabric.properties
 .vscode/settings.json
 .idea/vcs.xml
 .idea/codeStyles/codeStyleConfig.xml
+/bin/
+.classpath
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.jdt.core.prefs
