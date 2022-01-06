@@ -51,6 +51,9 @@ public class Doctor extends JFrame {
 	private Consultation selectedConsultation;
 	private int activeRow;
 
+	/**
+	 * Création de la page pour les médecins
+	 */
 	public Doctor(
 			PatientController patientController,
 			ConsultationController consultationController
@@ -75,14 +78,14 @@ public class Doctor extends JFrame {
 		);
 
 		createBtn = new Button("Nouvelle consultation").setPosition(Button.Position.END);
-		createBtn.addActionListener(e -> create(createBtn));
+		createBtn.addActionListener(this::create);
 		template.add(createBtn, In.MAIN_HEADER, "gapleft 0");
 
 		Label tableTitle = new Label("Liste des consultations liées au patient", Label.Styles.TITLE);
 		template.add(tableTitle, In.MAIN_BODY);
 
 		exportBtn = new Button("Exporter", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
-		exportBtn.addActionListener(e -> export());
+		exportBtn.addActionListener(this::export);
 		template.add(exportBtn.setPosition(Button.Position.END), In.SIDEBAR_HEADER);
 
 		sidebarSetup();
@@ -91,6 +94,9 @@ public class Doctor extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * @return Retourne les appareils attribués
+	 */
 	private Component getDevicesCheckboxes() {
 		final JPanel panel = new JPanel();
 		panel.setLayout(new MigLayout("wrap 1, insets 0"));
@@ -118,6 +124,9 @@ public class Doctor extends JFrame {
 		return panel;
 	}
 
+	/**
+	 * @return Retourne les pathologies attribuées
+	 */
 	private Component getPathologiesCheckboxes() {
 		final JPanel panel = new JPanel();
 		panel.setLayout(new MigLayout("wrap 1, insets 0"));
@@ -143,13 +152,21 @@ public class Doctor extends JFrame {
 		return panel;
 	}
 
-	@SuppressWarnings("unused")
+	/**
+	 * Permet d'ajouter une pathologie
+	 * @param e
+	 */
 	private void addPathology(ActionEvent e) {
 		String pathology = JOptionPane.showInputDialog(this, "Saisissez le nom de la pathologie :");
 		setPathology(pathology, true);
 		save(false);
 	}
 
+	/**
+	 * TODO remi
+	 *
+	 * @param consultation
+	 */
 	private void setSelected(Consultation consultation) {
 		try {
 			int row = tableUtils.getRowIndex(consultation);
@@ -162,6 +179,11 @@ public class Doctor extends JFrame {
 		}
 	}
 
+	/**
+	 * TODO remi
+	 *
+	 * @param row
+	 */
 	private void setSelected(int row) {
 		try {
 			Consultation consultation = tableUtils.getData(row);
@@ -175,6 +197,9 @@ public class Doctor extends JFrame {
 		}
 	}
 
+	/**
+	 * Met à jour l'interface après une modification
+	 */
 	private void updateGraphics() {
 		template.clear(In.SIDEBAR_BODY);
 		template.clear(In.SIDEBAR_FOOTER);
@@ -184,6 +209,9 @@ public class Doctor extends JFrame {
 		revalidate();
 	}
 
+	/**
+	 * Mise en place de l'interface latérale
+	 */
 	private void sidebarSetup() {
 		if (selectedConsultation == null) {
 			// Si aucun patient n'est selectionner, on affiche un message et on masque le bouton d'export.
@@ -223,7 +251,7 @@ public class Doctor extends JFrame {
 		saveBtn.addActionListener(e -> save(doctorName, consultedAt, details));
 
 		Button deleteBtn = new Button("Supprimer la consultation", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.DANGER);
-		deleteBtn.addActionListener(e -> delete());
+		deleteBtn.addActionListener(this::delete);
 
 		// template.add(saveBtn, In.SIDEBAR_FOOTER);
 		// template.add(Box.createRigidArea(new Dimension(0, 5)), In.SIDEBAR_FOOTER);
@@ -235,7 +263,11 @@ public class Doctor extends JFrame {
 		template.add(deleteBtn, In.SIDEBAR_BODY);
 	}
 
-	private void create(Button btn) {
+	/**
+	 * Permet de créer un nouveau formulaire consultation
+	 */
+	private void create(ActionEvent e) {
+		Button btn = (Button) e.getSource();
 		(new SelectPatient(
 				patientCtrl.getAll(),
 				template,
@@ -258,6 +290,13 @@ public class Doctor extends JFrame {
 		});
 	}
 
+	/**
+	 * Permet d'enregistrer les modifications apporter au formulaire patient
+	 *
+	 * @param doctorName   nom du médecin
+	 * @param consultedAt  date de la consultation
+	 * @param observations observations en détails de la consultation
+	 */
 	private void save(SidebarRow doctorName,
 	                  SidebarRow consultedAt,
 	                  TextArea observations
@@ -273,6 +312,11 @@ public class Doctor extends JFrame {
 		save(true);
 	}
 
+	/**
+	 * Enregistre la donnée
+	 *
+	 * @param showSuccessMessage <code>true</code> pour afficher le message de succès
+	 */
 	private void save(boolean showSuccessMessage) {
 		try {
 			consultCtrl.update(selectedConsultation);
@@ -289,7 +333,10 @@ public class Doctor extends JFrame {
 		updateGraphics();
 	}
 
-	private void delete() {
+	/**
+	 * Permet de supprimer un dossier consultation
+	 */
+	private void delete(ActionEvent e) {
 		if (!ConfirmSuppression.getPopup(this)) return;
 		try {
 			consultCtrl.remove(selectedConsultation, true);
@@ -305,7 +352,10 @@ public class Doctor extends JFrame {
 		}
 	}
 
-	private void export() {
+	/**
+	 * Permet d'exporter toutes les informations de la consultation dans un fichier en cliquant sur un bouton
+	 */
+	private void export(ActionEvent e) {
 		List<String> msg = new ArrayList<>();
 		msg.add("Détails de la consultation");
 		msg.add("");
@@ -335,12 +385,14 @@ public class Doctor extends JFrame {
 		try {
 			(new File<String>()).saveData(msg, file);
 			new UserMessage("Fiche de consultation exportée sous " + file + ".", UserMessage.LEVEL.Info);
-		} catch (ProcessingException e) {
+		} catch (ProcessingException err) {
 			new UserMessage("Erreur lors de l'enregistrement du fichier " + file + ".", UserMessage.LEVEL.Severe);
 		}
 	}
 
-
+	/**
+	 * Définit la pathologie
+	 */
 	private void setPathology(String pathology, boolean checkboxState) {
 		final List<String> pathologies = selectedConsultation.getDiagnosedPathologies();
 		final boolean contains = pathologies.contains(pathology);

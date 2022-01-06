@@ -10,6 +10,9 @@ public class Stats extends JFrame {
 
 	private static final long serialVersionUID = -1377226174334041975L;
 
+	/**
+	 * Création de la page contenant les statistiques
+	 */
 	public Stats() {
 		setTitle("GesPat — Statistiques");
 		setSize(1080, 575);

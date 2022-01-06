@@ -18,6 +18,7 @@ import views.popups.UserMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +33,9 @@ public class Admin extends JFrame {
 	private Patient selectedPatient;
 	private int activeRow;
 
+	/**
+	 * Création d'une page pour les administrateurs
+	 */
 	@SuppressWarnings("SpellCheckingInspection")
 	public Admin(PatientController patientController) {
 		setTitle("GesPat — Personnel d'administration");
@@ -54,7 +58,7 @@ public class Admin extends JFrame {
 		);
 
 		Button create = new Button("Nouveau patient").setPosition(Button.Position.END);
-		create.addActionListener(e -> create());
+		create.addActionListener(this::create);
 		template.add(create, In.MAIN_HEADER, "gapleft 0");
 
 		Label tableTitle = new Label("Résultat de la recherche");
@@ -66,6 +70,11 @@ public class Admin extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Définit le patient sélectionné
+	 *
+	 * @param patient patient à sélectionner
+	 */
 	private void setSelected(Patient patient) {
 		try {
 			int row = tableUtils.getRowIndex(patient);
@@ -78,6 +87,11 @@ public class Admin extends JFrame {
 		}
 	}
 
+	/**
+	 * Définit le patient à sélectionner
+	 *
+	 * @param row ligne du tableau des résultats
+	 */
 	private void setSelected(int row) {
 		try {
 			Patient patient = tableUtils.getData(row);
@@ -91,6 +105,9 @@ public class Admin extends JFrame {
 		}
 	}
 
+	/**
+	 * Met à jour l'interface après une modification
+	 */
 	private void updateGraphics() {
 		template.clear(In.SIDEBAR_BODY);
 		template.clear(In.SIDEBAR_FOOTER);
@@ -100,6 +117,9 @@ public class Admin extends JFrame {
 		revalidate();
 	}
 
+	/**
+	 * Mise en place de l'interface latérale
+	 */
 	private void sidebarSetup() {
 		if (selectedPatient == null) {
 			// Si aucun patient n'est selectionner, on affiche un message.
@@ -123,7 +143,7 @@ public class Admin extends JFrame {
 		saveBtn.addActionListener(e -> save(lastname, firstname, birthAt, socialId));
 
 		Button deleteBtn = new Button("Supprimer le patient", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.DANGER);
-		deleteBtn.addActionListener(e -> delete());
+		deleteBtn.addActionListener(this::delete);
 
 		// template.add(saveBtn, In.SIDEBAR_FOOTER);
 		// template.add(Box.createRigidArea(new Dimension(0, 5)), In.SIDEBAR_FOOTER);
@@ -135,7 +155,10 @@ public class Admin extends JFrame {
 		template.add(deleteBtn, In.SIDEBAR_BODY);
 	}
 
-	private void create() {
+	/**
+	 * Permet de créer un nouveau formulaire patient
+	 */
+	private void create(ActionEvent e) {
 		try {
 			Patient patient = patientCtrl.add("xxx", "xxx", 0, null);
 			setSelected(patient);
@@ -153,6 +176,14 @@ public class Admin extends JFrame {
 		}
 	}
 
+	/**
+	 * Permet d'enregistrer les modifications apporter au formulaire patient
+	 *
+	 * @param lastname  nom de famille du patient
+	 * @param firstname prénom du patient
+	 * @param birthAt   date de naissance du patient
+	 * @param socialId  numéro de sécurité sociale du patient
+	 */
 	private void save(
 			SidebarRow lastname,
 			SidebarRow firstname,
@@ -181,7 +212,10 @@ public class Admin extends JFrame {
 		}
 	}
 
-	private void delete() {
+	/**
+	 * Permet de supprimer un dossier patient
+	 */
+	private void delete(ActionEvent e) {
 		if (!ConfirmSuppression.getPopup(this)) return;
 		try {
 			patientCtrl.remove(selectedPatient, true);

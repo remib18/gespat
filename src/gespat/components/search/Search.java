@@ -33,15 +33,20 @@ public class Search<T extends AbstractData> implements DocumentListener {
 	 */
 	public Search(SearchBar sBar, List<T> data, ScrollableTable<T> tableResult) {
 		this.data = data;
+
+		// Trie les données
 		Collections.sort(this.data);
+
 		this.lastSearchResult = this.data;
 		this.sBar = sBar;
 		this.tableResult = tableResult;
+
+		// Permet la récupération de la donnée sélectionnée
 		this.tableResult.addTableListener(new TableListener<T>() {
 
 			@Override
-			public void getDataOnRowSelected(T patient) {
-				selectedResult = patient;
+			public void getDataOnRowSelected(T data) {
+				selectedResult = data;
 				publishSelectionListener();
 			}
 
@@ -53,13 +58,18 @@ public class Search<T extends AbstractData> implements DocumentListener {
 		EventQueue.invokeLater(this::displayResult);
 	}
 
+	/**
+	 * Ajoute un écouteur permettant l'écoute de la sélection dans le tableau des résultats
+	 *
+	 * @param listener écouteur
+	 */
 	public void addSelectionListener(SearchSelectedListener<T> listener) {
 		subscribedSelectionListeners.add(listener);
 	}
 
 	/**
 	 * Écoute chaque changement de la barre de recherche
-	 * Note : je n'ai jamais vu ce cas s'exécuter, je suppose qu'il s'agit des changements effectuer par le code.
+	 * Note : je n'ai jamais vu ce cas s'exécuter
 	 */
 	@Override
 	public void changedUpdate(DocumentEvent e) {
@@ -96,6 +106,9 @@ public class Search<T extends AbstractData> implements DocumentListener {
 		return this.lastSearchResult;
 	}
 
+	/**
+	 * @return l'élément sélectionné dans le tableau
+	 */
 	public T getSelected() {
 		return selectedResult;
 	}
@@ -127,6 +140,9 @@ public class Search<T extends AbstractData> implements DocumentListener {
 		update();
 	}
 
+	/**
+	 * Exécute la recherche
+	 */
 	public void update() {
 		if (lastSearchResult.equals(data)) {
 			lastSearchResult = search(sBar.getText(), data);
@@ -142,6 +158,9 @@ public class Search<T extends AbstractData> implements DocumentListener {
 		displayResult();
 	}
 
+	/**
+	 * Publie l'évènement
+	 */
 	public void publishSelectionListener() {
 		subscribedSelectionListeners.forEach(
 				listener -> listener.onSelectionChange(getSelected(), new TableRowsFunctionsInterface<T>() {
@@ -159,7 +178,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
 	}
 
 	/**
-	 * Ecoute chaque suppression de caractère dans la barre de recherche
+	 * Écoute chaque suppression de caractère dans la barre de recherche
 	 */
 	@Override
 	public void removeUpdate(DocumentEvent e) {
@@ -187,11 +206,17 @@ public class Search<T extends AbstractData> implements DocumentListener {
 		return result;
 	}
 
+	/**
+	 * Ajoute un filtre
+	 */
 	public void addFilter(FilterInterface<T> filter) {
 		filters.add(filter);
 		data = applyFilters(data);
 	}
 
+	/**
+	 * Applique le filtre sur la liste de données
+	 */
 	private List<T> applyFilters(List<T> data) {
 		for (FilterInterface<T> filter : filters) {
 			data = filter.newFilter(data);

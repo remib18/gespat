@@ -11,9 +11,7 @@ public class Table<T extends AbstractData> extends JTable {
 
 	private static final long serialVersionUID = -4513960817544981475L;
 
-	/**
-	 * Liste des écouteurs
-	 */
+	/** Liste des écouteurs */
 	protected final List<TableListener<T>> tableListeners = new ArrayList<>();
 
 	private final int colNumb;
@@ -39,6 +37,7 @@ public class Table<T extends AbstractData> extends JTable {
 	/**
 	 * Ajoute un écouteur
 	 *
+	 * @param listener l'écouteur
 	 */
 	public void addTableListener(TableListener<T> listener) {
 		tableListeners.add(listener);

@@ -17,6 +17,7 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée date non modifiable pour la sidebar
 	 *
+	 * @param label texte du label
 	 * @param date  date par défaut
 	 */
 	public SidebarRow(String label, LocalDate date) {
@@ -27,6 +28,7 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée date pour la sidebar
 	 *
+	 * @param label texte du label
 	 * @param date    date par défaut
 	 * @param canEdit définit si la donnée est modifiable
 	 */
@@ -38,6 +40,7 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée texte non modifiable pour la sidebar
 	 *
+	 * @param label texte du label
 	 * @param text  texte par défaut
 	 */
 	public SidebarRow(String label, String text) {
@@ -48,6 +51,7 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée texte pour la sidebar
 	 *
+	 * @param label texte du label
 	 * @param text    texte par défaut
 	 * @param canEdit définit si la donnée est modifiable
 	 */
@@ -135,7 +139,6 @@ public class SidebarRow extends JPanel {
 
 	/**
 	 * Initialise le composant (date)
-	 *
 	 */
 	private void initDate(String label, LocalDate date, boolean canEdit) {
 		JPanel inputs = new JPanel();

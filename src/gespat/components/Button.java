@@ -15,6 +15,7 @@ public class Button extends JButton {
 	private static final Size defaultSize = Size.LARGE;
 	private static final Style defaultStyle = Style.FILLED;
 	private static final Color defaultColor = Color.SECONDARY;
+
 	private boolean styleOutline = false;
 	private int padding;
 	private double outlineStrokeWidth;
@@ -99,6 +100,9 @@ public class Button extends JButton {
 	/**
 	 * Création du bouton avec les paramètres
 	 *
+	 * @param size  taille du bouton
+	 * @param style style du bouton
+	 * @param color couleur du bouton
 	 */
 	private void init(Size size, Style style, Color color) {
 		// Annulation des styles par défaut du bouton

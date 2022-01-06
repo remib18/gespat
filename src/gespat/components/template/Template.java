@@ -26,6 +26,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 
 	private static final long serialVersionUID = -4176427088749241304L;
 	private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	private final JPanel main = new JPanel();
 	private final JPanel header = new JPanel();
 	private final JPanel body = new JPanel();
@@ -34,6 +35,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 	private final JPanel sidebarBody = new JPanel();
 	private final XCenteredContainer sidebarFooter = new XCenteredContainer(Colors.SECONDARY);
 	private final SearchBar searchBar = new SearchBar();
+
 	private int panelWidth;
 	private int panelHeight;
 	private int sidebarWidth;
@@ -141,6 +143,10 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 		return this;
 	}
 
+	/**
+	 * Supprime l'ensemble des enfants d'un élément
+	 * @param panel le panel à vider
+	 */
 	public void clear(In panel) {
 		switch (panel) {
 			case SIDEBAR_BODY:

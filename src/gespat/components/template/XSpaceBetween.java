@@ -8,14 +8,12 @@ public class XSpaceBetween extends JPanel {
 	public static final String WEST = BorderLayout.WEST;
 	public static final String EAST = BorderLayout.EAST;
 
-	public XSpaceBetween(Component[] cps) {
-		init();
-
-		setLayout(new BorderLayout());
-		add(cps[0], BorderLayout.WEST);
-		add(cps[1], BorderLayout.EAST);
-	}
-
+	/**
+	 * Crée un composant permettant d'espacer au maximum deux colonnes
+	 *
+	 * @param a colonne de gauche
+	 * @param b colonne de droite
+	 */
 	public XSpaceBetween(Component a, Component b) {
 		init();
 
@@ -24,6 +22,9 @@ public class XSpaceBetween extends JPanel {
 		add(b, BorderLayout.EAST);
 	}
 
+	/**
+	 * Initialise le composant
+	 */
 	private void init() {
 		setLayout(new BorderLayout());
 		setOpaque(true);

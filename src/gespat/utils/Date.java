@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Classe utilitaire pour la gestion des dates
+ */
 public class Date {
 
 	private Date() {
@@ -14,17 +17,22 @@ public class Date {
 	}
 
 	/**
-	 * Convertis une date en chaine de caractère.
+	 * Convertit une date en chaîne de caractères.
 	 *
+	 * @param date la date à convertir
+	 * @return la date convertie
 	 */
 	public static String convert(LocalDate date) {
 		return date.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	/**
-	 * Converti une chaine de caractère en LocalDate
+	 * Converti une chaine de caractère en LocalDate <br/>
+	 * Format de <code>str</code> : <code>y-M-d</code> ou <code>yyyy-MM-d</code>
 	 *
-	 * @param str du format y-M-d ou yyyy-MM-d
+	 * @param str la chaine de caractère à convertir
+	 * @return la date correspondante
+	 * @throws ProcessingException si <code>str</code> est incorrectement formatée
 	 */
 	public static LocalDate convert(String str)
 			throws ProcessingException {
@@ -40,6 +48,12 @@ public class Date {
 		}
 	}
 
+	/**
+	 * Retourne une date formatée pour l'affichage
+	 *
+	 * @param date la date à formater
+	 * @return une <code>String</code> contenant la date formatée.
+	 */
 	public static String getDisplayString(LocalDate date) {
 		String month = "" + date.getMonthValue();
 		String day = "" + date.getDayOfMonth();

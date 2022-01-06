@@ -14,6 +14,13 @@ public class SelectPatient {
 	private final List<Patient> data;
 	private final List<DataTransmitterInterface<Patient>> listeners = new ArrayList<>();
 
+	/**
+	 * TODO remi
+	 * @param data
+	 * @param container
+	 * @param x
+	 * @param y
+	 */
 	public SelectPatient(List<Patient> data, Container container, int x, int y) {
 		this.data = data;
 

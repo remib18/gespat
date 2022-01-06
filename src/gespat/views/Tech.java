@@ -18,6 +18,7 @@ import views.popups.UserMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class Tech extends JFrame {
 		final Device equipment = selectedConsultation.getRequiredEquipment();
 
 		equipmentChkbx = new Checkbox(equipment.getLabel(), equipment.getState() == Device.STATES.ASSIGNED);
-		equipmentChkbx.addActionListener(e -> save());
+		equipmentChkbx.addActionListener(this::save);
 		panel.add(equipmentChkbx);
 
 		return panel;
@@ -78,7 +79,6 @@ public class Tech extends JFrame {
 
 	/**
 	 * Définit la consultation sélectionnée
-	 *
 	 */
 	private void setSelected(Consultation consultation) {
 
@@ -88,7 +88,6 @@ public class Tech extends JFrame {
 
 	/**
 	 * Mets à jour l'interface
-	 *
 	 */
 	private void updateGraphics() {
 		template.clear(In.SIDEBAR_BODY);
@@ -119,14 +118,14 @@ public class Tech extends JFrame {
 		template.add(getDevicesCheckboxes(), In.SIDEBAR_BODY);
 
 		Button saveBtn = new Button("Enregistrer les modifications", Button.Size.LARGE, Button.Style.OUTLINED, Button.Color.SECONDARY);
-		saveBtn.addActionListener(e -> save());
+		saveBtn.addActionListener(this::save);
 		template.add(saveBtn, In.SIDEBAR_FOOTER);
 	}
 
 	/**
 	 * Permet d'enregistrer les modifications après une attribution d'appareillage
 	 */
-	private void save() {
+	private void save(ActionEvent e) {
 		selectedConsultation.getRequiredEquipment().setState(equipmentChkbx.isSelected());
 		updateGraphics();
 		new UserMessage("Consultation mise à jour avec succès.", UserMessage.LEVEL.Info);

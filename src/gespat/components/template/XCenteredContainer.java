@@ -11,7 +11,7 @@ public class XCenteredContainer extends JPanel {
 	private final JPanel mig = new JPanel();
 
 	/**
-	 * Crée un conteneur vertical dont les éléments sont centrés
+	 * Crée un conteneur vertical dont les éléments sont centrés et s'ajoutent les uns à la suite des autres
 	 *
 	 * @param background couleur de fond
 	 */
@@ -27,7 +27,7 @@ public class XCenteredContainer extends JPanel {
 	}
 
 	/**
-	 * Crée un conteneur vertical dont les éléments sont centrés
+	 * Crée un conteneur vertical dont les éléments sont centrés et s'ajoutent les uns à la suite des autres
 	 *
 	 * @param background couleur de fond
 	 */

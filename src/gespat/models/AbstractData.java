@@ -4,6 +4,7 @@ import utils.File;
 
 public abstract class AbstractData implements Comparable<AbstractData> {
 
+	/** Séparateur de colonne pour la conversion en <code>String</code> */
 	protected final String fs = File.COLUMN_SEPARATOR;
 
 	protected int id;
@@ -26,6 +27,9 @@ public abstract class AbstractData implements Comparable<AbstractData> {
 	@Override
 	public abstract String toString();
 
+	/**
+	 * Permet d'effectuer la comparaison
+	 */
 	@Override
 	public int compareTo(AbstractData obj) {
 		return this.getSearchableFields().compareTo(obj.getSearchableFields());

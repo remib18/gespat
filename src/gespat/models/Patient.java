@@ -13,9 +13,14 @@ public class Patient extends AbstractData {
 	private LocalDate birthAt;
 
 	/**
-	 * Crée un nouveau patient.
-	 * Utiliser un PatientManager pour instancier et sauvegarder des patients.
+	 * Modèle de donnée représentant un patient.
+	 * Utiliser un <code>PatientManager</code> pour instancier et sauvegarder des patients.
 	 *
+	 * @param id        identifiant du patient
+	 * @param firstname prénom
+	 * @param lastname  nom de famille
+	 * @param socialId  numéro de sécurité social
+	 * @param birthAt   date de naissance
 	 * @see PatientController
 	 */
 	public Patient(int id, String firstname, String lastname, int socialId, LocalDate birthAt) {
@@ -99,7 +104,6 @@ public class Patient extends AbstractData {
 
 	/**
 	 * Renvoie le patient sous forme de chaine de caractères prêt pour la sauvegarde.
-	 *
 	 */
 	@Override
 	public String toString() {

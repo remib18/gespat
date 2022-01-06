@@ -19,10 +19,19 @@ public class Consultation extends AbstractData {
 	private String observations;
 
 	/**
-	 * Nouvelle consultation.
-	 * Utiliser un ConsultationManager pour créer et enregistrer une consultation correctement.
+	 * Modèle de donnée représentant une consultation.
+	 * Utiliser un <code>ConsultationManager</code> pour créer et enregistrer une consultation correctement.
 	 *
-	 * @see ConsultationController
+	 * @param id                   identifiant de la consultation, doit être généré à partir du <code>StateManager</code>
+	 * @param patient              le patient lié à la consultation, doit être enregistré dans le <code>PatientController</code>
+	 * @param doctorName           nom du docteur ayant traité le patient
+	 * @param consultedAt          date de la consultation
+	 * @param diagnosedPathologies pathologies diagnostiquées
+	 * @param requiredEquipment    equipment requis, null déconseiller
+	 * @param observations         observations du docteur
+	 * @see controllers.ConsultationController
+	 * @see utils.StateManager
+	 * @see controllers.PatientController
 	 */
 	public Consultation(
 			int id,
@@ -42,74 +51,44 @@ public class Consultation extends AbstractData {
 		this.observations = observations;
 	}
 
-	/**
-	 * @return la date de consultation
-	 */
 	public LocalDate getConsultedAt() {
 		return consultedAt;
 	}
 
-	/**
-	 * @param consultedAt la date de consultation à définir
-	 */
 	public void setConsultedAt(LocalDate consultedAt) {
 		this.consultedAt = consultedAt;
 	}
 
-	/**
-	 * @return les pathologies diagnostiquées
-	 */
 	public List<String> getDiagnosedPathologies() {
 		if (diagnosedPathologies == null)
 			return new ArrayList<>(Collections.emptyList());
 		return new ArrayList<>(Arrays.asList(diagnosedPathologies));
 	}
 
-	/**
-	 * @param diagnosedPathologies les pathologies diagnostiquées à définir
-	 */
 	public void setDiagnosedPathologies(String[] diagnosedPathologies) {
 		this.diagnosedPathologies = diagnosedPathologies;
 	}
 
-	/**
-	 * @return le nom du docteur
-	 */
 	public String getDoctorName() {
 		return doctorName;
 	}
 
-	/**
-	 * @param doctorName le nom du docteur à définir
-	 */
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
 	}
 
-	/**
-	 * @return le patient correspondant
-	 */
 	public Patient getPatient() {
 		return this.patient;
 	}
 
-	/**
-	 * @return le matériel nécessaire
-	 */
 	public Device getRequiredEquipment() {
 		return requiredEquipment;
 	}
 
-	/**
-	 * @param requiredEquipment le matériel nécessaire à définir
-	 */
 	public void setRequiredEquipment(Device requiredEquipment) {
 		this.requiredEquipment = requiredEquipment;
 	}
 
-	/**
-	 * @return les champs parmi lesquels il est possible d'effectuer une recherche
-	 */
 	@Override
 	public String getSearchableFields() {
 		if (this.patient == null)
@@ -125,9 +104,6 @@ public class Consultation extends AbstractData {
 		this.observations = observations;
 	}
 
-	/**
-	 * @return la consultation sous forme de chaine de caractères prête pour l'enregistrement
-	 */
 	@Override
 	public String toString() {
 		String consultedAt = this.consultedAt == null ? "null" : Date.convert(this.consultedAt);

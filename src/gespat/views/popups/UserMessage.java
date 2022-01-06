@@ -32,6 +32,9 @@ public class UserMessage {
 		}
 	}
 
+	/**
+	 * Permet d'obtenir le type de message en fonction de la gravité du message
+	 */
 	private int getMessageType(LEVEL level) {
 		switch (level) {
 			case Warning:

@@ -19,21 +19,13 @@ public abstract class AbstractController<T extends AbstractData> {
 
 	protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	/**
-	 * Liste des données
-	 */
+	/** Liste des données */
 	protected final List<T> data = new ArrayList<>();
-	/**
-	 * Listeners sur la mise à jour des données
-	 */
+	/** Listeners sur la mise à jour des données*/
 	protected final List<TableListener<T>> tableUpdateListeners = new ArrayList<>();
-	/**
-	 * Fichier de stockage
-	 */
+	/** Fichier de stockage */
 	protected String storeFile;
-	/**
-	 * Clé utilisée pour utiliser la state
-	 */
+	/** Clé utilisée pour utiliser la state */
 	protected StateManager.DataType stateDataType;
 
 	/**
@@ -41,9 +33,11 @@ public abstract class AbstractController<T extends AbstractData> {
 	 *
 	 * @param object donnée à ajouter.
 	 * @throws ConflictingDataException si une donnée avec le même identifiant existe déjà.
+	 * @throws ProcessingException en cas de problème lors de la sauvegarde ou du chargement des données
 	 */
 	protected T add(T object) throws ConflictingDataException, ProcessingException {
 		try {
+			// Vérification de l'existence de la donnée
 			get(object.getId());
 			StateManager.getState().narrowNextInsertionIndex(stateDataType);
 			throw new ConflictingDataException("[ABS CTRL — ADD]: Une donnée avec le même identifiant existe déjà.");
@@ -55,41 +49,43 @@ public abstract class AbstractController<T extends AbstractData> {
 		return object;
 	}
 
-	/**
-	 * Ajoute un évènement permettant d'écouter les mises à jour de données
-	 * Utile dans le cas de plusieurs instances
-	 *
-	 */
-	public void addTableUpdateListener(TableListener<T> listener) {
-		tableUpdateListeners.add(listener);
-	}
+    /**
+     * Ajoute un évènement permettant d'écouter les mises à jour de données
+     * Utile dans le cas de plusieurs instances
+     *
+     * @param listener l'évènement
+     */
+    public void addTableUpdateListener(TableListener<T> listener) {
+        tableUpdateListeners.add(listener);
+    }
 
-	/**
-	 * Supprime l'ensemble des données
-	 *
-	 */
-	public void clear() throws ProcessingException {
-		data.clear();
-		StateManager.getState().clearData(stateDataType);
-		save();
-		publishTableUpdate();
-	}
+    /**
+     * Supprime l'ensemble des données
+     *
+     * @throws ProcessingException en cas de problème lors de la sauvegarde ou du chargement des données
+     */
+    public void clear() throws ProcessingException {
+        data.clear();
+        StateManager.getState().clearData(stateDataType);
+        save();
+        publishTableUpdate();
+    }
 
-	/**
-	 * Retourne la donnée
-	 *
-	 * @param id identifiant
-	 * @return donnée correspondente
-	 * @throws NotFoundException si la donnée n'a pas été trouvée.
-	 */
-	public T get(int id) throws NotFoundException {
-		for (T object : data) {
-			if (object.getId() == id) {
-				return object;
-			}
-		}
-		throw new NotFoundException("[ABS CTRL — GET]: Impossible de trouver la donnée rechercher.");
-	}
+    /**
+     * Retourne la donnée
+     *
+     * @param id identifiant
+     * @return   donnée correspondente
+     * @throws NotFoundException si la donnée n'a pas été trouvée.
+     */
+    public T get(int id) throws NotFoundException {
+        for (T object : data) {
+            if (object.getId() == id) {
+                return object;
+            }
+        }
+        throw new NotFoundException("Impossible de trouver la donnée rechercher.");
+    }
 
 	/**
 	 * @return l'ensemble du jeu de données
@@ -125,6 +121,8 @@ public abstract class AbstractController<T extends AbstractData> {
 	 *
 	 * @param object la donnée.
 	 * @return l'objet correspondant.
+	 * @throws NotFoundException en cas de problème lors de la création
+	 * @throws NumberFormatException en cas de problème lors de la création de la donnée
 	 */
 	protected abstract T makeObjectFromString(String[] object)
 			throws NotFoundException, NumberFormatException;
@@ -139,9 +137,10 @@ public abstract class AbstractController<T extends AbstractData> {
 	/**
 	 * Supprime la donnée.
 	 *
-	 * @param id           identifiant de la donnée à supprimer.
+	 * @param id          identifiant de la donnée à supprimer.
 	 * @param confirmation validation de l'utilisateur via l'interface.
 	 * @throws NotFoundException   si la donnée à supprimer n'existe pas.
+	 * @throws ProcessingException si les données sont impossibles à charger.
 	 */
 	public void remove(int id, boolean confirmation) throws NotFoundException, ProcessingException {
 		if (confirmation) {
@@ -157,6 +156,7 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * @param object       donnée à supprimer.
 	 * @param confirmation validation de l'utilisateur via l'interface.
 	 * @throws NotFoundException   si la donnée à supprimer n'existe pas.
+	 * @throws ProcessingException si les données sont impossibles à charger.
 	 */
 	public void remove(T object, boolean confirmation) throws NotFoundException, ProcessingException {
 		if (confirmation) {
@@ -181,6 +181,8 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * Met à jour les informations d'une donnée
 	 *
 	 * @param data la donnée modifiée
+	 * @throws NotFoundException si la donnée n'existe pas
+	 * @throws ProcessingException si les données sont impossibles à charger.
 	 */
 	public void update(T data) throws NotFoundException, ProcessingException {
 		remove(data.getId(), true);

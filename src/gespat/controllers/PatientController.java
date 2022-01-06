@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 public class PatientController extends AbstractController<Patient> {
 
+	/** Instance du <code>ConsultationController</code> */
 	private ConsultationController consultCtrl = null;
 
 	/**
@@ -24,10 +25,27 @@ public class PatientController extends AbstractController<Patient> {
 		load();
 	}
 
+	/**
+	 * Permet de définir le <code>ConsultationController</code>
+	 *
+	 * @param consultCtrl le <code>ConsultationController</code>
+	 * @see ConsultationController
+	 */
 	public void setConsultCtrl(ConsultationController consultCtrl) {
 		this.consultCtrl = consultCtrl;
 	}
 
+	/**
+	 * Crée un nouveau patient
+	 *
+	 * @param firstname prénom
+	 * @param lastname nom de famille
+	 * @param socialId numéro de sécurité sociale
+	 * @param birthAt  date de naissance
+	 * @return le patient
+	 * @throws ConflictingDataException si la donnée existe déjà
+	 * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
+	 */
 	public Patient add(String firstname, String lastname, int socialId, LocalDate birthAt) throws ConflictingDataException, ProcessingException {
 		return super.add(new Patient(
 				StateManager.getState().getNextInsertionIndex(StateManager.DataType.Patient),

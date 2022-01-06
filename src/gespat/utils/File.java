@@ -11,9 +11,7 @@ import java.util.Scanner;
 
 public class File<T> {
 
-	/**
-	 * Séparateur de champ de données
-	 */
+	/** Séparateur de champ de données */
 	public static final String COLUMN_SEPARATOR = ";";
 
 	/**

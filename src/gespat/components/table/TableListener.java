@@ -6,7 +6,6 @@ public interface TableListener<T extends AbstractData> {
 
 	/**
 	 * Fournit la donnée issue de la ligne sélectionnée
-	 *
 	 */
 	void getDataOnRowSelected(T data);
 

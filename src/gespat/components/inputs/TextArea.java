@@ -20,8 +20,10 @@ public class TextArea extends JTextArea {
 	}
 
 	/**
-	 * Initisation du composant
+	 * Initialisation du composant
 	 *
+	 * @param width  largeur
+	 * @param height hauteur
 	 */
 	private void init(int width, int height) {
 		this.setMinimumSize(new Dimension(100, 20));

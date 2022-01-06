@@ -15,10 +15,10 @@ import java.util.List;
 
 public class ConsultationController extends AbstractController<Consultation> {
 
-	/**
-	 * Instance du PatientController
-	 */
+	/** Instance du <code>PatientController</code> */
 	private final PatientController patientCtrl;
+
+	/** Instance du <code>DeviceController</code> */
 	private final DeviceController deviceCtrl;
 
 	/**
@@ -39,6 +39,15 @@ public class ConsultationController extends AbstractController<Consultation> {
 	/**
 	 * Crée une nouvelle consultation
 	 *
+	 * @param patient              le patient lié à la consultation
+	 * @param consultedAt          la date de la consultation
+	 * @param doctorName           le nom du docteur
+	 * @param diagnosedPathologies les pathologies diagnostiquées
+	 * @param requiredEquipment    l'équipement nécessaire
+	 * @param observations         les observations
+	 * @return                     la consultation
+	 * @throws ConflictingDataException si la donnée existe déjà
+	 * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
 	 */
 	public Consultation add(
 			Patient patient,
@@ -48,7 +57,7 @@ public class ConsultationController extends AbstractController<Consultation> {
 			Device requiredEquipment,
 			String observations
 	) throws ConflictingDataException, ProcessingException {
-		Device device = requiredEquipment == null ? deviceCtrl.add(Device.STATES.UNDEFINED, null) : requiredEquipment;
+		Device device = requiredEquipment == null ? deviceCtrl.add(null, Device.STATES.UNDEFINED) : requiredEquipment;
 		return add(new Consultation(
 				StateManager.getState().getNextInsertionIndex(StateManager.DataType.Consultation),
 				patient,
@@ -75,6 +84,11 @@ public class ConsultationController extends AbstractController<Consultation> {
 		return pathologies;
 	}
 
+	/**
+	 * Retourne l'ensemble des consultations liées à un patient
+	 * @param  patient le patient
+	 * @return les consultations liées
+	 */
 	public List<Consultation> getAll(Patient patient) {
 		List<Consultation> consultations = new ArrayList<>();
 		for (Consultation c : data) {
@@ -84,6 +98,13 @@ public class ConsultationController extends AbstractController<Consultation> {
 		return consultations;
 	}
 
+	/**
+	 * Supprime des consultations en batterie
+	 *
+	 * @param consultations la liste des consultations à supprimer
+	 * @throws NotFoundException si une consultation n'existe pas
+	 * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
+	 */
 	void batchRemove(List<Consultation> consultations) throws NotFoundException, ProcessingException {
 		for (Consultation consultation : consultations) {
 			remove(consultation, true);

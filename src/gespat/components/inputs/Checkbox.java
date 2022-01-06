@@ -22,7 +22,7 @@ public class Checkbox extends JCheckBox {
 	 * Création d'une boite à cocher
 	 *
 	 * @param string  Texte descriptif
-	 * @param checked Etat par défaut
+	 * @param checked État par défaut
 	 */
 	public Checkbox(String string, boolean checked) {
 		super(string, checked);

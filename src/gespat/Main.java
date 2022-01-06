@@ -22,7 +22,7 @@ public class Main {
 
 	/**
 	 * Génère des données pour tester l'application
-	 *
+	 * @throws ProcessingException
 	 */
 	public static void genData() throws ProcessingException {
 		logger.log(Level.INFO, "Génération de données test");
@@ -47,9 +47,9 @@ public class Main {
 		Device device2 = null;
 		Device device3 = null;
 		try {
-			device1 = deviceController.add(Device.STATES.UNDEFINED, null);
-			device2 = deviceController.add(Device.STATES.PENDING, DeviceController.DEVICES[2]);
-			device3 = deviceController.add(Device.STATES.ASSIGNED, DeviceController.DEVICES[3]);
+			device1 = deviceController.add(null, Device.STATES.UNDEFINED);
+			device2 = deviceController.add(DeviceController.DEVICES[2], Device.STATES.PENDING);
+			device3 = deviceController.add(DeviceController.DEVICES[3], Device.STATES.ASSIGNED);
 		} catch (ConflictingDataException err) {
 			logger.log(Level.SEVERE, "Erreur lors de la génération des appareils");
 		}

@@ -9,13 +9,9 @@ public abstract class AbstractTableModel<T extends AbstractData> extends javax.s
 
 	private static final long serialVersionUID = 8145852153886651759L;
 
-	/**
-	 * Liste des noms de colonne
-	 */
+	/** Liste des noms de colonne */
 	protected final List<String> headers = new ArrayList<>();
-	/**
-	 * Liste de données
-	 */
+	/** Liste de données */
 	protected List<T> data;
 
 	/**

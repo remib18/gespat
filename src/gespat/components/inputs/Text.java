@@ -12,6 +12,8 @@ public class Text extends JTextField {
 	/**
 	 * Création d'un champ de type texte
 	 *
+	 * @param width largeur
+	 * @param height hauteur
 	 */
 	public Text(int width, int height) {
 		EventQueue.invokeLater(() -> init(width, height));
@@ -20,6 +22,8 @@ public class Text extends JTextField {
 	/**
 	 * Initialisation du composant
 	 *
+	 * @param width largeur
+	 * @param height hauteur
 	 */
 	private void init(int width, int height) {
 		this.setMinimumSize(new Dimension(10, 20));

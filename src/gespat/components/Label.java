@@ -12,6 +12,8 @@ public class Label extends JLabel {
 	private static final long serialVersionUID = -1843845123937225747L;
 
 	/**
+	 * Crée un nouveau label
+	 *
 	 * @param text contenu du label
 	 */
 	public Label(String text) {
@@ -20,7 +22,10 @@ public class Label extends JLabel {
 	}
 
 	/**
+	 * Crée un nouveau label
+	 *
 	 * @param text  contenu du label
+	 * @param style style du label
 	 */
 	public Label(String text, Styles style) {
 		super(text);
@@ -28,7 +33,11 @@ public class Label extends JLabel {
 	}
 
 	/**
+	 * Crée un nouveau label
+	 *
 	 * @param text  contenu du label
+	 * @param style style du label
+	 * @param color couleur du label
 	 */
 	public Label(String text, Styles style, Color color) {
 		super(text);
@@ -36,7 +45,10 @@ public class Label extends JLabel {
 	}
 
 	/**
+	 * Crée un nouveau label
+	 *
 	 * @param text  contenu du label
+	 * @param style style du label
 	 * @param name  nom du label
 	 */
 	public Label(String text, Styles style, String name) {
