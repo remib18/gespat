@@ -107,7 +107,7 @@ public class Tech extends JFrame {
 	private void sidebarSetup() {
 		if (selectedConsultation == null) {
 			// Si aucun patient n'est selectionner, on affiche un message.
-			template.add(new Label("Selectionnez un patient."), In.SIDEBAR_BODY);
+			template.add(new Label("Sélectionnez un patient."), In.SIDEBAR_BODY);
 			return;
 		}
 		Patient patient = selectedConsultation.getPatient();
@@ -131,6 +131,7 @@ public class Tech extends JFrame {
 	private void save() {
 		selectedConsultation.getRequiredEquipment().setState(equipmentChkbx.isSelected());
 		updateGraphics();
+		new UserMessage("Consultation mise à jour avec succès.", UserMessage.LEVEL.Info);
 	}
 }
 

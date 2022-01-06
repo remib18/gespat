@@ -19,7 +19,6 @@ public class Stats extends JFrame {
 		UserMessage.setActiveWindow(this);
 
 		final Template<AbstractData> template = new Template<>(978, 575);
-		// template.setSearchBar(data, model);
 
 		add(template);
 		setVisible(true);

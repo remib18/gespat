@@ -147,7 +147,7 @@ public class Doctor extends JFrame {
 	private void addPathology(ActionEvent e) {
 		String pathology = JOptionPane.showInputDialog(this, "Saisissez le nom de la pathologie :");
 		setPathology(pathology, true);
-		save();
+		save(false);
 	}
 
 	private void setSelected(Consultation consultation) {
@@ -245,6 +245,7 @@ public class Doctor extends JFrame {
 			try {
 				Consultation consultation = consultCtrl.add(patient, "Nom", LocalDate.now(), new String[0], null, "Observations");
 				setSelected(consultation);
+				new UserMessage("Consultation créer avec succès. N'oubliez pas d'attribuer un docteur.", UserMessage.LEVEL.Info);
 			} catch (ProcessingException err) {
 				logger.log(Level.SEVERE, err.getMessage());
 				new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
@@ -269,13 +270,15 @@ public class Doctor extends JFrame {
 		}
 		selectedConsultation.setDoctorName(doctorName.getText());
 		selectedConsultation.setObservations(observations.getText());
-		save();
+		save(true);
 	}
 
-	private void save() {
+	private void save(boolean showSuccessMessage) {
 		try {
 			consultCtrl.update(selectedConsultation);
 			setSelected(selectedConsultation); // To update the view
+			if (showSuccessMessage)
+				new UserMessage("Consultation enregistrée avec succès.", UserMessage.LEVEL.Info);
 		} catch (ProcessingException err) {
 			logger.log(Level.SEVERE, err.getMessage());
 			new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
@@ -290,6 +293,7 @@ public class Doctor extends JFrame {
 		try {
 			consultCtrl.remove(selectedConsultation, ConfirmSuppression.getPopup());
 			setSelected(Math.max(activeRow - 1, 0));
+			new UserMessage("Consultation supprimée avec succès.", UserMessage.LEVEL.Info);
 		} catch (NotFoundException err) {
 			/* The patient obviously exists */
 		} catch (ProcessingException err) {

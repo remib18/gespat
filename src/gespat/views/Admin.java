@@ -71,9 +71,7 @@ public class Admin extends JFrame {
 			selectedPatient = patient;
 			activeRow = row;
 			template.setResultTableSelectedRow(patient);
-		} catch (NullPointerException err) {
-			//TODO: handle exception
-		} finally {
+		} catch (NullPointerException ignore) {} finally {
 			updateGraphics();
 		}
 	}
@@ -103,7 +101,7 @@ public class Admin extends JFrame {
 	private void sidebarSetup() {
 		if (selectedPatient == null) {
 			// Si aucun patient n'est selectionner, on affiche un message.
-			template.add(new Label("Selectionnez un patient."), In.SIDEBAR_BODY);
+			template.add(new Label("Sélectionnez un patient."), In.SIDEBAR_BODY);
 			return;
 		}
 
@@ -139,6 +137,7 @@ public class Admin extends JFrame {
 		try {
 			Patient patient = patientCtrl.add("xxx", "xxx", 0, null);
 			setSelected(patient);
+			new UserMessage("Patient créer avec succès. N'oubliez pas de le modifier avec des données valides", UserMessage.LEVEL.Info);
 		} catch (ProcessingException err) {
 			logger.log(Level.SEVERE, err.getMessage());
 			new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
@@ -170,6 +169,7 @@ public class Admin extends JFrame {
 		try {
 			patientCtrl.update(selectedPatient);
 			updateGraphics();
+			new UserMessage("Patient sauvegardé avec succès.", UserMessage.LEVEL.Info);
 		} catch (ProcessingException err) {
 			logger.log(Level.SEVERE, err.getMessage());
 			new UserMessage(err.getMessage(), UserMessage.LEVEL.Severe);
@@ -183,6 +183,7 @@ public class Admin extends JFrame {
 		try {
 			patientCtrl.remove(selectedPatient, ConfirmSuppression.getPopup());
 			setSelected(Math.max(activeRow - 1, 0));
+			new UserMessage("Patient supprimé.", UserMessage.LEVEL.Info);
 		} catch (NotFoundException ignore) {
 		} catch (ProcessingException err) {
 			logger.log(Level.SEVERE, err.getMessage());
