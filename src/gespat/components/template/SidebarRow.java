@@ -17,7 +17,6 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée date non modifiable pour la sidebar
 	 *
-	 * @param label
 	 * @param date  date par défaut
 	 */
 	public SidebarRow(String label, LocalDate date) {
@@ -28,7 +27,6 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée date pour la sidebar
 	 *
-	 * @param label
 	 * @param date    date par défaut
 	 * @param canEdit définit si la donnée est modifiable
 	 */
@@ -40,7 +38,6 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée texte non modifiable pour la sidebar
 	 *
-	 * @param label
 	 * @param text  texte par défaut
 	 */
 	public SidebarRow(String label, String text) {
@@ -51,7 +48,6 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Crée une ligne de donnée texte pour la sidebar
 	 *
-	 * @param label
 	 * @param text    texte par défaut
 	 * @param canEdit définit si la donnée est modifiable
 	 */
@@ -62,7 +58,6 @@ public class SidebarRow extends JPanel {
 
 	/**
 	 * @return la date
-	 * @throws FormatException
 	 * @apiNote ne fonctionne que dans le cas d'une donnée date
 	 */
 	public LocalDate getDate() throws FormatException {
@@ -84,8 +79,6 @@ public class SidebarRow extends JPanel {
 	}
 
 	/**
-	 * @param data
-	 * @param canEdit
 	 * @return la donnée en fonction de son éditabilité
 	 */
 	private Component getDateField(int data, boolean canEdit) {
@@ -106,6 +99,7 @@ public class SidebarRow extends JPanel {
 	 * @return le texte
 	 * @apiNote ne fonctionne que dans le cas d'une donnée texte ou numérique
 	 */
+	@SuppressWarnings("ConstantConditions")
 	public String getText() {
 		Component cp = getComponent(1);
 		try {
@@ -142,9 +136,6 @@ public class SidebarRow extends JPanel {
 	/**
 	 * Initialise le composant (date)
 	 *
-	 * @param label
-	 * @param date
-	 * @param canEdit
 	 */
 	private void initDate(String label, LocalDate date, boolean canEdit) {
 		JPanel inputs = new JPanel();

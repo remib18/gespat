@@ -1,7 +1,6 @@
 package views;
 
 import components.template.Template;
-import controllers.PatientController;
 import models.AbstractData;
 import views.popups.UserMessage;
 
@@ -11,7 +10,7 @@ public class Stats extends JFrame {
 
 	private static final long serialVersionUID = -1377226174334041975L;
 
-	public Stats(PatientController patientController) {
+	public Stats() {
 		setTitle("GesPat — Statistiques");
 		setSize(1080, 575);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

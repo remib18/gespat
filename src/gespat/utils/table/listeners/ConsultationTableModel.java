@@ -21,7 +21,7 @@ public class ConsultationTableModel extends AbstractTableModel<Consultation> {
 	}
 
 	/**
-	 * Définit les valeurs à la ligne <code>rowIndex</code> et la colone <code>columnIndex</code>
+	 * Définit les valeurs à la ligne <code>rowIndex</code> et la colonne <code>columnIndex</code>
 	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {

@@ -120,7 +120,7 @@ public class Search<T extends AbstractData> implements DocumentListener {
 	}
 
 	/**
-	 * Ecoute chaque insertion de caractère dans la barre de recherche
+	 * Écoute chaque insertion de caractère dans la barre de recherche
 	 */
 	@Override
 	public void insertUpdate(DocumentEvent e) {

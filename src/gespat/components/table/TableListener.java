@@ -5,9 +5,8 @@ import models.AbstractData;
 public interface TableListener<T extends AbstractData> {
 
 	/**
-	 * Fournit la donnée issue de la ligne selectionnée
+	 * Fournit la donnée issue de la ligne sélectionnée
 	 *
-	 * @param data
 	 */
 	void getDataOnRowSelected(T data);
 

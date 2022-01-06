@@ -15,6 +15,7 @@ public class StateManager {
 	private Integer lastPatientIndexInserted;
 	private Integer lastConsultationIndexInserted;
 	private Integer lastDeviceIndexInserted;
+
 	protected StateManager() {
 		try {
 			logger.log(Level.INFO, "Application State : loading...;");

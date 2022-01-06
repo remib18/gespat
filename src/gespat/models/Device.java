@@ -4,6 +4,7 @@ public class Device extends AbstractData {
 
 	private STATES state;
 	private String label;
+
 	public Device(final int id, final STATES state, final String label) {
 		this.id = id;
 		this.state = state;
@@ -41,10 +42,6 @@ public class Device extends AbstractData {
 		}
 		setState(STATES.PENDING);
 
-	}
-
-	public String getStateString(final STATES state) {
-		return state.name();
 	}
 
 	public String getLabel() {

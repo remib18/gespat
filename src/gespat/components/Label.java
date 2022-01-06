@@ -21,7 +21,6 @@ public class Label extends JLabel {
 
 	/**
 	 * @param text  contenu du label
-	 * @param style
 	 */
 	public Label(String text, Styles style) {
 		super(text);
@@ -30,7 +29,6 @@ public class Label extends JLabel {
 
 	/**
 	 * @param text  contenu du label
-	 * @param style
 	 */
 	public Label(String text, Styles style, Color color) {
 		super(text);
@@ -39,7 +37,6 @@ public class Label extends JLabel {
 
 	/**
 	 * @param text  contenu du label
-	 * @param style
 	 * @param name  nom du label
 	 */
 	public Label(String text, Styles style, String name) {
@@ -51,8 +48,6 @@ public class Label extends JLabel {
 	/**
 	 * Création du label
 	 *
-	 * @param style
-	 * @param style
 	 */
 	private void init(Styles style, Color color) {
 		// Choix de la couleur du texte

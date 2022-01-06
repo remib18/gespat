@@ -22,9 +22,9 @@ import models.Device;
 import models.Patient;
 import net.miginfocom.swing.MigLayout;
 import utils.Colors;
-import utils.table.listeners.ConsultationTableModel;
 import utils.Date;
 import utils.File;
+import utils.table.listeners.ConsultationTableModel;
 import views.popups.ConfirmSuppression;
 import views.popups.SelectPatient;
 import views.popups.UserMessage;
@@ -53,8 +53,7 @@ public class Doctor extends JFrame {
 
 	public Doctor(
 			PatientController patientController,
-			ConsultationController consultationController,
-			DeviceController deviceController
+			ConsultationController consultationController
 	) {
 		setTitle("GesPat — Personnel Médical");
 		setSize(1080, 575);
@@ -83,7 +82,7 @@ public class Doctor extends JFrame {
 		template.add(tableTitle, In.MAIN_BODY);
 
 		exportBtn = new Button("Exporter", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
-		exportBtn.addActionListener(e -> export(exportBtn));
+		exportBtn.addActionListener(e -> export());
 		template.add(exportBtn.setPosition(Button.Position.END), In.SIDEBAR_HEADER);
 
 		sidebarSetup();
@@ -144,6 +143,7 @@ public class Doctor extends JFrame {
 		return panel;
 	}
 
+	@SuppressWarnings("unused")
 	private void addPathology(ActionEvent e) {
 		String pathology = JOptionPane.showInputDialog(this, "Saisissez le nom de la pathologie :");
 		setPathology(pathology, true);
@@ -187,7 +187,7 @@ public class Doctor extends JFrame {
 	private void sidebarSetup() {
 		if (selectedConsultation == null) {
 			// Si aucun patient n'est selectionner, on affiche un message et on masque le bouton d'export.
-			template.add(new Label("Selectionnez un patient."), In.SIDEBAR_BODY);
+			template.add(new Label("Sélectionnez un patient."), In.SIDEBAR_BODY);
 			exportBtn.setVisible(false);
 
 			return;
@@ -305,7 +305,7 @@ public class Doctor extends JFrame {
 		}
 	}
 
-	private void export(Button btn) {
+	private void export() {
 		List<String> msg = new ArrayList<>();
 		msg.add("Détails de la consultation");
 		msg.add("");

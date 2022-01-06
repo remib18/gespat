@@ -32,6 +32,7 @@ public class Admin extends JFrame {
 	private Patient selectedPatient;
 	private int activeRow;
 
+	@SuppressWarnings("SpellCheckingInspection")
 	public Admin(PatientController patientController) {
 		setTitle("GesPat — Personnel d'administration");
 		setSize(1080, 575);
@@ -71,7 +72,8 @@ public class Admin extends JFrame {
 			selectedPatient = patient;
 			activeRow = row;
 			template.setResultTableSelectedRow(patient);
-		} catch (NullPointerException ignore) {} finally {
+		} catch (NullPointerException ignore) {
+		} finally {
 			updateGraphics();
 		}
 	}

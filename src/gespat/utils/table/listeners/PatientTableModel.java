@@ -2,26 +2,19 @@ package utils.table.listeners;
 
 import components.table.AbstractTableModel;
 import controllers.PatientController;
-import exceptions.NotFoundException;
-import exceptions.ProcessingException;
 import models.Patient;
 import utils.Date;
 
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PatientTableModel extends AbstractTableModel<Patient> {
 
 	private static final long serialVersionUID = 7024694580497279586L;
-	private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	final PatientController ctrl;
 
 	/**
 	 * Crée un modèle de tableau pour la vue AdminDash
 	 */
 	public PatientTableModel(PatientController patientController) {
-		this.ctrl = patientController;
 		this.headers.add("Nom");
 		this.headers.add("Prénom");
 		this.headers.add("Date de naissance");
@@ -29,9 +22,10 @@ public class PatientTableModel extends AbstractTableModel<Patient> {
 	}
 
 	/**
-	 * Définit les valeurs à la ligne <code>rowIndex</code> et la colone
+	 * Définit les valeurs à la ligne <code>rowIndex</code> et la colonne
 	 * <code>columnIndex</code>
 	 */
+	@SuppressWarnings("SpellCheckingInspection")
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (rowIndex == 0)

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Consultation extends AbstractData {
 
-	private Patient patient;
+	private final Patient patient;
 	private String doctorName;
 	private LocalDate consultedAt;
 	private String[] diagnosedPathologies;
@@ -22,13 +22,6 @@ public class Consultation extends AbstractData {
 	 * Nouvelle consultation.
 	 * Utiliser un ConsultationManager pour créer et enregistrer une consultation correctement.
 	 *
-	 * @param id
-	 * @param patient
-	 * @param doctorName
-	 * @param consultedAt
-	 * @param diagnosedPathologies
-	 * @param requiredEquipment
-	 * @param observations
 	 * @see ConsultationController
 	 */
 	public Consultation(
@@ -101,13 +94,6 @@ public class Consultation extends AbstractData {
 	}
 
 	/**
-	 * @param patient le patient correspondant à définir
-	 */
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	/**
 	 * @return le matériel nécessaire
 	 */
 	public Device getRequiredEquipment() {
@@ -122,7 +108,7 @@ public class Consultation extends AbstractData {
 	}
 
 	/**
-	 * @return les champs parmis lesquels il est possible d'effectuer une recherche
+	 * @return les champs parmi lesquels il est possible d'effectuer une recherche
 	 */
 	@Override
 	public String getSearchableFields() {
@@ -140,7 +126,7 @@ public class Consultation extends AbstractData {
 	}
 
 	/**
-	 * @return la consultation sous forme de chaine de caractères prète pour l'enregistrement
+	 * @return la consultation sous forme de chaine de caractères prête pour l'enregistrement
 	 */
 	@Override
 	public String toString() {

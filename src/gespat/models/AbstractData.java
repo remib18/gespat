@@ -9,7 +9,7 @@ public abstract class AbstractData implements Comparable<AbstractData> {
 	protected int id;
 
 	/**
-	 * @return le paramètre repésentant l'identifiant de la donnée
+	 * @return le paramètre représentant l'identifiant de la donnée
 	 */
 	public int getId() {
 		return id;

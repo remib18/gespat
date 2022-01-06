@@ -79,7 +79,6 @@ public class Tech extends JFrame {
 	/**
 	 * Définit la consultation sélectionnée
 	 *
-	 * @param consultation
 	 */
 	private void setSelected(Consultation consultation) {
 
@@ -90,7 +89,6 @@ public class Tech extends JFrame {
 	/**
 	 * Mets à jour l'interface
 	 *
-	 * @param consultation
 	 */
 	private void updateGraphics() {
 		template.clear(In.SIDEBAR_BODY);

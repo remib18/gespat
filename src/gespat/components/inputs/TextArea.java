@@ -13,21 +13,19 @@ public class TextArea extends JTextArea {
 	 * Création d'un champ de type TextArea
 	 *
 	 * @param width  largeur
-	 * @param heigth hauteur
+	 * @param height hauteur
 	 */
-	public TextArea(int width, int heigth) {
-		EventQueue.invokeLater(() -> init(width, heigth));
+	public TextArea(int width, int height) {
+		EventQueue.invokeLater(() -> init(width, height));
 	}
 
 	/**
 	 * Initisation du composant
 	 *
-	 * @param width
-	 * @param heigth
 	 */
-	private void init(int width, int heigth) {
+	private void init(int width, int height) {
 		this.setMinimumSize(new Dimension(100, 20));
-		this.setPreferredSize(new Dimension(width, heigth));
+		this.setPreferredSize(new Dimension(width, height));
 
 		this.setBackground(Colors.PRIMARY);
 	}

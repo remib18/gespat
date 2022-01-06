@@ -29,7 +29,6 @@ public class SearchBar extends Text {
 	/**
 	 * Ajoute un écouteur sur l'évènement de recherche
 	 *
-	 * @param clb
 	 */
 	public void addSearchListener(DocumentListener clb) {
 		this.getDocument().addDocumentListener(clb);

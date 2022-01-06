@@ -54,7 +54,7 @@ public class Login extends JFrame {
 		// Adding ClickListener to buttons
 		button1.addActionListener(e -> new Admin(patientController));
 
-		button2.addActionListener(e -> new Doctor(patientController, consultationController, deviceController));
+		button2.addActionListener(e -> new Doctor(patientController, consultationController));
 
 		button3.addActionListener(e -> new Tech(consultationController));
 
@@ -77,7 +77,7 @@ public class Login extends JFrame {
 		container.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		Button goToStats = new Button("Y aller", Button.Size.SMALL);
-		goToStats.addActionListener(e -> new Stats(patientController));
+		goToStats.addActionListener(e -> new Stats());
 		container.add(goToStats);
 
 		return container;

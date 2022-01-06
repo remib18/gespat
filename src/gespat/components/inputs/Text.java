@@ -12,22 +12,18 @@ public class Text extends JTextField {
 	/**
 	 * Création d'un champ de type texte
 	 *
-	 * @param width
-	 * @param heigth
 	 */
-	public Text(int width, int heigth) {
-		EventQueue.invokeLater(() -> init(width, heigth));
+	public Text(int width, int height) {
+		EventQueue.invokeLater(() -> init(width, height));
 	}
 
 	/**
 	 * Initialisation du composant
 	 *
-	 * @param width
-	 * @param heigth
 	 */
-	private void init(int width, int heigth) {
+	private void init(int width, int height) {
 		this.setMinimumSize(new Dimension(10, 20));
-		this.setPreferredSize(new Dimension(width, heigth));
+		this.setPreferredSize(new Dimension(width, height));
 
 		this.setBackground(Colors.SECONDARY);
 	}

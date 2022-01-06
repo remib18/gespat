@@ -2,7 +2,6 @@ package components.table;
 
 import models.AbstractData;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,9 @@ public abstract class AbstractTableModel<T extends AbstractData> extends javax.s
 
 	private static final long serialVersionUID = 8145852153886651759L;
 
-	/** * Liste des noms de colonne */
+	/**
+	 * Liste des noms de colonne
+	 */
 	protected final List<String> headers = new ArrayList<>();
 	/**
 	 * Liste de données
@@ -26,7 +27,7 @@ public abstract class AbstractTableModel<T extends AbstractData> extends javax.s
 	}
 
 	/**
-	 * @param columnIndex l'index de la colone
+	 * @param columnIndex l'index de la colonne
 	 * @return le nom de la colonne lié
 	 */
 	@Override

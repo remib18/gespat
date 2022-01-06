@@ -38,6 +38,7 @@ public class Template<T extends AbstractData> extends JPanel implements Componen
 	private int panelHeight;
 	private int sidebarWidth;
 	private Search<T> search;
+
 	/**
 	 * Construit une fenêtre responsive.
 	 *

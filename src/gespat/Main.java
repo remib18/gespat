@@ -23,7 +23,6 @@ public class Main {
 	/**
 	 * Génère des données pour tester l'application
 	 *
-	 * @throws ProcessingException
 	 */
 	public static void genData() throws ProcessingException {
 		logger.log(Level.INFO, "Génération de données test");

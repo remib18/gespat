@@ -24,7 +24,6 @@ public class ConsultationController extends AbstractController<Consultation> {
 	/**
 	 * Crée un objet permettant la manipulation des consultations
 	 *
-	 * @param patientCtrl
 	 * @throws ProcessingException en cas d'erreur lors du chargement des fichiers
 	 */
 	public ConsultationController(PatientController patientCtrl, DeviceController deviceCtrl)
@@ -40,14 +39,6 @@ public class ConsultationController extends AbstractController<Consultation> {
 	/**
 	 * Crée une nouvelle consultation
 	 *
-	 * @param patient
-	 * @param doctorName
-	 * @param consultedAt
-	 * @param diagnosedPathologies
-	 * @param requiredEquipment
-	 * @param observations
-	 * @throws ConflictingDataException
-	 * @throws ProcessingException
 	 */
 	public Consultation add(
 			Patient patient,
@@ -101,7 +92,7 @@ public class ConsultationController extends AbstractController<Consultation> {
 
 	@Override
 	protected Consultation makeObjectFromString(String[] object)
-			throws NotFoundException, NumberFormatException, ProcessingException {
+			throws NotFoundException, NumberFormatException {
 		String[] device = {object[5], object[6], object[7]};
 		List<String> pathologies = Regex.getMatches("[^|]+", object[4]);
 		//noinspection EmpryBranchInAlteration

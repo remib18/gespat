@@ -20,6 +20,7 @@ public class Colors {
 	// ----- BOUTONS ----- \\
 	public static final Color BUTTON_SECONDARY = new Color(255, 255, 255, 60);
 	public static final Color BUTTON_DANGER = new Color(249, 201, 201);
+
 	private Colors() {
 		throw new IllegalStateException("[COLORS]: Classe utilitaire.");
 	}

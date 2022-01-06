@@ -16,11 +16,6 @@ public class Patient extends AbstractData {
 	 * Crée un nouveau patient.
 	 * Utiliser un PatientManager pour instancier et sauvegarder des patients.
 	 *
-	 * @param id
-	 * @param firstname
-	 * @param lastname
-	 * @param socialId
-	 * @param birthAt
 	 * @see PatientController
 	 */
 	public Patient(int id, String firstname, String lastname, int socialId, LocalDate birthAt) {
@@ -81,7 +76,7 @@ public class Patient extends AbstractData {
 	}
 
 	/**
-	 * @return les champs parmis lesquels il est possible d'effectuer une recherche
+	 * @return les champs parmi lesquels il est possible d'effectuer une recherche
 	 */
 	@Override
 	public String getSearchableFields() {
@@ -103,9 +98,8 @@ public class Patient extends AbstractData {
 	}
 
 	/**
-	 * Renvoie le patient sous forme de chaine de caractères prèt pour la sauvegarde.
+	 * Renvoie le patient sous forme de chaine de caractères prêt pour la sauvegarde.
 	 *
-	 * @return
 	 */
 	@Override
 	public String toString() {

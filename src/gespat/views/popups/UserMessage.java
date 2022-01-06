@@ -10,11 +10,9 @@ public class UserMessage {
 	/**
 	 * Génère une interface pour afficher les potentielles erreurs.
 	 *
-	 * @param message
 	 */
 	@SuppressWarnings("MagicConstant")
 	public UserMessage(String message, LEVEL level) {
-		// TODO Auto-generated constructor stub
 		JOptionPane.showMessageDialog(component, message, getTitle(level), getMessageType(level));
 
 	}
@@ -28,7 +26,7 @@ public class UserMessage {
 			case Warning:
 				return "Oups, un problème est survenu...";
 			case Severe:
-				return "Une erreure s'est produite...";
+				return "Une erreur s'est produite...";
 			default:
 				return "Message";
 		}

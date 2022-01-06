@@ -29,16 +29,18 @@ public class Button extends JButton {
 		super(text);
 		EventQueue.invokeLater(() -> init(defaultSize, defaultStyle, defaultColor));
 	}
+
 	/**
 	 * Crée un nouveau bouton
 	 *
 	 * @param text titre du bouton
-	 * @param size taille du bouton parmis <code>ButtonSizes</code>
+	 * @param size taille du bouton parmi <code>ButtonSizes</code>
 	 */
 	public Button(String text, Size size) {
 		super(text);
 		EventQueue.invokeLater(() -> init(size, defaultStyle, defaultColor));
 	}
+
 	/**
 	 * Crée un nouveau bouton
 	 *
@@ -50,6 +52,7 @@ public class Button extends JButton {
 		super(text);
 		EventQueue.invokeLater(() -> init(size, style, defaultColor));
 	}
+
 	/**
 	 * Crée un nouveau bouton
 	 *
@@ -96,9 +99,6 @@ public class Button extends JButton {
 	/**
 	 * Création du bouton avec les paramètres
 	 *
-	 * @param size
-	 * @param style
-	 * @param color
 	 */
 	private void init(Size size, Style style, Color color) {
 		// Annulation des styles par défaut du bouton
@@ -125,7 +125,7 @@ public class Button extends JButton {
 				break;
 		}
 
-		// Choix du style du boutton
+		// Choix du style du bouton
 		switch (style) {
 			case FILLED:
 				break;
@@ -219,7 +219,6 @@ public class Button extends JButton {
 	 * Retourne le bouton avec une position définie
 	 *
 	 * @param pos position du bouton
-	 * @return
 	 */
 	public Button setPosition(Position pos) {
 		this.position = pos;

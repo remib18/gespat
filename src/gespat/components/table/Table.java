@@ -21,7 +21,6 @@ public class Table<T extends AbstractData> extends JTable {
 	/**
 	 * Création d'un tableau selon le model fournit
 	 *
-	 * @param model
 	 * @see AbstractTableModel
 	 */
 	public Table(AbstractTableModel<T> model) {
@@ -40,7 +39,6 @@ public class Table<T extends AbstractData> extends JTable {
 	/**
 	 * Ajoute un écouteur
 	 *
-	 * @param listener
 	 */
 	public void addTableListener(TableListener<T> listener) {
 		tableListeners.add(listener);
@@ -88,7 +86,7 @@ public class Table<T extends AbstractData> extends JTable {
 			T data = ((AbstractTableModel<T>) getModel()).getData().get(rowIndex - 1);
 			tableListeners.forEach(action -> action.getDataOnRowSelected(data));
 		} catch (IndexOutOfBoundsException e) {
-			/* Protège d'une exception si la barre de titre est selectionnée */
+			/* Protège d'une exception si la barre de titre est sélectionnée */
 		}
 	}
 

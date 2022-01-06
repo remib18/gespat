@@ -41,7 +41,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 *
 	 * @param object donnée à ajouter.
 	 * @throws ConflictingDataException si une donnée avec le même identifiant existe déjà.
-	 * @throws ProcessingException
 	 */
 	protected T add(T object) throws ConflictingDataException, ProcessingException {
 		try {
@@ -60,7 +59,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * Ajoute un évènement permettant d'écouter les mises à jour de données
 	 * Utile dans le cas de plusieurs instances
 	 *
-	 * @param listener
 	 */
 	public void addTableUpdateListener(TableListener<T> listener) {
 		tableUpdateListeners.add(listener);
@@ -69,8 +67,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	/**
 	 * Supprime l'ensemble des données
 	 *
-	 * @throws ProcessingException
-	 * @hidden
 	 */
 	public void clear() throws ProcessingException {
 		data.clear();
@@ -108,7 +104,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * @throws ProcessingException si les données sont impossibles à charger.
 	 */
 	protected void load() throws ProcessingException {
-		//clear();
 		final String[][] newData = (new File<T>()).getData(storeFile);
 		if (newData == null) {
 			return;
@@ -116,7 +111,9 @@ public abstract class AbstractController<T extends AbstractData> {
 		for (String[] object : newData) {
 			try {
 				add(makeObjectFromString(object));
-			} catch (ConflictingDataException | NullPointerException | ArrayIndexOutOfBoundsException e) { /**/ } catch (NotFoundException | DateTimeParseException e) {
+			}
+			catch (ConflictingDataException | NullPointerException | ArrayIndexOutOfBoundsException e) { /**/ }
+			catch (NotFoundException | DateTimeParseException e) {
 				new UserMessage("Une donnée corrompue à été interceptée et supprimée.", UserMessage.LEVEL.Warning);
 				logger.log(Level.WARNING, "Donnée corrompue interceptée et supprimée.");
 			}
@@ -130,7 +127,7 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * @return l'objet correspondant.
 	 */
 	protected abstract T makeObjectFromString(String[] object)
-			throws NotFoundException, NumberFormatException, ProcessingException;
+			throws NotFoundException, NumberFormatException;
 
 	/**
 	 * Publie l'évènement TableUpdate
@@ -145,7 +142,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * @param id           identifiant de la donnée à supprimer.
 	 * @param confirmation validation de l'utilisateur via l'interface.
 	 * @throws NotFoundException   si la donnée à supprimer n'existe pas.
-	 * @throws ProcessingException
 	 */
 	public void remove(int id, boolean confirmation) throws NotFoundException, ProcessingException {
 		if (confirmation) {
@@ -161,7 +157,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * @param object       donnée à supprimer.
 	 * @param confirmation validation de l'utilisateur via l'interface.
 	 * @throws NotFoundException   si la donnée à supprimer n'existe pas.
-	 * @throws ProcessingException
 	 */
 	public void remove(T object, boolean confirmation) throws NotFoundException, ProcessingException {
 		if (confirmation) {
@@ -186,8 +181,6 @@ public abstract class AbstractController<T extends AbstractData> {
 	 * Met à jour les informations d'une donnée
 	 *
 	 * @param data la donnée modifiée
-	 * @throws ProcessingException
-	 * @throws NotFoundException
 	 */
 	public void update(T data) throws NotFoundException, ProcessingException {
 		remove(data.getId(), true);
