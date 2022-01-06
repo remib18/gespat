@@ -31,6 +31,7 @@ import views.popups.UserMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +127,7 @@ public class Doctor extends JFrame {
 		Label nomPath = new Label("Pathologies :");
 		panel.add(nomPath);
 
+
 		final List<String> patientPathologies = selectedConsultation.getDiagnosedPathologies();
 		final List<String> pathologies = consultCtrl.getAllPathologies();
 
@@ -135,7 +137,17 @@ public class Doctor extends JFrame {
 			panel.add(pathology);
 		}
 
+		Button newPathology = new Button("Autre", Button.Size.SMALL, Button.Style.OUTLINED, Button.Color.SECONDARY);
+		newPathology.addActionListener(this::addPathology);
+		panel.add(newPathology);
+
 		return panel;
+	}
+
+	private void addPathology(ActionEvent e) {
+		String pathology = JOptionPane.showInputDialog(this, "Saisissez le nom de la pathologie :");
+		setPathology(pathology, true);
+		save();
 	}
 
 	private void setSelected(Consultation consultation) {
@@ -257,6 +269,10 @@ public class Doctor extends JFrame {
 		}
 		selectedConsultation.setDoctorName(doctorName.getText());
 		selectedConsultation.setObservations(observations.getText());
+		save();
+	}
+
+	private void save() {
 		try {
 			consultCtrl.update(selectedConsultation);
 			setSelected(selectedConsultation); // To update the view
