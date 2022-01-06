@@ -19,44 +19,52 @@ public class File<T> {
 	/**
 	 * Retourne une liste de données d'un fichier.
 	 *
-	 * @param file
-	 * @return
-	 * @throws ProcessingException
+	 * @param file fichier
+	 * @return les données sous la forme <code>[ligne][index de la donnée]</code>
+	 * @throws ProcessingException en cas d'erreur de chargement des données
 	 */
 	public String[][] getData(String file) throws ProcessingException {
 		try (
-				FileReader fr = new FileReader(file);
-				Scanner sc = new Scanner(fr)
+				final FileReader fr = new FileReader(file);
+				final Scanner sc = new Scanner(fr)
 		) {
-
-			ArrayList<String[]> strs = new ArrayList<>();
+			// Tableau de retours
+			final ArrayList<String[]> strs = new ArrayList<>();
 
 			while (sc.hasNextLine()) {
+				// Séparation des données de la ligne
 				final String[] dataPart = sc.nextLine().split(COLUMN_SEPARATOR);
+
 				strs.add(dataPart);
 			}
+
 			if (strs.isEmpty()) {
 				return null;
 			}
+
+			// On retourne la liste des résultats transformée en Array
 			return strs.toArray(new String[strs.get(0).length][0]);
 		} catch (IOException e) {
+			// Si on n'a pas réussi à accéder au fichier, on le crée.
 			try (
-					FileWriter fw = new FileWriter(file)
+					final FileWriter fw = new FileWriter(file)
 			) {
 				fw.write("");
+				// Si aucune erreur ne se produit, on ré-execute la méthode
+				return getData(file);
+				// throw new ProcessingException("Le fichier n'existe pas, un nouveau va être créer.");
 			} catch (Exception err) {
-				throw new ProcessingException("[FILE – SAVE DATA]: Impossible de créer le fichier.");
+				throw new ProcessingException("Impossible de créer le fichier.");
 			}
-			throw new ProcessingException("[FILE – SAVE DATA]: Le fichier n'existe pas, un nouveau va être créer.");
 		}
 	}
 
 	/**
 	 * Enregistre une liste de données dans un fichier.
 	 *
-	 * @param data
-	 * @param file
-	 * @throws ProcessingException
+	 * @param data données à enregistrés
+	 * @param file fichier
+	 * @throws ProcessingException en cas d'erreur de chargement des données
 	 */
 	public void saveData(List<T> data, String file) throws ProcessingException {
 		try (
