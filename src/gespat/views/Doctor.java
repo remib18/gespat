@@ -22,7 +22,7 @@ import models.Device;
 import models.Patient;
 import net.miginfocom.swing.MigLayout;
 import utils.Colors;
-import utils.ConsultationTableModel;
+import utils.table.listeners.ConsultationTableModel;
 import utils.Date;
 import utils.File;
 import views.popups.ConfirmSuppression;

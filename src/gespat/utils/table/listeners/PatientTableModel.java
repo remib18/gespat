@@ -1,10 +1,11 @@
-package utils;
+package utils.table.listeners;
 
 import components.table.AbstractTableModel;
 import controllers.PatientController;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
+import utils.Date;
 
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -25,7 +26,6 @@ public class PatientTableModel extends AbstractTableModel<Patient> {
 		this.headers.add("Prénom");
 		this.headers.add("Date de naissance");
 		this.headers.add("Numéro de sécurité sociale");
-		this.headers.add("Action");
 	}
 
 	/**
@@ -56,17 +56,7 @@ public class PatientTableModel extends AbstractTableModel<Patient> {
 				return String.valueOf(socialId);
 
 			default:
-				// TODO: Add actions buttons
-				int id = data.get(rowIndex - 1).getId();
-				delete.addActionListener(e -> {
-					try {
-						ctrl.remove(ctrl.get(id), true);
-						setDataSet(ctrl.getAll());
-					} catch (NotFoundException | ProcessingException err) {
-						logger.log(Level.SEVERE, "Erreur lors du chargement des données / de la suppression.");
-					}
-				});
-				return delete;
+				return "";
 		}
 	}
 

@@ -10,13 +10,7 @@ public abstract class AbstractTableModel<T extends AbstractData> extends javax.s
 
 	private static final long serialVersionUID = 8145852153886651759L;
 
-	/**
-	 * Bouton supprimer en fin de ligne
-	 */
-	protected final JButton delete = new JButton("Supprimer");
-	/**
-	 * Liste des noms de colone
-	 */
+	/** * Liste des noms de colonne */
 	protected final List<String> headers = new ArrayList<>();
 	/**
 	 * Liste de données

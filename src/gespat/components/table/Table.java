@@ -68,7 +68,6 @@ public class Table<T extends AbstractData> extends JTable {
 				this.getColumnModel().getColumn(i).setMinWidth(this.getColumnModel().getColumn(i).getWidth());
 			}
 		}
-		getColumn("Action").setPreferredWidth(150);
 
 		// Choix de la taille des lignes
 		this.setRowHeight(35);

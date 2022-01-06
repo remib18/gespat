@@ -1,8 +1,9 @@
-package utils;
+package utils.table.listeners;
 
 import components.table.AbstractTableModel;
 import models.Consultation;
 import models.Patient;
+import utils.Date;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,6 @@ public class ConsultationTableModel extends AbstractTableModel<Consultation> {
 		this.headers.add("Nom");
 		this.headers.add("Date de consultation");
 		this.headers.add("Numéro de sécurité sociale");
-		this.headers.add("Action");
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ConsultationTableModel extends AbstractTableModel<Consultation> {
 				return String.valueOf(patient.getSocialId());
 
 			default:
-				return data.get(rowIndex - 1).getId();
+				return "";
 		}
 	}
 

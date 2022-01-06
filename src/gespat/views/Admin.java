@@ -12,7 +12,7 @@ import exceptions.FormatException;
 import exceptions.NotFoundException;
 import exceptions.ProcessingException;
 import models.Patient;
-import utils.PatientTableModel;
+import utils.table.listeners.PatientTableModel;
 import views.popups.ConfirmSuppression;
 import views.popups.UserMessage;
 

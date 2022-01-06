@@ -13,7 +13,7 @@ import models.Device;
 import models.Patient;
 import net.miginfocom.swing.MigLayout;
 import utils.Colors;
-import utils.ConsultationTableModel;
+import utils.table.listeners.ConsultationTableModel;
 import views.popups.UserMessage;
 
 import javax.swing.*;
