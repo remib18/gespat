@@ -24,7 +24,7 @@ public class Separator extends JComponent {
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		RenderingHints hints = new RenderingHints(
-			RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
+				RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON
 		);
 		g2d.setRenderingHints(hints);
 

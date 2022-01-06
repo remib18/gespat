@@ -26,7 +26,7 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 		setLayout(new ScrollPaneLayout() {
 			@Override
 			public void layoutContainer(Container parent) {
-				JScrollPane scrollPane = (JScrollPane)parent;
+				JScrollPane scrollPane = (JScrollPane) parent;
 
 				Rectangle availR = scrollPane.getBounds();
 				availR.x = availR.y = 0;
@@ -34,19 +34,19 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 				Insets insets = parent.getInsets();
 				availR.x = insets.left;
 				availR.y = insets.top;
-				availR.width  -= insets.left + insets.right;
-				availR.height -= insets.top  + insets.bottom;
+				availR.width -= insets.left + insets.right;
+				availR.height -= insets.top + insets.bottom;
 
 				Rectangle vsbR = new Rectangle();
-				vsbR.width  = 12;
+				vsbR.width = 12;
 				vsbR.height = availR.height;
 				vsbR.x = availR.x + availR.width - vsbR.width;
 				vsbR.y = availR.y;
 
-				if(viewport != null) {
+				if (viewport != null) {
 					viewport.setBounds(availR);
 				}
-				if(vsb != null) {
+				if (vsb != null) {
 					vsb.setVisible(true);
 					vsb.setBounds(vsbR);
 				}
@@ -54,42 +54,51 @@ public class ScrollableTable<T extends AbstractData> extends JScrollPane {
 		});
 		getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			private final Dimension d = new Dimension();
-			@Override protected JButton createDecreaseButton(int orientation) {
+
+			@Override
+			protected JButton createDecreaseButton(int orientation) {
 				return new JButton() {
-					@Override public Dimension getPreferredSize() {
+					@Override
+					public Dimension getPreferredSize() {
 						return d;
 					}
 				};
 			}
-			@Override protected JButton createIncreaseButton(int orientation) {
+
+			@Override
+			protected JButton createIncreaseButton(int orientation) {
 				return new JButton() {
-					@Override public Dimension getPreferredSize() {
+					@Override
+					public Dimension getPreferredSize() {
 						return d;
 					}
 				};
 			}
+
 			@Override
 			protected void paintTrack(Graphics g, JComponent c, Rectangle r) {
-				Graphics2D g2 = (Graphics2D)g.create();
+				Graphics2D g2 = (Graphics2D) g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
 				g2.setPaint(getBackground());
-				g2.fillRoundRect(r.x,r.y,r.width,r.height,10,10);
+				g2.fillRoundRect(r.x, r.y, r.width, r.height, 10, 10);
 				g2.dispose();
 			}
+
 			@Override
 			protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
-				Graphics2D g2 = (Graphics2D)g.create();
+				Graphics2D g2 = (Graphics2D) g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 						RenderingHints.VALUE_ANTIALIAS_ON);
-				JScrollBar sb = (JScrollBar)c;
-				if(!sb.isEnabled() || r.width>r.height) {
+				JScrollBar sb = (JScrollBar) c;
+				if (!sb.isEnabled() || r.width > r.height) {
 					return;
 				}
 				g2.setPaint(Colors.BUTTON_SECONDARY);
-				g2.fillRoundRect(r.x,r.y,r.width,r.height,10,10);
+				g2.fillRoundRect(r.x, r.y, r.width, r.height, 10, 10);
 				g2.dispose();
 			}
+
 			@Override
 			protected void setThumbBounds(int x, int y, int width, int height) {
 				super.setThumbBounds(x, y, width, height);

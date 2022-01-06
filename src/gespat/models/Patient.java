@@ -7,109 +7,110 @@ import java.time.LocalDate;
 
 public class Patient extends AbstractData {
 
-    private String firstname;
-    private String lastname;
-    private int socialId;
-    private LocalDate birthAt;
+	private String firstname;
+	private String lastname;
+	private int socialId;
+	private LocalDate birthAt;
 
-    /**
-     * Crée un nouveau patient.
-     * Utiliser un PatientManager pour instancier et sauvegarder des patients.
-     * @see PatientController
-     *
-     * @param id
-     * @param firstname
-     * @param lastname
-     * @param socialId
-     * @param birthAt
-     */
-    public Patient(int id, String firstname, String lastname, int socialId, LocalDate birthAt) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.socialId = socialId;
-        this.birthAt = birthAt;
-    }
+	/**
+	 * Crée un nouveau patient.
+	 * Utiliser un PatientManager pour instancier et sauvegarder des patients.
+	 *
+	 * @param id
+	 * @param firstname
+	 * @param lastname
+	 * @param socialId
+	 * @param birthAt
+	 * @see PatientController
+	 */
+	public Patient(int id, String firstname, String lastname, int socialId, LocalDate birthAt) {
+		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.socialId = socialId;
+		this.birthAt = birthAt;
+	}
 
-    /**
-     * @return la date de naissance
-     */
-    public LocalDate getBirthAt() {
-        return birthAt;
-    }
+	/**
+	 * @return la date de naissance
+	 */
+	public LocalDate getBirthAt() {
+		return birthAt;
+	}
 
-    /**
-     * @return le prénom
-     */
-    public String getFirstname() {
-        return firstname;
-    }
+	/**
+	 * @param birthAt la date de naissance à définir
+	 */
+	public void setBirthAt(LocalDate birthAt) {
+		this.birthAt = birthAt;
+	}
 
-    /**
-     * @return le nom complet du patient
-     */
-    public String getFullname() {
-        return this.lastname + ' ' + this.firstname;
-    }
+	/**
+	 * @return le prénom
+	 */
+	public String getFirstname() {
+		return firstname;
+	}
 
-    /**
-     * @return le nom de famille
-     */
-    public String getLastname() {
-        return lastname;
-    }
+	/**
+	 * @param firstname le prénom à définir
+	 */
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    /**
-     * @return les champs parmis lesquels il est possible d'effectuer une recherche
-     */
-    @Override
-    public String getSearchableFields() {
-        return this.getFullname();
-    }
+	/**
+	 * @return le nom complet du patient
+	 */
+	public String getFullname() {
+		return this.lastname + ' ' + this.firstname;
+	}
 
-    /**
-     * @return le numéro de sécurité sociale
-     */
-    public int getSocialId() {
-        return socialId;
-    }
+	/**
+	 * @return le nom de famille
+	 */
+	public String getLastname() {
+		return lastname;
+	}
 
-    /**
-     * @param birthAt la date de naissance à définir
-     */
-    public void setBirthAt(LocalDate birthAt) {
-        this.birthAt = birthAt;
-    }
+	/**
+	 * @param lastname le nom de famille à définir
+	 */
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    /**
-     * @param firstname le prénom à définir
-     */
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	/**
+	 * @return les champs parmis lesquels il est possible d'effectuer une recherche
+	 */
+	@Override
+	public String getSearchableFields() {
+		return this.getFullname();
+	}
 
-    /**
-     * @param lastname le nom de famille à définir
-     */
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	/**
+	 * @return le numéro de sécurité sociale
+	 */
+	public int getSocialId() {
+		return socialId;
+	}
 
-    /**
-     * @param socialId le numéro de sécurité sociale à définir
-     */
-    public void setSocialId(int socialId) {
-        this.socialId = socialId;
-    }
+	/**
+	 * @param socialId le numéro de sécurité sociale à définir
+	 */
+	public void setSocialId(int socialId) {
+		this.socialId = socialId;
+	}
 
-    /**
-     * Renvoie le patient sous forme de chaine de caractères prèt pour la sauvegarde.
-     * @return
-     */
-    @Override
-    public String toString() {
-        final String date = birthAt == null ? "null" : Date.convert(this.birthAt);
-        return this.id + fs + this.lastname + fs + this.firstname + fs + this.socialId + fs + date;
-    }
+	/**
+	 * Renvoie le patient sous forme de chaine de caractères prèt pour la sauvegarde.
+	 *
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		final String date = birthAt == null ? "null" : Date.convert(this.birthAt);
+		return this.id + fs + this.lastname + fs + this.firstname + fs + this.socialId + fs + date;
+	}
 
 }

@@ -6,83 +6,81 @@ import components.template.XCenteredContainer;
 import controllers.ConsultationController;
 import controllers.DeviceController;
 import controllers.PatientController;
-import utils.Colors;
 import net.miginfocom.swing.MigLayout;
+import utils.Colors;
 import views.popups.UserMessage;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Box;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
 public class Login extends JFrame {
 
-    private static final long serialVersionUID = -2283950897638045412L;
-    final PatientController patientController;
-    final ConsultationController consultationController;
-    final DeviceController deviceController;
+	private static final long serialVersionUID = -2283950897638045412L;
+	final PatientController patientController;
+	final ConsultationController consultationController;
+	final DeviceController deviceController;
 
-    public Login(
-            PatientController patientController,
-            ConsultationController consultationController,
-            DeviceController deviceController
-    ) {
-        setTitle("GesPat");
-        setSize(580, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().setBackground(Colors.PRIMARY);
+	public Login(
+			PatientController patientController,
+			ConsultationController consultationController,
+			DeviceController deviceController
+	) {
+		setTitle("GesPat");
+		setSize(580, 300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Colors.PRIMARY);
 
-        UserMessage.setActiveWindow(this);
+		UserMessage.setActiveWindow(this);
 
-        this.patientController = patientController;
-        this.consultationController = consultationController;
-        this.deviceController = deviceController;
+		this.patientController = patientController;
+		this.consultationController = consultationController;
+		this.deviceController = deviceController;
 
 
-        add(this.getContent());
-        setVisible(true);
-    }
+		add(this.getContent());
+		setVisible(true);
+	}
 
-    private JPanel getButtons() {
-        JPanel buttonContainer = new JPanel();
-        buttonContainer.setLayout(new MigLayout());
-        buttonContainer.setBackground(Colors.PRIMARY);
+	private JPanel getButtons() {
+		JPanel buttonContainer = new JPanel();
+		buttonContainer.setLayout(new MigLayout());
+		buttonContainer.setBackground(Colors.PRIMARY);
 
-        // Creating buttons
-        Button button1 = new Button("Agent d’administration");
-        Button button2 = new Button("Personnel médical");
-        Button button3 = new Button("Technicien");
+		// Creating buttons
+		Button button1 = new Button("Agent d’administration");
+		Button button2 = new Button("Personnel médical");
+		Button button3 = new Button("Technicien");
 
-        // Adding ClickListener to buttons
-        button1.addActionListener(e -> new Admin(patientController));
+		// Adding ClickListener to buttons
+		button1.addActionListener(e -> new Admin(patientController));
 
-        button2.addActionListener(e -> new Doctor(patientController, consultationController, deviceController));
+		button2.addActionListener(e -> new Doctor(patientController, consultationController, deviceController));
 
-        button3.addActionListener(e -> new Tech(consultationController));
+		button3.addActionListener(e -> new Tech(consultationController));
 
-        // Adding buttons to the container
-        buttonContainer.add(button1);
-        buttonContainer.add(button2, "gapleft 20");
-        buttonContainer.add(button3, "gapleft 20");
+		// Adding buttons to the container
+		buttonContainer.add(button1);
+		buttonContainer.add(button2, "gapleft 20");
+		buttonContainer.add(button3, "gapleft 20");
 
-        return buttonContainer;
-    }
+		return buttonContainer;
+	}
 
-    private XCenteredContainer getContent() {
-        final XCenteredContainer container = new XCenteredContainer(Colors.PRIMARY);
+	private XCenteredContainer getContent() {
+		final XCenteredContainer container = new XCenteredContainer(Colors.PRIMARY);
 
-        container.add(new Label("GesPat", Label.Styles.TITLE));
-        container.add(new Label("Veuillez vous identifier."));
-        container.add(this.getButtons());
-        container.add(Box.createRigidArea(new Dimension(0, 10)));
-        container.add(new Label("Ou accédez directement aux statistiques"));
-        container.add(Box.createRigidArea(new Dimension(0, 10)));
+		container.add(new Label("GesPat", Label.Styles.TITLE));
+		container.add(new Label("Veuillez vous identifier."));
+		container.add(this.getButtons());
+		container.add(Box.createRigidArea(new Dimension(0, 10)));
+		container.add(new Label("Ou accédez directement aux statistiques"));
+		container.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        Button goToStats = new Button("Y aller", Button.Size.SMALL);
-        goToStats.addActionListener(e -> new Stats(patientController));
-        container.add(goToStats);
+		Button goToStats = new Button("Y aller", Button.Size.SMALL);
+		goToStats.addActionListener(e -> new Stats(patientController));
+		container.add(goToStats);
 
-        return container;
-    }
+		return container;
+	}
 
 }

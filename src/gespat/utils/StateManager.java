@@ -12,12 +12,19 @@ public class StateManager {
 
 	private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private static final StateManager STATE = new StateManager();
-
-	public enum DataType { Patient, Consultation, Device }
-
 	private Integer lastPatientIndexInserted;
 	private Integer lastConsultationIndexInserted;
 	private Integer lastDeviceIndexInserted;
+	protected StateManager() {
+		try {
+			logger.log(Level.INFO, "Application State : loading...;");
+			load();
+			logger.log(Level.INFO, "Application State : loaded.");
+		} catch (ProcessingException err) {
+			new UserMessage("Erreur lors du chargement de l'application.", UserMessage.LEVEL.Severe);
+			logger.log(Level.SEVERE, "Application State : error during loading.");
+		}
+	}
 
 	public static StateManager getState() {
 		return STATE;
@@ -37,7 +44,8 @@ public class StateManager {
 				lastDeviceIndexInserted++;
 				save();
 				return lastDeviceIndexInserted;
-			default: return null;
+			default:
+				return null;
 		}
 	}
 
@@ -63,17 +71,6 @@ public class StateManager {
 				lastDeviceIndexInserted = 0;
 		}
 		save();
-	}
-
-	protected StateManager() {
-		try {
-			logger.log(Level.INFO, "Application State : loading...;");
-			load();
-			logger.log(Level.INFO, "Application State : loaded.");
-		} catch (ProcessingException err) {
-			new UserMessage("Erreur lors du chargement de l'application.", UserMessage.LEVEL.Severe);
-			logger.log(Level.SEVERE, "Application State : error during loading.");
-		}
 	}
 
 	private void load() throws ProcessingException {
@@ -103,4 +100,6 @@ public class StateManager {
 			logger.log(Level.SEVERE, "Erreur lors de l'enregistrement de l'état de l'application.");
 		}
 	}
+
+	public enum DataType {Patient, Consultation, Device}
 }

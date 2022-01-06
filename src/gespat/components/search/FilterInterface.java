@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface FilterInterface<T extends AbstractData> {
 
-    List<T> newFilter(List<T> data);
+	List<T> newFilter(List<T> data);
 }

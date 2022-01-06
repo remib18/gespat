@@ -2,13 +2,8 @@ package models;
 
 public class Device extends AbstractData {
 
-	public enum STATES {
-		UNDEFINED, PENDING, ASSIGNED
-	}
-
 	private STATES state;
 	private String label;
-
 	public Device(final int id, final STATES state, final String label) {
 		this.id = id;
 		this.state = state;
@@ -23,8 +18,8 @@ public class Device extends AbstractData {
 	@Override
 	public String toString() {
 		return id + fs +
-			   state + fs +
-			   label;
+				state + fs +
+				label;
 	}
 
 	public STATES getState() {
@@ -56,8 +51,12 @@ public class Device extends AbstractData {
 		return label;
 	}
 
-
 	public void setLabel(final String label) {
 		this.label = label;
+	}
+
+
+	public enum STATES {
+		UNDEFINED, PENDING, ASSIGNED
 	}
 }
