@@ -1,10 +1,10 @@
 # Gespat
  
-This is my first java project for classes.
+This is my first java project for my courses. First semester project at [University of Tours](https://www.univ-tours.fr).
 
 ## The goal
 
-Building a java app from scratch using swing in order to manage the patients who need some medical devices.
+Building a java app from scratch using Swing in order to manage the patients who need some medical devices.
 
 ## Note
 
